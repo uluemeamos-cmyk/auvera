@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E1A2B">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Auvera™">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Auvera™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: phone-first single column; navy money band, tab content, fixed bottom tab bar */
+:root{
+  --bg:#F7F4EC; --surface:#FFFFFF; --line:#E3DCCB; --fg:#0E1A2B; --muted:#5C6472;
+  --band:#0E1A2B; --band-fg:#F4EFE3; --band-muted:#C8BFA9; --band-tile:#17263B; --band-line:#2C3B52;
+  --gold:#C9A227; --gold-ink:#0E1A2B; --gold-soft:#E2C15A;
+  --ok:#1F7A5C; --ok-ink:#FFFFFF; --ok-bg:#E3F2EC; --warn:#8A5A00; --warn-bg:#FBF0D4; --bad:#A12C22; --bad-bg:#F9E1DE; --neutral-bg:#EFE9DC;
+  --display:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --body:Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A1320; --surface:#132136; --line:#26364E; --fg:#F1ECDF; --muted:#A9B1BF;
+  --band:#060D17; --band-fg:#F4EFE3; --band-muted:#C8BFA9; --band-tile:#132136; --band-line:#26364E;
+  --gold:#D4B13C; --gold-ink:#0E1A2B; --gold-soft:#E7C863;
+  --ok:#5CC79F; --ok-ink:#06231A; --ok-bg:#12352B; --warn:#F0C25C; --warn-bg:#3A2E10; --bad:#F28B80; --bad-bg:#3D1A17; --neutral-bg:#1C2B42;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1320; --surface:#132136; --line:#26364E; --fg:#F1ECDF; --muted:#A9B1BF;
+  --band:#060D17; --band-fg:#F4EFE3; --band-muted:#C8BFA9; --band-tile:#132136; --band-line:#26364E;
+  --gold:#D4B13C; --gold-ink:#0E1A2B; --gold-soft:#E7C863;
+  --ok:#5CC79F; --ok-ink:#06231A; --ok-bg:#12352B; --warn:#F0C25C; --warn-bg:#3A2E10; --bad:#F28B80; --bad-bg:#3D1A17; --neutral-bg:#1C2B42;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45;padding-bottom:calc(84px + env(safe-area-inset-bottom, 0px))}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.band{background:var(--band);color:var(--band-fg);border-radius:0 0 22px 22px}
+.band .wrap{padding-block:20px 22px;display:flex;flex-direction:column;gap:16px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mark{display:flex;align-items:center;gap:10px}
+.tile{width:34px;height:34px;border:2px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px;color:var(--gold)}
+.word{font-family:var(--display);font-size:26px;font-weight:600}
+.tm{font-family:var(--body);font-size:11px;font-weight:600;vertical-align:super;margin-left:2px;color:var(--gold)}
+.testtag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--band-muted);border:1px solid var(--band-line);border-radius:20px;padding:4px 10px}
+.big-label{font-size:13px;color:var(--band-muted)}
+.big{font-size:36px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.1}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{background:var(--band-tile);border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat span:first-child{font-size:12px;color:var(--band-muted)}
+.stat span:last-child{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.stat .gold{color:var(--gold-soft)}
+main.wrap{padding-block:18px 24px;display:flex;flex-direction:column;gap:16px}
+h2{margin:0;font-size:18px;font-weight:600;text-wrap:balance}
+.sub{margin:0;font-size:13px;color:var(--muted)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+button,.btn{font-family:inherit;font-size:14px;font-weight:600;min-height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;text-align:center}
+button:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.wa{background:var(--ok);color:var(--ok-ink);border-color:var(--ok)}
+.ghost{background:transparent;border-color:transparent;color:var(--muted);padding:0 10px}
+.full{width:100%}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field label,.legend{font-size:13px;font-weight:500;color:var(--muted)}
+input,select{font-family:inherit;font-size:16px;height:46px;border:1px solid var(--line);border-radius:10px;padding:0 12px;background:var(--bg);color:var(--fg);width:100%}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.seg button[aria-pressed="true"]{background:var(--band);color:var(--band-fg);border-color:var(--band)}
+.alarm{background:var(--surface);border:2px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.alarm svg{flex:none;color:var(--gold);margin-top:2px}
+.alarm strong{display:block}
+.alarm p{margin:2px 0 8px;font-size:13px;color:var(--muted)}
+.list{display:flex;flex-direction:column;gap:12px}
+.sale{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.sale.late{border-color:var(--bad)}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.who{display:flex;flex-direction:column;gap:2px;min-width:0}
+.who b{font-size:16px;overflow-wrap:anywhere}
+.who span{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.amt{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;font-weight:600;padding:4px 9px;border-radius:10px;white-space:nowrap}
+.chip.late{color:var(--bad);background:var(--bad-bg)}
+.chip.today{color:var(--warn);background:var(--warn-bg)}
+.chip.soon,.chip.example,.chip.plain{color:var(--muted);background:var(--neutral-bg)}
+.chip.ok{color:var(--ok);background:var(--ok-bg)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.step{font-size:12px;font-weight:600;text-align:center;padding:6px 4px;border-radius:8px;background:var(--neutral-bg);color:var(--muted)}
+.step.done{background:var(--ok-bg);color:var(--ok)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions > *{flex:1 1 150px}
+.confirm{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer}
+.check input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--ok)}
+.warnbox{font-size:13px;color:var(--warn);background:var(--warn-bg);border-radius:10px;padding:8px 10px}
+.preview{background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.empty{text-align:center;color:var(--muted);padding:24px 12px;border:1px dashed var(--line);border-radius:14px;font-size:14px}
+.err{font-size:13px;color:var(--bad);margin:0}
+.foot{font-size:12px;color:var(--muted);text-align:center;line-height:1.6;margin:0}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom, 0px)}
+.tabs .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding-block:6px}
+.tabs button{flex-direction:column;gap:2px;font-size:11px;font-weight:600;border:none;background:transparent;color:var(--muted);min-height:56px;padding:4px 2px;border-radius:10px}
+.tabs button[aria-current="page"]{color:var(--fg);background:var(--neutral-bg)}
+.tabs .badge{font-size:10px;background:var(--bad);color:#FFFFFF;border-radius:8px;padding:0 5px;margin-left:2px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom, 0px));background:var(--band);color:var(--band-fg);padding:10px 16px;border-radius:12px;font-size:14px;z-index:20;max-width:calc(100% - 32px)}
+details.card summary{cursor:pointer;font-weight:600;min-height:28px}
+.voice{min-height:56px;font-size:16px;border:2px solid var(--gold);background:var(--surface)}
+.voice[aria-busy="true"]{background:var(--gold);color:var(--gold-ink)}
+html.large body{zoom:1.18}
+@media (max-width:380px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+
+<header class="band">
+  <div class="wrap">
+    <div class="brand">
+      <div class="mark"><div class="tile" aria-hidden="true">Au</div><span class="word">Auvera<span class="tm" aria-label="trademark">™</span></span></div>
+      <span class="testtag">Test version</span>
+    </div>
+    <div>
+      <div class="big-label">Received this month (confirmed)</div>
+      <div class="big" id="mReceived">R0</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><span>Still unpaid</span><span class="gold" id="mUnpaid">R0</span></div>
+      <div class="stat"><span>Late payers</span><span id="mLate">0</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- HOME -->
+  <section id="tab-home" class="tabpanel" aria-labelledby="t-home">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="alarm" id="alarm" hidden>
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+        <div><strong id="alarmText"></strong><p>In the full app this alarm buzzes your phone every morning.</p><button type="button" class="primary" data-go="owed">See who to remind</button></div>
+      </div>
+      <button type="button" class="primary full" data-go="sell" style="min-height:56px;font-size:16px">+ New sale</button>
+      <button type="button" class="full" id="readBtn" style="min-height:52px"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg>Read my money out loud</button>
+      <div class="card" id="readOut" aria-live="polite" hidden style="font-size:17px;font-weight:600;line-height:1.5"></div>
+      <div class="row"><h2>Recent sales</h2></div>
+      <div class="list" id="recentList"></div>
+      <details class="card">
+        <summary>Settings</summary>
+        <div class="field"><label for="sBiz">Business name (shown on invoices and receipts)</label><input id="sBiz" placeholder="e.g. Amos Tailoring"></div>
+        <div class="field"><label for="sUi">My language (voice questions)</label><select id="sUi"></select></div>
+        <div class="field"><label for="sLang">Default language for customer messages</label><select id="sLang"></select></div>
+        <label class="check" for="sRobot"><input type="checkbox" id="sRobot"><span>Phone voice for anything without a recording (helps sellers who can't read)</span></label>
+        <label class="check" for="sLarge"><input type="checkbox" id="sLarge"><span>Large text and buttons (easier to read)</span></label>
+        <div class="field"><label for="sBank">Bank details for EFT (optional)</label><input id="sBank" placeholder="e.g. Capitec 1234567890, A. Ulueme"></div>
+        <div class="field"><label for="sLink">Card payment link (e.g. from the Yoco app)</label><input id="sLink" inputmode="url" placeholder="Paste your payment link"></div>
+        <p class="sub">Bank details and your card link are added to invoices and reminders. Customers pay straight into your own bank. Auvera never touches the money.</p>
+        <button type="button" id="clearExamples">Remove example sales</button>
+      </details>
+    </div>
+  </section>
+
+  <!-- SELL -->
+  <section id="tab-sell" class="tabpanel" aria-labelledby="t-sell" hidden>
+    <form class="card" id="saleForm" novalidate>
+      <h2>New sale</h2>
+      <button type="button" class="voice full" id="voiceBtn"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v5"></path></svg><span id="voiceLabel">Speak the sale instead of typing</span></button>
+      <p class="sub" id="voiceStatus" dir="auto" aria-live="polite">Auvera shows each question and says "Talk now". Answer after it.</p>
+      <div class="field"><label for="fName">Customer name</label><input id="fName" autocomplete="off" placeholder="e.g. Mr Okafor"></div>
+      <div class="two">
+        <div class="field"><label for="fPhone">WhatsApp number</label><input id="fPhone" inputmode="tel" placeholder="072 123 4567"></div>
+        <div class="field"><label for="fAmount">Amount (R)</label><input id="fAmount" inputmode="decimal" placeholder="2000"></div>
+      </div>
+      <div class="field"><label for="fItem">What they bought</label><input id="fItem" placeholder="e.g. Agbada, custom fit"></div>
+      <div class="field"><span class="legend" id="whenLbl">When are they paying?</span>
+        <div class="seg" role="group" aria-labelledby="whenLbl">
+          <button type="button" id="payNow" aria-pressed="true">Paying now</button>
+          <button type="button" id="payLater" aria-pressed="false">Pay later</button>
+        </div>
+      </div>
+      <div class="two">
+        <div class="field" id="dueWrap" hidden><label for="fDue">Due date</label><input id="fDue" type="date"></div>
+        <div class="field"><label for="fLang">Message language</label><select id="fLang"></select></div>
+      </div>
+      <p class="err" id="saleErr" hidden>Add the customer name and an amount above R0.</p>
+      <button type="submit" class="primary full">Save sale and send invoice</button>
+    </form>
+  </section>
+
+  <!-- OWED -->
+  <section id="tab-owed" class="tabpanel" aria-labelledby="t-owed" hidden>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <h2>Who owes you</h2>
+      <p class="sub">Late customers first. Tap to send a WhatsApp reminder.</p>
+      <div class="list" id="owedList"></div>
+    </div>
+  </section>
+
+  <!-- PAID -->
+  <section id="tab-paid" class="tabpanel" aria-labelledby="t-paid" hidden>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <h2>Confirmed payments</h2>
+      <p class="sub">Every payment here was checked: bank app, card machine, cash count or blockchain.</p>
+      <div class="list" id="paidList"></div>
+    </div>
+  </section>
+
+  <p class="foot">Test version: data is saved on this phone only. Translations should be checked by a native speaker before real use.</p>
+</main>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="wrap">
+    <button type="button" id="t-home" data-go="home" aria-current="page"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>Home</button>
+    <button type="button" id="t-sell" data-go="sell"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>Sell</button>
+    <button type="button" id="t-owed" data-go="owed"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>Owed<span class="badge" id="lateBadge" hidden></span></span></button>
+    <button type="button" id="t-paid" data-go="paid"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>Paid</button>
+  </div>
+</nav>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+  var LANGS=[['en','English'],['pcm','Pidgin'],['ur','اردو (Urdu)'],['bn','বাংলা (Bengali)'],['so','Soomaali (Somali)'],['sw','Kiswahili'],['am','አማርኛ (Amharic)']];
+  var T={
+    en:{invoice:'Hi {name}, invoice #{no} from {biz}: {item}, R{amount}. Please pay by {date}. Thank you!',
+        soon:'Hi {name}, a friendly reminder from {biz}: R{amount} for {item} (invoice #{no}) is due on {date}. Thank you!',
+        late:'Hi {name}, your payment of R{amount} for {item} (invoice #{no}) to {biz} is {days} days late. Please pay today. Thank you.',
+        receipt:'Thank you {name}! Receipt #{no} from {biz}: R{amount} for {item} received on {date}. ✓ Payment confirmed with Auvera.'},
+    pcm:{invoice:'How far {name}, na invoice #{no} from {biz}: {item}, R{amount}. Abeg pay before {date}. Thank you!',
+        soon:'How far {name}, na {biz} dey remind you: R{amount} for {item} (invoice #{no}) go due {date}. Thank you!',
+        late:'{name}, abeg the R{amount} for {item} (invoice #{no}) wey you owe {biz} don pass due by {days} days. Abeg pay today. Thank you.',
+        receipt:'Thank you {name}! Receipt #{no} from {biz}: we don receive your R{amount} for {item} on {date}. ✓ Auvera don confirm am.'},
+    ur:{invoice:'السلام علیکم {name}، {biz} کی طرف سے انوائس #{no}: {item}، R{amount}۔ براہ کرم {date} تک ادائیگی کریں۔ شکریہ!',
+        soon:'السلام علیکم {name}، {biz} کی طرف سے یاد دہانی: {item} کے R{amount} (انوائس #{no}) کی ادائیگی {date} تک ہے۔ شکریہ!',
+        late:'{name}، {biz} کو {item} کے R{amount} (انوائس #{no}) کی ادائیگی {days} دن سے باقی ہے۔ براہ کرم آج ادائیگی کریں۔ شکریہ۔',
+        receipt:'شکریہ {name}! {biz} کی رسید #{no}: {item} کے R{amount} {date} کو وصول ہو گئے۔ ✓ Auvera سے تصدیق شدہ۔'},
+    bn:{invoice:'আসসালামু আলাইকুম {name}, {biz} থেকে ইনভয়েস #{no}: {item}, R{amount}। অনুগ্রহ করে {date} তারিখের মধ্যে পরিশোধ করুন। ধন্যবাদ!',
+        soon:'আসসালামু আলাইকুম {name}, {biz} থেকে মনে করিয়ে দিচ্ছি: {item}-এর R{amount} (ইনভয়েস #{no}) {date} তারিখের মধ্যে দিতে হবে। ধন্যবাদ!',
+        late:'{name}, {biz}-এর {item}-এর R{amount} (ইনভয়েস #{no}) পরিশোধ {days} দিন দেরি হয়েছে। অনুগ্রহ করে আজই পরিশোধ করুন। ধন্যবাদ।',
+        receipt:'ধন্যবাদ {name}! {biz} থেকে রসিদ #{no}: {item}-এর R{amount} {date} তারিখে পাওয়া গেছে। ✓ Auvera দ্বারা নিশ্চিত।'},
+    so:{invoice:'Asc {name}, qaansheegad #{no} ka timid {biz}: {item}, R{amount}. Fadlan bixi ka hor {date}. Mahadsanid!',
+        soon:'Asc {name}, xasuusin ka timid {biz}: R{amount} oo ah {item} (qaansheegad #{no}) waa in la bixiyaa {date}. Mahadsanid!',
+        late:'{name}, lacagta R{amount} ee {item} (qaansheegad #{no}) ee {biz} waxay dib u dhacday {days} maalmood. Fadlan maanta bixi. Mahadsanid.',
+        receipt:'Mahadsanid {name}! Rasiidh #{no} ee {biz}: R{amount} oo ah {item} waa la helay {date}. ✓ Auvera ayaa xaqiijisay.'},
+    sw:{invoice:'Habari {name}, ankara #{no} kutoka {biz}: {item}, R{amount}. Tafadhali lipa kabla ya {date}. Asante!',
+        soon:'Habari {name}, ukumbusho kutoka {biz}: R{amount} kwa {item} (ankara #{no}) inatakiwa kulipwa {date}. Asante!',
+        late:'{name}, malipo ya R{amount} kwa {item} (ankara #{no}) kutoka {biz} yamechelewa siku {days}. Tafadhali lipa leo. Asante.',
+        receipt:'Asante {name}! Risiti #{no} kutoka {biz}: R{amount} kwa {item} imepokelewa {date}. ✓ Imethibitishwa na Auvera.'},
+    am:{invoice:'ሰላም {name}፣ ከ{biz} የክፍያ ጥያቄ #{no}፦ {item}፣ R{amount}። እባክዎ እስከ {date} ይክፈሉ። እናመሰግናለን!',
+        soon:'ሰላም {name}፣ ከ{biz} ማስታወሻ፦ ለ{item} R{amount} (#{no}) እስከ {date} መከፈል አለበት። እናመሰግናለን!',
+        late:'{name}፣ ለ{biz} የ{item} R{amount} (#{no}) ክፍያ በ{days} ቀን ዘግይቷል። እባክዎ ዛሬ ይክፈሉ። እናመሰግናለን።',
+        receipt:'እናመሰግናለን {name}! ከ{biz} ደረሰኝ #{no}፦ ለ{item} R{amount} በ{date} ተቀብለናል። ✓ በAuvera ተረጋግጧል።'}
+  };
+  var METHODS=[
+    ['eft','Bank transfer (EFT)','I saw R{a} arrive in my own banking app. Not just a screenshot or SMS from the customer.','Checked in bank app'],
+    ['payshap','PayShap / instant EFT','I saw R{a} arrive in my own banking app.','Checked in bank app'],
+    ['card','Card (Yoco link or machine)','My Yoco app or card machine shows R{a} approved.','Approved on Yoco/card machine'],
+    ['cash','Cash','I counted R{a} in cash.','Cash counted'],
+    ['btc','Crypto: Bitcoin','The blockchain shows it confirmed, sent to my wallet, for the right amount.','Checked on blockchain'],
+    ['usdt','Crypto: USDT (Tron)','The blockchain shows it confirmed, sent to my wallet, for the right amount.','Checked on blockchain']
+  ];
+  var KEY='auvera-test-v2';
+  var $=function(id){return document.getElementById(id)};
+  function today(){var d=new Date();d.setHours(0,0,0,0);return d}
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function addDays(n){var d=today();d.setDate(d.getDate()+n);return iso(d)}
+  function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2])}
+  function daysFrom(s){return Math.round((parse(s)-today())/86400000)}
+  function fmtDate(s){var d=parse(s);return d.getDate()+'/'+(d.getMonth()+1)}
+  function money(n){return Math.round(n).toLocaleString('en-ZA').replace(/[, ]/g,' ')}
+  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+  function method(id){return METHODS.filter(function(m){return m[0]===id})[0]||METHODS[0]}
+  function langName(id){return (LANGS.filter(function(l){return l[0]===id})[0]||LANGS[0])[1]}
+  function explorer(m,tx){tx=(tx||'').trim();if(!tx)return '';return m==='btc'?'https://mempool.space/tx/'+encodeURIComponent(tx):(m==='usdt'?'https://tronscan.org/#/transaction/'+encodeURIComponent(tx):'')}
+
+  function sample(){return {biz:'',lang:'en',bank:'',link:'',next:1004,sales:[
+    {id:'s1',no:1001,name:'Mr Adeyemi',phone:'0721234567',item:'suit alterations',amount:2000,lang:'pcm',created:addDays(-12),due:addDays(-5),invoiceSent:true,paid:null,example:true},
+    {id:'s2',no:1002,name:'Lerato K.',phone:'0831234567',item:'wig install',amount:1400,lang:'en',created:addDays(-3),due:addDays(0),invoiceSent:true,paid:null,example:true},
+    {id:'s3',no:1003,name:'Mr Okafor',phone:'0611234567',item:'agbada',amount:2000,lang:'en',created:addDays(-1),due:addDays(-1),invoiceSent:true,paid:{method:'eft',tx:'',date:addDays(-1),receiptSent:true},example:true}
+  ]}}
+  var S;
+  try{var raw=localStorage.getItem(KEY);S=raw?JSON.parse(raw):sample()}catch(e){S=sample()}
+  if(!S||!Array.isArray(S.sales))S=sample();
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+  function payInfo(){var s='';if(S.bank)s+='\n\nEFT: '+S.bank;if(S.link)s+=(s?'\n':'\n\n')+'Pay by card: '+S.link;return s}
+  function msg(sale,kind){
+    var t=T[sale.lang]||T.en,n=daysFrom(sale.due);
+    var date=kind==='receipt'&&sale.paid?sale.paid.date:sale.due;
+    var out=t[kind].replace(/\{name\}/g,sale.name).replace(/\{biz\}/g,S.biz||'us').replace(/\{amount\}/g,money(sale.amount))
+      .replace(/\{item\}/g,sale.item||'your order').replace(/\{no\}/g,String(sale.no)).replace(/\{date\}/g,fmtDate(date)).replace(/\{days\}/g,String(-n));
+    if(kind!=='receipt')out+=payInfo();
+    return out;
+  }
+  function waNum(p){var s=(p||'').replace(/\D/g,'');if(s.charAt(0)==='0')s='27'+s.slice(1);return s}
+  function waHref(sale,kind){return 'https://wa.me/'+waNum(sale.phone)+'?text='+encodeURIComponent(msg(sale,kind))}
+  function toast(m){var t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){t.hidden=true},2800)}
+  var WA_ICON='<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>';
+
+  function waButton(sale,kind,label,cls,onSent){
+    var a=el('a','btn '+(cls||'wa'));a.href=waHref(sale,kind);a.target='_blank';a.rel='noopener';a.innerHTML=WA_ICON;a.appendChild(document.createTextNode(label));
+    a.addEventListener('click',function(){if(onSent)onSent()});
+    return a;
+  }
+  function previewBlock(sale,kind){
+    var d=el('details');var s=el('summary',null,'See message');s.style.cssText='cursor:pointer;font-size:13px;color:var(--muted);min-height:28px';d.appendChild(s);
+    var p=el('div','preview',msg(sale,kind));p.dir='auto';d.appendChild(p);
+    var c=el('button',null,'Copy message');c.type='button';c.style.marginTop='8px';
+    c.addEventListener('click',function(){var txt=msg(sale,kind);var pr=navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt):Promise.reject();pr.then(function(){toast('Message copied. Paste it in WhatsApp.')},function(){var r=document.createRange();r.selectNodeContents(p);var sel=getSelection();sel.removeAllRanges();sel.addRange(r);toast('Text selected. Copy it from here.')})});
+    d.appendChild(c);return d;
+  }
+
+  function buildConfirm(sale){
+    var box=el('div','confirm');var uid=sale.id;
+    box.appendChild(el('b',null,'Check the payment before you hand over goods'));
+    var f1=el('div','field');var l1=el('label',null,'How did they pay?');l1.htmlFor='m-'+uid;
+    var sel=el('select');sel.id='m-'+uid;METHODS.forEach(function(m){var o=el('option',null,m[1]);o.value=m[0];sel.appendChild(o)});
+    f1.appendChild(l1);f1.appendChild(sel);box.appendChild(f1);
+    var cw=el('div','field');var l2=el('label',null,'Transaction ID (ask the customer for it)');l2.htmlFor='tx-'+uid;
+    var tx=el('input');tx.id='tx-'+uid;tx.autocomplete='off';tx.placeholder='Paste the transaction ID';
+    var exp=el('a','btn','Check it on the blockchain');exp.target='_blank';exp.rel='noopener';
+    cw.appendChild(l2);cw.appendChild(tx);cw.appendChild(exp);box.appendChild(cw);
+    box.appendChild(el('div','warnbox','Fake proof of payment is common. Only confirm when you see the money yourself.'));
+    var lab=el('label','check');var cb=el('input');cb.type='checkbox';cb.id='cb-'+uid;var ct=el('span');lab.appendChild(cb);lab.appendChild(ct);box.appendChild(lab);
+    var ok=el('button','wa','Confirm payment');ok.type='button';box.appendChild(ok);
+    function sync(){var m=sel.value,c=(m==='btc'||m==='usdt');cw.hidden=!c;var l=explorer(m,tx.value);exp.hidden=!l;if(l)exp.href=l;ct.textContent=method(m)[2].replace('{a}',money(sale.amount));ok.disabled=!cb.checked||(c&&!tx.value.trim())}
+    sel.addEventListener('change',function(){cb.checked=false;sync()});tx.addEventListener('input',sync);cb.addEventListener('change',sync);sync();
+    ok.addEventListener('click',function(){sale.paid={method:sel.value,tx:tx.value.trim(),date:iso(today()),receiptSent:false};save();render();toast('Payment confirmed: R'+money(sale.amount)+' from '+sale.name+'. Send the receipt.')});
+    return box;
+  }
+
+  function statusChip(sale){
+    if(sale.paid)return el('span','chip ok','✓ Paid · '+method(sale.paid.method)[3]);
+    var n=daysFrom(sale.due);
+    if(n<0)return el('span','chip late',(-n)+(n===-1?' day late':' days late'));
+    if(n===0)return el('span','chip today','Due today');
+    return el('span','chip soon','Due '+fmtDate(sale.due));
+  }
+
+  function saleCard(sale,mode){
+    var paid=!!sale.paid,n=daysFrom(sale.due);
+    var card=el('article','sale'+(!paid&&n<0?' late':''));
+    var top=el('div','top');var who=el('div','who');var nm=el('b',null,sale.name);who.appendChild(nm);
+    who.appendChild(el('span',null,(sale.item||'Sale')+' · Invoice #'+sale.no+' · '+langName(sale.lang)));
+    top.appendChild(who);top.appendChild(el('span','amt','R'+money(sale.amount)));card.appendChild(top);
+    var chips=el('div','chips');chips.appendChild(statusChip(sale));if(sale.example)chips.appendChild(el('span','chip example','Example'));card.appendChild(chips);
+
+    var steps=el('div','steps');
+    [['Invoice sent',sale.invoiceSent],['Payment checked',paid],['Receipt sent',paid&&sale.paid.receiptSent]].forEach(function(s){steps.appendChild(el('div','step'+(s[1]?' done':''),(s[1]?'✓ ':'')+s[0]))});
+    card.appendChild(steps);
+
+    var actions=el('div','actions');
+    if(!paid){
+      if(!sale.invoiceSent){actions.appendChild(waButton(sale,'invoice','Send invoice',null,function(){sale.invoiceSent=true;save();setTimeout(render,400)}))}
+      else if(mode==='owed'||n<=0){actions.appendChild(waButton(sale,n<0?'late':'soon',n<0?'Send firm reminder':'Send reminder'))}
+      var chk=el('button','primary','Check payment');chk.type='button';actions.appendChild(chk);
+      card.appendChild(actions);
+      var cf=buildConfirm(sale);cf.hidden=true;card.appendChild(cf);
+      chk.addEventListener('click',function(){cf.hidden=!cf.hidden;chk.textContent=cf.hidden?'Check payment':'Close'});
+      card.appendChild(previewBlock(sale,!sale.invoiceSent?'invoice':(n<0?'late':'soon')));
+    }else{
+      if(!sale.paid.receiptSent){actions.appendChild(waButton(sale,'receipt','Send receipt',null,function(){sale.paid.receiptSent=true;save();setTimeout(render,400)}))}
+      var l=explorer(sale.paid.method,sale.paid.tx);if(l){var a=el('a','btn','View on blockchain');a.href=l;a.target='_blank';a.rel='noopener';actions.appendChild(a)}
+      if(actions.childNodes.length)card.appendChild(actions);
+      if(!sale.paid.receiptSent)card.appendChild(previewBlock(sale,'receipt'));
+    }
+    return card;
+  }
+
+  function render(){
+    var month=today().getMonth(),year=today().getFullYear(),rec=0,unpaid=0,late=0,dueToday=0;
+    S.sales.forEach(function(s){
+      if(s.paid){var d=parse(s.paid.date);if(d.getMonth()===month&&d.getFullYear()===year)rec+=s.amount}
+      else{unpaid+=s.amount;var n=daysFrom(s.due);if(n<0)late++;else if(n===0)dueToday++}
+    });
+    $('mReceived').textContent='R'+money(rec);$('mUnpaid').textContent='R'+money(unpaid);$('mLate').textContent=late;
+    var lb=$('lateBadge');lb.hidden=!late;lb.textContent=late;
+    var need=late+dueToday;$('alarm').hidden=!need;$('alarmText').textContent=need+(need===1?' customer needs':' customers need')+' a reminder today';
+    $('clearExamples').hidden=!S.sales.some(function(s){return s.example});
+
+    var recent=S.sales.slice().sort(function(a,b){return b.no-a.no}).slice(0,5),rl=$('recentList');rl.innerHTML='';
+    if(!recent.length)rl.appendChild(el('div','empty','No sales yet. Tap "New sale" to record your first one.'));
+    recent.forEach(function(s){rl.appendChild(saleCard(s,'home'))});
+
+    var owed=S.sales.filter(function(s){return !s.paid}).sort(function(a,b){return parse(a.due)-parse(b.due)}),ol=$('owedList');ol.innerHTML='';
+    if(!owed.length)ol.appendChild(el('div','empty','Nobody owes you money right now.'));
+    owed.forEach(function(s){ol.appendChild(saleCard(s,'owed'))});
+
+    var paid=S.sales.filter(function(s){return s.paid}).sort(function(a,b){return parse(b.paid.date)-parse(a.paid.date)||b.no-a.no}),pl=$('paidList');pl.innerHTML='';
+    if(!paid.length)pl.appendChild(el('div','empty','Payments you confirm will appear here.'));
+    paid.forEach(function(s){pl.appendChild(saleCard(s,'paid'))});
+  }
+
+  function go(tab){
+    ['home','sell','owed','paid'].forEach(function(t){$('tab-'+t).hidden=t!==tab;var b=$('t-'+t);if(t===tab)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+    window.scrollTo(0,0);
+    if(tab==='sell'){$('fDue').value=$('fDue').value||addDays(7);$('fLang').value=S.lang||'en'}
+  }
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(b)go(b.getAttribute('data-go'))});
+
+  function fillLangs(sel,v){sel.innerHTML='';LANGS.forEach(function(l){var o=el('option',null,l[1]);o.value=l[0];sel.appendChild(o)});sel.value=v||'en'}
+  fillLangs($('fLang'),S.lang);fillLangs($('sLang'),S.lang);
+  $('sBiz').value=S.biz||'';$('sBank').value=S.bank||'';$('sLink').value=S.link||'';
+  $('sBiz').addEventListener('input',function(e){S.biz=e.target.value.trim();save();render()});
+  $('sBank').addEventListener('input',function(e){S.bank=e.target.value.trim();save();render()});
+  $('sLink').addEventListener('input',function(e){S.link=e.target.value.trim();save();render()});
+  $('sLang').addEventListener('change',function(e){S.lang=e.target.value;save()});
+  $('clearExamples').addEventListener('click',function(){S.sales=S.sales.filter(function(s){return !s.example});save();render();toast('Example sales removed.')});
+
+  var later=false;
+  function setWhen(l){later=l;$('payNow').setAttribute('aria-pressed',String(!l));$('payLater').setAttribute('aria-pressed',String(l));$('dueWrap').hidden=!l;if(l&&!$('fDue').value)$('fDue').value=addDays(7)}
+  $('payNow').addEventListener('click',function(){setWhen(false)});$('payLater').addEventListener('click',function(){setWhen(true)});
+  $('saleForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=$('fName').value.trim(),amount=parseFloat(($('fAmount').value||'').replace(/[^\d.]/g,''));
+    if(!name||!(amount>0)){$('saleErr').hidden=false;return}
+    $('saleErr').hidden=true;
+    var sale={id:'s'+Date.now(),no:S.next||1001,name:name,phone:$('fPhone').value.trim(),item:$('fItem').value.trim(),amount:amount,lang:$('fLang').value,created:iso(today()),due:later&&$('fDue').value?$('fDue').value:iso(today()),invoiceSent:false,paid:null};
+    S.next=(S.next||1001)+1;S.sales.push(sale);save();e.target.reset();setWhen(false);render();go('home');
+    toast('Sale #'+sale.no+' saved. Send the invoice on WhatsApp.');
+    try{say({c:'saved',t:''})}catch(e){}
+  });
+
+  /* ---------- Voice: Amos's recorded clips, like Road Clear ---------- */
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  var RLANG={en:'en-ZA',pcm:'en-NG',ur:'ur-PK',bn:'bn-BD',so:'so-SO',sw:'sw-KE',am:'am-ET'};
+  // Recorded clips in the voice folder. Add more files with these names and they play automatically.
+  var CLIPS={talk:'voice/talk-now',nohear:'voice/no-hear',nomic:'voice/no-mic',okay:'voice/okay',
+    qname:'voice/q-name',qitem:'voice/q-item',qamount:'voice/q-amount',qwhen:'voice/q-when',saved:'voice/sale-saved'};
+  var EXT=['.m4a','.mp3'],clipExt={};
+  var VQ={
+    en:{qname:"What is the customer's name?",qitem:'What did they buy?',qamount:'How much, in rand?',qwhen:'When will they pay? Say now, or a day like Friday.',talk:'Talk now.',nohear:"I didn't hear you. Please say it again.",okay:'Okay.',nomic:'Allow the microphone for Auvera, then try again.',got:'Got it. Check the details, then tap Save.'},
+    pcm:{qname:'Wetin be the customer name?',qitem:'Wetin dem buy?',qamount:'How much, for rand?',qwhen:'When dem go pay? Talk now now, or one day like Friday.',talk:'Talk now.',nohear:'I no hear you. Talk am again.',okay:'Okay.',nomic:'Allow microphone for Auvera, then try again.',got:'I don get am. Check am well, then tap Save.'},
+    ur:{qname:'گاہک کا نام کیا ہے؟',qitem:'انہوں نے کیا خریدا؟',qamount:'کتنے رینڈ؟',qwhen:'وہ کب ادائیگی کریں گے؟ ابھی کہیں، یا کوئی دن جیسے جمعہ۔',talk:'اب بولیں۔',nohear:'میں سن نہیں سکا۔ براہ کرم دوبارہ کہیں۔',okay:'ٹھیک ہے۔',nomic:'Auvera کے لیے مائیکروفون کی اجازت دیں، پھر دوبارہ کوشش کریں۔',got:'سمجھ گیا۔ تفصیلات دیکھیں، پھر Save دبائیں۔'},
+    bn:{qname:'গ্রাহকের নাম কী?',qitem:'তিনি কী কিনেছেন?',qamount:'কত র‍্যান্ড?',qwhen:'কবে টাকা দেবেন? এখন বলুন, অথবা একটি দিন যেমন শুক্রবার।',talk:'এখন বলুন।',nohear:'আমি শুনতে পাইনি। আবার বলুন।',okay:'ঠিক আছে।',nomic:'Auvera-কে মাইক্রোফোনের অনুমতি দিন, তারপর আবার চেষ্টা করুন।',got:'বুঝেছি। বিবরণ দেখুন, তারপর Save চাপুন।'},
+    so:{qname:'Magaca macmiilka waa maxay?',qitem:'Maxay iibsadeen?',qamount:'Imisa rand?',qwhen:'Goorma ayay bixin doonaan? Dheh hadda, ama maalin sida Jimcaha.',talk:'Hadda hadal.',nohear:'Ma maqlin. Fadlan ku celi.',okay:'Hagaag.',nomic:'U oggolow makarafoonka Auvera, kadibna mar kale isku day.',got:'Waan helay. Hubi faahfaahinta, kadib taabo Save.'},
+    sw:{qname:'Jina la mteja ni nani?',qitem:'Wamenunua nini?',qamount:'Kiasi gani, kwa randi?',qwhen:'Watalipa lini? Sema sasa, au siku kama Ijumaa.',talk:'Ongea sasa.',nohear:'Sikukusikia. Tafadhali sema tena.',okay:'Sawa.',nomic:'Ruhusu maikrofoni kwa Auvera, kisha jaribu tena.',got:'Nimepata. Angalia maelezo, kisha bonyeza Save.'},
+    am:{qname:'የደንበኛው ስም ማን ነው?',qitem:'ምን ገዙ?',qamount:'ስንት ራንድ?',qwhen:'መቼ ይከፍላሉ? አሁን ይበሉ፣ ወይም እንደ አርብ ያለ ቀን።',talk:'አሁን ይናገሩ።',nohear:'አልሰማሁዎትም። እባክዎ እንደገና ይበሉ።',okay:'እሺ።',nomic:'ለAuvera ማይክሮፎን ይፍቀዱ፣ ከዚያ እንደገና ይሞክሩ።',got:'ገባኝ። ዝርዝሩን ያረጋግጡ፣ ከዚያ Save ይጫኑ።'}
+  };
+  function ui(){return VQ[S.ui]?S.ui:'en'}
+  function vq(k){return (VQ[ui()]||VQ.en)[k]||VQ.en[k]}
+  // English and Pidgin use Amos's clips in the voice folder; other languages use voice/<code>/ recorded by a native speaker
+  function clipBase(k){var L=ui();return (L==='en'||L==='pcm')?CLIPS[k]:CLIPS[k].replace('voice/','voice/'+L+'/')}
+  var missing={};
+  function playClip(k){return new Promise(function(res){
+    var mk=ui()+':'+k;if(!CLIPS[k]||missing[mk])return res(false);
+    var done=false;function fin(ok){if(!done){done=true;res(ok)}}
+    var tries=clipExt[mk]?[clipExt[mk]]:EXT.slice(),i=0,base=clipBase(k);
+    function next(){if(i>=tries.length){missing[mk]=true;return fin(false)}var ext=tries[i++];
+      try{var a=new Audio(base+ext);a.onended=function(){clipExt[mk]=ext;fin(true)};a.onerror=function(){next()};
+        var pr=a.play();if(pr&&pr.then)pr.then(function(){clipExt[mk]=ext},function(){next()})}catch(e){next()}}
+    next();setTimeout(function(){fin(true)},15000);
+  })}
+  var bestVoice=null;
+  function pickVoice(){try{var vs=speechSynthesis.getVoices().filter(function(v){return /^en/i.test(v.lang)});if(!vs.length)return;
+    function sc(v){var n=v.name.toLowerCase(),s=0;if(/natural|neural|premium|enhanced|online/.test(n))s+=50;if(/google/.test(n))s+=20;if(/en[-_](ng|za)/i.test(v.lang))s+=15;if(/daniel|arthur|oliver|male/.test(n))s+=10;if(/compact|espeak/.test(n))s-=40;return s}
+    vs.sort(function(a,b){return sc(b)-sc(a)});bestVoice=vs[0]}catch(e){}}
+  try{if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}}catch(e){}
+  function tts(text){return new Promise(function(res){var done=false;function fin(){if(!done){done=true;res()}}
+    if(!S.robot||!text)return setTimeout(fin,Math.min(2000,400+String(text||'').length*20));
+    try{speechSynthesis.cancel();if(!bestVoice)pickVoice();var u=new SpeechSynthesisUtterance(text);var L=ui();if(L==='en'||L==='pcm'){if(bestVoice){u.voice=bestVoice;u.lang=bestVoice.lang}else u.lang='en-ZA'}else{u.lang=RLANG[L];try{var lv=speechSynthesis.getVoices().filter(function(v){return v.lang.replace('_','-').toLowerCase().indexOf(L)===0})[0];if(lv)u.voice=lv}catch(e){}}u.rate=0.95;u.onend=fin;u.onerror=fin;speechSynthesis.speak(u);setTimeout(fin,2500+text.length*95)}catch(e){fin()}})}
+  // say([{c:'clip',t:'text'}, 'text']): plays your clip where it exists; otherwise the phone voice only if switched on in Settings
+  async function say(parts){if(!Array.isArray(parts))parts=[parts];
+    for(var i=0;i<parts.length;i++){var p=parts[i];
+      if(typeof p!=='string'&&p.c){var ok=await playClip(p.c);if(!ok&&p.t)await tts(p.t)}
+      else await tts(typeof p==='string'?p:p.t)}}
+  function listen(lang){return new Promise(function(res,rej){try{var r=new SR();r.lang=lang;r.interimResults=false;r.maxAlternatives=1;var got=false;r.onresult=function(e){got=true;res(e.results[0][0].transcript)};r.onerror=function(e){if(!got)rej(e.error||'error')};r.onend=function(){if(!got)rej('no-speech')};r.start()}catch(e){rej('unavailable')}})}
+  var SMALL={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60,seventy:70,eighty:80,ninety:90};
+  function toAmount(t){
+    var d=t.replace(/[,\s](?=\d{3}\b)/g,'').match(/\d+(?:\.\d+)?/);if(d)return parseFloat(d[0]);
+    var total=0,cur=0,any=false;t.toLowerCase().replace(/-/g,' ').split(/\s+/).forEach(function(w){
+      if(w==='a'&&!any){cur=1;return}
+      if(SMALL[w]!=null){cur+=SMALL[w];any=true}else if(w==='hundred'){cur=(cur||1)*100;any=true}else if(w==='thousand'){total+=(cur||1)*1000;cur=0;any=true}});
+    return any?total+cur:NaN;
+  }
+  var DAYS=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+  function toWhen(t){
+    t=t.toLowerCase();
+    if(/\b(now|today|cash|paid|paying|hadda|maanta|sasa|leo)\b/.test(t)||/ابھی|آج|এখন|আজ|አሁን|ዛሬ/.test(t))return null;
+    if(/tomorrow|tomorro|tumoro|berri|kesho/.test(t)||/کل|আগামীকাল|কাল|ነገ/.test(t))return addDays(1);
+    if(/next week/.test(t))return addDays(7);
+    if(/month end|end of (the )?month/.test(t)){var d=today();return iso(new Date(d.getFullYear(),d.getMonth()+1,0))}
+    for(var i=0;i<7;i++){if(t.indexOf(DAYS[i])>-1){var diff=(i-today().getDay()+7)%7||7;return addDays(diff)}}
+    var n=toAmount(t);if(n>0&&/day/.test(t))return addDays(Math.round(n));
+    return addDays(7);
+  }
+  function vstatus(m){var v=$('voiceStatus');v.textContent=m;v.style.fontSize='16px';v.style.fontWeight='600';v.style.color='var(--fg)'}
+  var busy=false;
+  $('voiceBtn').addEventListener('click',async function(){
+    if(busy)return;
+    if(!SR){vstatus('Voice no dey work for this browser. Open Auvera in Chrome, or tap the microphone on your phone keyboard and talk into any box.');return}
+    busy=true;var btn=$('voiceBtn');btn.setAttribute('aria-busy','true');$('voiceLabel').textContent='Listening… answer each question';
+    var lang=RLANG[ui()]||'en-ZA';
+    var Q=[['fName','qname',vq('qname'),lang],['fItem','qitem',vq('qitem'),lang],['fAmount','qamount',vq('qamount'),lang],['when','qwhen',vq('qwhen'),lang]];
+    try{
+      for(var i=0;i<Q.length;i++){
+        var q=Q[i];vstatus(q[2]);await say([{c:q[1],t:q[2]},{c:'talk',t:vq('talk')}]);vstatus(q[2]+' '+vq('talk'));
+        var heard;
+        try{heard=await listen(q[3])}catch(err){
+          if(err==='not-allowed'||err==='service-not-allowed'){vstatus(vq('nomic'));await say({c:'nomic',t:vq('nomic')});throw err}
+          vstatus(vq('nohear')+' '+q[2]);await say([{c:'nohear',t:vq('nohear')},{c:'talk',t:vq('talk')}]);heard=await listen(q[3]);
+        }
+        if(q[0]==='fAmount'){var a=toAmount(heard);if(a>0)$('fAmount').value=String(a);else vstatus('Heard "'+heard+'". Please type the amount.')}
+        else if(q[0]==='when'){var w=toWhen(heard);if(w){setWhen(true);$('fDue').value=w}else setWhen(false)}
+        else $(q[0]).value=heard.trim().replace(/^./,function(c){return c.toUpperCase()});
+      }
+      var amt=parseFloat($('fAmount').value)||0;
+      var sum=$('fName').value+', '+($('fItem').value||'sale')+', R'+money(amt)+', '+(later?'due '+fmtDate($('fDue').value):'paying now')+'.';
+      vstatus(sum+' '+vq('got'));await say({c:'okay',t:vq('okay')});
+    }catch(e){if(e!=='not-allowed'&&e!=='service-not-allowed')vstatus('Voice stopped. Tap the microphone to try again, or type the rest.')}
+    finally{busy=false;btn.removeAttribute('aria-busy');$('voiceLabel').textContent='Speak the sale instead of typing'}
+  });
+  $('readBtn').addEventListener('click',function(){
+    var month=today().getMonth(),year=today().getFullYear(),rec=0,unpaid=0,lates=[];
+    S.sales.forEach(function(s){if(s.paid){var d=parse(s.paid.date);if(d.getMonth()===month&&d.getFullYear()===year)rec+=s.amount}else{unpaid+=s.amount;var n=daysFrom(s.due);if(n<0)lates.push(s.name+' owes R'+money(s.amount)+', '+(-n)+' days late')}});
+    var t='This month you received R'+money(rec)+'. Customers still owe you R'+money(unpaid)+'.'+(lates.length?' Late: '+lates.join('. ')+'.':' Nobody is late.');
+    var box=$('readOut');box.textContent=t;box.hidden=false;
+    if(S.robot)tts(t);
+  });
+  fillLangs($('sUi'),S.ui||'en');$('sUi').addEventListener('change',function(e){S.ui=e.target.value;save()});
+  $('sRobot').checked=!!S.robot;
+  $('sRobot').addEventListener('change',function(e){S.robot=e.target.checked;save()});
+
+  function applyLarge(){document.documentElement.classList.toggle('large',!!S.large);$('sLarge').checked=!!S.large}
+  $('sLarge').addEventListener('change',function(e){S.large=e.target.checked;save();applyLarge()});
+  applyLarge();
+
+  setWhen(false);render();
+})();
+</script>
+
+</body>
+</html>
