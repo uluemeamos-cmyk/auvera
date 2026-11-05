@@ -1,398 +1,379 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2580
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 LucidaGrande;\f2\fnil\fcharset0 Menlo-Regular;
-\f3\fnil\fcharset178 GeezaPro;\f4\fnil\fcharset77 KohinoorBangla-Regular;\f5\fnil\fcharset0 Kefa-Regular;
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B1626">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Auvera™">
+<title>Auvera™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --navy:#0B1626; --navy-2:#13233A; --navy-line:#24364F; --on-navy:#F4EFE3; --on-navy-muted:#B9B1A0;
+  --gold:#C9A227; --gold-soft:#E2C15A; --gold-ink:#0B1626;
+  --bg:#F6F3EC; --surface:#FFFFFF; --line:#E4DDCC; --fg:#0B1626; --muted:#5A6271; --soft:#F0EBDF;
+  --ok:#1C7A5A; --ok-ink:#FFFFFF; --ok-bg:#E2F2EB; --warn:#875800; --warn-bg:#FBEFD2; --bad:#A3271D; --bad-bg:#F9E0DC;
+  --shadow:0 1px 2px rgba(11,22,38,.06),0 6px 18px rgba(11,22,38,.06);
+  --display:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --body:Inter, 'Noto Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
 }
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --navy:#060D18; --navy-2:#0E1A2C; --navy-line:#22344C; --on-navy:#F4EFE3; --on-navy-muted:#B9B1A0;
+  --gold:#D4B13C; --gold-soft:#E7C863; --gold-ink:#0B1626;
+  --bg:#0A1320; --surface:#111E31; --line:#25374F; --fg:#F1ECDF; --muted:#A8B0BE; --soft:#17263B;
+  --ok:#5CC79F; --ok-ink:#06231A; --ok-bg:#12352B; --warn:#F0C25C; --warn-bg:#3A2E10; --bad:#F28B80; --bad-bg:#3D1A17;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --navy:#060D18; --navy-2:#0E1A2C; --navy-line:#22344C; --on-navy:#F4EFE3; --on-navy-muted:#B9B1A0;
+  --gold:#D4B13C; --gold-soft:#E7C863; --gold-ink:#0B1626;
+  --bg:#0A1320; --surface:#111E31; --line:#25374F; --fg:#F1ECDF; --muted:#A8B0BE; --soft:#17263B;
+  --ok:#5CC79F; --ok-ink:#06231A; --ok-bg:#12352B; --warn:#F0C25C; --warn-bg:#3A2E10; --bad:#F28B80; --bad-bg:#3D1A17;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
+  color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg);margin:0}
+body{color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45;padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
+html.large body{zoom:1.18}
+[hidden]{display:none!important}
+img{max-width:100%}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+button,.btn{font-family:inherit;font-size:16px;font-weight:600;min-height:52px;padding:0 18px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;text-align:center;line-height:1.2}
+button:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.gold{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.navy{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+.wa{background:var(--ok);color:var(--ok-ink);border-color:var(--ok)}
+.ghost{background:transparent;border-color:transparent;color:var(--muted)}
+.full{width:100%}
+svg{flex:none}
 
-\f0\fs24 \cf0 <!doctype html>\
-<html lang="en">\
-<head>\
-<meta charset="utf-8">\
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\
-<meta name="theme-color" content="#0B1626">\
-<link rel="manifest" href="manifest.json">\
-<link rel="icon" href="icon-192.png">\
-<link rel="apple-touch-icon" href="icon-192.png">\
-<meta name="apple-mobile-web-app-capable" content="yes">\
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\
-<meta name="apple-mobile-web-app-title" content="Auvera\'99">\
-<title>Auvera\'99</title>\
-<link rel="preconnect" href="https://fonts.googleapis.com">\
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">\
-<style>\
-:root\{\
-  --navy:#0B1626; --navy-2:#13233A; --navy-line:#24364F; --on-navy:#F4EFE3; --on-navy-muted:#B9B1A0;\
-  --gold:#C9A227; --gold-soft:#E2C15A; --gold-ink:#0B1626;\
-  --bg:#F6F3EC; --surface:#FFFFFF; --line:#E4DDCC; --fg:#0B1626; --muted:#5A6271; --soft:#F0EBDF;\
-  --ok:#1C7A5A; --ok-ink:#FFFFFF; --ok-bg:#E2F2EB; --warn:#875800; --warn-bg:#FBEFD2; --bad:#A3271D; --bad-bg:#F9E0DC;\
-  --shadow:0 1px 2px rgba(11,22,38,.06),0 6px 18px rgba(11,22,38,.06);\
-  --display:'Cormorant Garamond', Georgia, 'Times New Roman', serif;\
-  --body:Inter, 'Noto Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;\
-  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)\
-\}\
-@media (prefers-color-scheme: dark)\{:root:not([data-theme="light"])\{\
-  --navy:#060D18; --navy-2:#0E1A2C; --navy-line:#22344C; --on-navy:#F4EFE3; --on-navy-muted:#B9B1A0;\
-  --gold:#D4B13C; --gold-soft:#E7C863; --gold-ink:#0B1626;\
-  --bg:#0A1320; --surface:#111E31; --line:#25374F; --fg:#F1ECDF; --muted:#A8B0BE; --soft:#17263B;\
-  --ok:#5CC79F; --ok-ink:#06231A; --ok-bg:#12352B; --warn:#F0C25C; --warn-bg:#3A2E10; --bad:#F28B80; --bad-bg:#3D1A17;\
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);\
-  color-scheme:dark\}\}\
-:root[data-theme="dark"]\{\
-  --navy:#060D18; --navy-2:#0E1A2C; --navy-line:#22344C; --on-navy:#F4EFE3; --on-navy-muted:#B9B1A0;\
-  --gold:#D4B13C; --gold-soft:#E7C863; --gold-ink:#0B1626;\
-  --bg:#0A1320; --surface:#111E31; --line:#25374F; --fg:#F1ECDF; --muted:#A8B0BE; --soft:#17263B;\
-  --ok:#5CC79F; --ok-ink:#06231A; --ok-bg:#12352B; --warn:#F0C25C; --warn-bg:#3A2E10; --bad:#F28B80; --bad-bg:#3D1A17;\
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);\
-  color-scheme:dark\}\
-*\{box-sizing:border-box\}\
-html,body\{background:var(--bg);margin:0\}\
-body\{color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45;padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))\}\
-html.large body\{zoom:1.18\}\
-[hidden]\{display:none!important\}\
-img\{max-width:100%\}\
-.wrap\{max-width:560px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))\}\
-button,.btn\{font-family:inherit;font-size:16px;font-weight:600;min-height:52px;padding:0 18px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;text-align:center;line-height:1.2\}\
-button:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible\{outline:3px solid var(--gold);outline-offset:2px\}\
-button:disabled\{opacity:.45;cursor:not-allowed\}\
-.gold\{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)\}\
-.navy\{background:var(--navy);color:var(--on-navy);border-color:var(--navy)\}\
-.wa\{background:var(--ok);color:var(--ok-ink);border-color:var(--ok)\}\
-.ghost\{background:transparent;border-color:transparent;color:var(--muted)\}\
-.full\{width:100%\}\
-svg\{flex:none\}\
-\
-.tile\{width:34px;height:34px;border:2px solid var(--gold);border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px;color:var(--gold);flex:none\}\
-.word\{font-family:var(--display);font-size:26px;font-weight:600;letter-spacing:.01em\}\
-.tm\{font-family:var(--body);font-size:10px;font-weight:600;vertical-align:super;margin-inline-start:2px;color:var(--gold)\}\
-\
-.top\{background:var(--navy);color:var(--on-navy);border-radius:0 0 26px 26px\}\
-.top .wrap\{padding-block:16px 20px;display:flex;flex-direction:column;gap:16px\}\
-.bar\{display:flex;align-items:center;justify-content:space-between;gap:12px\}\
-.mark\{display:flex;align-items:center;gap:10px\}\
-.iconbtn\{width:48px;height:48px;min-height:48px;padding:0;border-radius:24px;background:transparent;border:1px solid var(--navy-line);color:var(--on-navy)\}\
-.card\{position:relative;border-radius:20px;padding:20px 20px 16px;border:1px solid rgba(201,162,39,.45);background:repeating-linear-gradient(135deg, rgba(201,162,39,.07) 0 1px, transparent 1px 10px), var(--navy-2);display:flex;flex-direction:column;gap:14px;overflow:hidden\}\
-.card-label\{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-navy-muted)\}\
-.big\{font-family:var(--display);font-size:46px;font-weight:600;line-height:1;color:var(--on-navy);font-variant-numeric:lining-nums tabular-nums\}\
-.crow\{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;border-top:1px solid rgba(201,162,39,.25);padding-top:12px\}\
-.crow div\{display:flex;flex-direction:column;gap:2px;min-width:0\}\
-.crow span\{font-size:13px;color:var(--on-navy-muted)\}\
-.crow b\{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere\}\
-.crow .owed\{color:var(--gold-soft)\}\
-.cfoot\{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--on-navy-muted);letter-spacing:.04em\}\
-.cfoot .biz\{overflow:hidden;text-overflow:ellipsis;white-space:nowrap\}\
-\
-main.wrap\{padding-block:18px 28px;display:flex;flex-direction:column;gap:18px\}\
-.panel\{display:flex;flex-direction:column;gap:16px\}\
-h1,h2\{margin:0;text-wrap:balance\}\
-h1\{font-family:var(--display);font-size:32px;font-weight:600;line-height:1.1\}\
-h2\{font-size:18px;font-weight:600\}\
-.sub\{margin:0;font-size:14px;color:var(--muted)\}\
-\
-.alarm\{background:var(--surface);border:2px solid var(--gold);border-radius:18px;padding:14px 16px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)\}\
-.alarm .bell\{width:44px;height:44px;border-radius:22px;background:var(--gold);color:var(--gold-ink);display:flex;align-items:center;justify-content:center;flex:none\}\
-.alarm strong\{display:block;font-size:16px\}\
-.alarm div\{flex:1;min-width:0\}\
-.alarm button\{min-height:44px;font-size:14px;padding:0 14px\}\
-\
-.tiles\{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px\}\
-.qt\{flex-direction:column;align-items:flex-start;justify-content:space-between;gap:14px;min-height:112px;padding:16px;border-radius:18px;text-align:start;box-shadow:var(--shadow);font-size:16px\}\
-.qt .ic\{width:44px;height:44px;border-radius:22px;background:var(--soft);color:var(--fg);display:flex;align-items:center;justify-content:center\}\
-.qt.navy .ic\{background:var(--gold);color:var(--gold-ink)\}\
-.readout\{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;font-size:18px;font-weight:600;line-height:1.5;box-shadow:var(--shadow)\}\
-\
-.list\{display:flex;flex-direction:column;gap:12px\}\
-.sale\{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)\}\
-.sale.late\{border-color:var(--bad)\}\
-.srow\{display:flex;gap:12px;align-items:center\}\
-.av\{width:44px;height:44px;border-radius:22px;background:var(--navy);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex:none;letter-spacing:.02em\}\
-.who\{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1\}\
-.who b\{font-size:17px;overflow-wrap:anywhere\}\
-.who span\{font-size:13px;color:var(--muted);overflow-wrap:anywhere\}\
-.amt\{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap\}\
-.chips\{display:flex;gap:6px;flex-wrap:wrap;align-items:center\}\
-.chip\{font-size:13px;font-weight:600;padding:5px 10px;border-radius:20px;white-space:nowrap\}\
-.chip.late\{color:var(--bad);background:var(--bad-bg)\}\
-.chip.today\{color:var(--warn);background:var(--warn-bg)\}\
-.chip.soon,.chip.example\{color:var(--muted);background:var(--soft)\}\
-.chip.ok\{color:var(--ok);background:var(--ok-bg)\}\
-.track\{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px\}\
-.step\{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted);min-width:0\}\
-.step i\{width:18px;height:18px;border-radius:9px;border:2px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:11px\}\
-.step.done\{color:var(--ok)\}\
-.step.done i\{background:var(--ok);border-color:var(--ok);color:var(--ok-ink)\}\
-.step span\{overflow:hidden;text-overflow:ellipsis;white-space:nowrap\}\
-.actions\{display:flex;gap:8px;flex-wrap:wrap\}\
-.actions > *\{flex:1 1 150px\}\
-.confirm\{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px\}\
-.check\{display:flex;gap:12px;align-items:flex-start;font-size:15px;cursor:pointer\}\
-.check input\{width:24px;height:24px;flex:none;margin-top:1px;accent-color:var(--ok)\}\
-.warnbox\{font-size:14px;color:var(--warn);background:var(--warn-bg);border-radius:12px;padding:10px 12px\}\
-.preview\{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere\}\
-details.msg summary\{cursor:pointer;font-size:14px;color:var(--muted);min-height:32px;display:flex;align-items:center\}\
-.empty\{text-align:center;color:var(--muted);padding:26px 14px;border:1px dashed var(--line);border-radius:18px;font-size:15px\}\
-\
-.form\{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)\}\
-.field\{display:flex;flex-direction:column;gap:6px;min-width:0\}\
-.field label,.legend\{font-size:14px;font-weight:600;color:var(--muted)\}\
-input,select\{font-family:inherit;font-size:17px;height:52px;border:1px solid var(--line);border-radius:12px;padding:0 14px;background:var(--bg);color:var(--fg);width:100%\}\
-.two\{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px\}\
-.seg\{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px\}\
-.seg button[aria-pressed="true"]\{background:var(--navy);color:var(--on-navy);border-color:var(--navy)\}\
-.mic\{min-height:64px;font-size:17px;border:2px solid var(--gold);background:var(--surface)\}\
-.mic .ic\{width:40px;height:40px;border-radius:20px;background:var(--gold);color:var(--gold-ink);display:flex;align-items:center;justify-content:center\}\
-.mic[aria-busy="true"]\{background:var(--gold);color:var(--gold-ink)\}\
-.mic[aria-busy="true"] .ic\{background:var(--navy);color:var(--gold-soft)\}\
-.vstatus\{margin:0;font-size:17px;font-weight:600;min-height:1.4em\}\
-.err\{font-size:14px;color:var(--bad);margin:0\}\
-.setrow\{display:flex;flex-direction:column;gap:14px\}\
-\
-.tabs\{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom, 0px);box-shadow:0 -4px 16px rgba(11,22,38,.05)\}\
-.tabs .wrap\{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding-block:6px\}\
-.tabs button\{flex-direction:column;gap:3px;font-size:12px;font-weight:600;border:none;background:transparent;color:var(--muted);min-height:60px;padding:4px 2px;border-radius:14px;position:relative\}\
-.tabs button[aria-current="page"]\{color:var(--fg)\}\
-.tabs button[aria-current="page"]::before\{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:2px;background:var(--gold)\}\
-.tabs .badge\{position:absolute;top:6px;inset-inline-end:calc(50% - 22px);font-size:11px;background:var(--bad);color:#FFFFFF;border-radius:9px;min-width:18px;height:18px;padding:0 5px;display:flex;align-items:center;justify-content:center\}\
-.toast\{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom, 0px));background:var(--navy);color:var(--on-navy);padding:12px 18px;border-radius:14px;font-size:15px;z-index:30;max-width:calc(100% - 32px);box-shadow:var(--shadow)\}\
-.foot\{font-size:13px;color:var(--muted);text-align:center;margin:0\}\
-\
-.ob\{position:fixed;inset:0;z-index:40;background:var(--navy);color:var(--on-navy);overflow-y:auto\}\
-.ob .wrap\{min-height:100%;padding-block:calc(28px + env(safe-area-inset-top, 0px)) calc(28px + env(safe-area-inset-bottom, 0px));display:flex;flex-direction:column;gap:22px\}\
-.ob h1\{font-size:34px;color:var(--on-navy)\}\
-.ob p\{margin:0;color:var(--on-navy-muted);font-size:16px\}\
-.ob .brandbig\{display:flex;align-items:center;gap:12px\}\
-.ob .brandbig .tile\{width:48px;height:48px;font-size:28px\}\
-.ob .brandbig .word\{font-size:36px\}\
-.ob .tag\{font-family:var(--display);font-size:22px;color:var(--gold-soft);font-style:italic\}\
-.ob section\{display:flex;flex-direction:column;gap:16px\}\
-.langs\{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px\}\
-.langs button\{background:var(--navy-2);color:var(--on-navy);border:1px solid var(--navy-line);min-height:60px;font-size:18px;justify-content:flex-start;padding:0 16px\}\
-.langs button[aria-pressed="true"]\{border:2px solid var(--gold);color:var(--gold-soft)\}\
-.ob input\{background:var(--navy-2);color:var(--on-navy);border-color:var(--navy-line)\}\
-.ob label\{font-size:14px;font-weight:600;color:var(--on-navy-muted)\}\
-.ob .nav\{display:flex;gap:10px;margin-top:auto\}\
-.ob .nav > *\{flex:1\}\
-.ob .ghost\{color:var(--on-navy-muted)\}\
-.dots\{display:flex;gap:8px;justify-content:center\}\
-.dots i\{width:8px;height:8px;border-radius:4px;background:var(--navy-line)\}\
-.dots i.on\{background:var(--gold);width:22px\}\
-.promise\{display:flex;flex-direction:column;gap:10px\}\
-.promise div\{display:flex;gap:12px;align-items:center;font-size:16px;color:var(--on-navy)\}\
-.promise b\{width:36px;height:36px;border-radius:18px;background:var(--navy-2);border:1px solid rgba(201,162,39,.5);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;flex:none\}\
-@media (max-width:370px)\{.two\{grid-template-columns:1fr\}.big\{font-size:40px\}\}\
-@media (prefers-reduced-motion: no-preference)\{.qt,.tabs button\{transition:transform .12s\}.qt:active\{transform:scale(.98)\}\}\
-</style>\
-</head>\
-<body>\
-\
-<!-- WELCOME -->\
-<div class="ob" id="ob" hidden>\
-  <div class="wrap">\
-    <div class="brandbig"><div class="tile" aria-hidden="true">Au</div><span class="word">Auvera<span class="tm">\'99</span></span></div>\
-    <p class="tag" data-t="tagline"></p>\
-    <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>\
-    <section id="ob1"><h1 data-t="chooseLang"></h1><div class="langs" id="obLangs"></div></section>\
-    <section id="ob2" hidden>\
-      <h1 data-t="obBiz"></h1><p data-t="obBizHint"></p>\
-      <label for="obBizIn" data-t="bizName"></label><input id="obBizIn" autocomplete="organization">\
-    </section>\
-    <section id="ob3" hidden>\
-      <h1 data-t="obPay"></h1><p data-t="obPayHint"></p>\
-      <label for="obBank" data-t="bank"></label><input id="obBank" placeholder="Capitec 1234567890">\
-      <label for="obLink" data-t="cardLink"></label><input id="obLink" inputmode="url">\
-    </section>\
-    <section id="ob4" hidden>\
-      <h1 data-t="obReady"></h1><p data-t="obReadyHint"></p>\
-      <div class="promise">\
-        <div><b aria-hidden="true">
-\f1 \uc0\u10003 
-\f0 </b><span data-t="h_bank"></span></div>\
-        <div><b aria-hidden="true">R</b><span data-t="whoOwes"></span></div>\
-        <div><b aria-hidden="true">
-\f2 \uc0\u9993 
-\f0 </b><span data-t="sendReminder"></span></div>\
-      </div>\
-      <button type="button" class="gold full" id="obFresh" data-t="startFresh"></button>\
-      <button type="button" class="ghost full" id="obEx" data-t="tryEx"></button>\
-    </section>\
-    <div class="nav" id="obNav" hidden><button type="button" class="ghost" id="obBack" data-t="back"></button><button type="button" class="gold" id="obNext" data-t="next"></button></div>\
-  </div>\
-</div>\
-\
-<!-- APP -->\
-<header class="top">\
-  <div class="wrap">\
-    <div class="bar">\
-      <div class="mark"><div class="tile" aria-hidden="true">Au</div><span class="word">Auvera<span class="tm">\'99</span></span></div>\
-      <button type="button" class="iconbtn" id="gear" data-go="settings" data-tlabel="settings"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>\
-    </div>\
-    <div class="card" id="balance">\
-      <div class="card-label" data-t="received"></div>\
-      <div class="big" id="mReceived"></div>\
-      <div class="crow">\
-        <div><span data-t="owed"></span><b class="owed" id="mUnpaid"></b></div>\
-        <div><span data-t="late"></span><b id="mLate"></b></div>\
-      </div>\
-      <div class="cfoot"><span class="biz" id="bizLine"></span><span>
-\f1 \uc0\u10003 
-\f0  AUVERA</span></div>\
-    </div>\
-  </div>\
-</header>\
-\
-<main class="wrap">\
-  <section class="panel" id="p-home">\
-    <div class="alarm" id="alarm" hidden>\
-      <span class="bell" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></span>\
-      <div><strong id="alarmText"></strong></div>\
-      <button type="button" class="gold" data-go="owed" data-t="remindThem"></button>\
-    </div>\
-    <div class="tiles">\
-      <button type="button" class="qt navy" data-go="sell"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span><span data-t="newSale"></span></button>\
-      <button type="button" class="qt" id="tileVoice"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v5"></path></svg></span><span data-t="speakSale"></span></button>\
-      <button type="button" class="qt" data-go="owed"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span><span data-t="whoOwes"></span></button>\
-      <button type="button" class="qt" id="readBtn"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg></span><span data-t="readMoney"></span></button>\
-    </div>\
-    <div class="readout" id="readOut" aria-live="polite" dir="auto" hidden></div>\
-    <h2 data-t="recent"></h2>\
-    <div class="list" id="recentList"></div>\
-  </section>\
-\
-  <section class="panel" id="p-sell" hidden>\
-    <h1 data-t="newSale"></h1>\
-    <form class="form" id="saleForm" novalidate>\
-      <button type="button" class="mic full" id="voiceBtn"><span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v5"></path></svg></span><span id="voiceLabel" data-t="speakSale"></span></button>\
-      <p class="vstatus" id="voiceStatus" dir="auto" aria-live="polite" data-t="speakHint"></p>\
-      <div class="field"><label for="fName" data-t="customer"></label><input id="fName" autocomplete="off" dir="auto"></div>\
-      <div class="two">\
-        <div class="field"><label for="fAmount" data-t="amount"></label><input id="fAmount" inputmode="decimal" placeholder="2000"></div>\
-        <div class="field"><label for="fPhone" data-t="phone"></label><input id="fPhone" inputmode="tel" placeholder="072 123 4567"></div>\
-      </div>\
-      <div class="field"><label for="fItem" data-t="item"></label><input id="fItem" dir="auto"></div>\
-      <div class="field"><span class="legend" id="whenLbl" data-t="whenPay"></span>\
-        <div class="seg" role="group" aria-labelledby="whenLbl">\
-          <button type="button" id="payNow" aria-pressed="true" data-t="payNow"></button>\
-          <button type="button" id="payLater" aria-pressed="false" data-t="payLater"></button>\
-        </div>\
-      </div>\
-      <div class="field" id="dueWrap" hidden><label for="fDue" data-t="due"></label><input id="fDue" type="date"></div>\
-      <div class="field"><label for="fLang" data-t="custLang"></label><select id="fLang"></select></div>\
-      <p class="err" id="saleErr" data-t="errSale" hidden></p>\
-      <button type="submit" class="gold full" data-t="saveSale"></button>\
-    </form>\
-  </section>\
-\
-  <section class="panel" id="p-owed" hidden>\
-    <div><h1 data-t="owedTitle"></h1><p class="sub" data-t="owedSub"></p></div>\
-    <div class="list" id="owedList"></div>\
-  </section>\
-\
-  <section class="panel" id="p-paid" hidden>\
-    <div><h1 data-t="paidTitle"></h1><p class="sub" data-t="paidSub"></p></div>\
-    <div class="list" id="paidList"></div>\
-  </section>\
-\
-  <section class="panel" id="p-settings" hidden>\
-    <h1 data-t="settings"></h1>\
-    <div class="form setrow">\
-      <div class="field"><label for="sUi" data-t="appLang"></label><select id="sUi"></select></div>\
-      <div class="field"><label for="sBiz" data-t="bizName"></label><input id="sBiz" dir="auto"></div>\
-      <div class="field"><label for="sBank" data-t="bank"></label><input id="sBank" placeholder="Capitec 1234567890"></div>\
-      <div class="field"><label for="sLink" data-t="cardLink"></label><input id="sLink" inputmode="url"></div>\
-      <div class="field"><label for="sLang" data-t="custLang"></label><select id="sLang"></select></div>\
-      <label class="check" for="sLarge"><input type="checkbox" id="sLarge"><span data-t="large"></span></label>\
-      <label class="check" for="sRobot"><input type="checkbox" id="sRobot"><span data-t="robot"></span></label>\
-      <button type="button" id="clearExamples" data-t="removeEx"></button>\
-    </div>\
-  </section>\
-\
-  <p class="foot" data-t="footer"></p>\
-</main>\
-\
-<nav class="tabs" aria-label="Auvera">\
-  <div class="wrap">\
-    <button type="button" id="t-home" data-go="home" aria-current="page"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg><span data-t="tHome"></span></button>\
-    <button type="button" id="t-sell" data-go="sell"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg><span data-t="tSell"></span></button>\
-    <button type="button" id="t-owed" data-go="owed"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span data-t="tOwed"></span><span class="badge" id="lateBadge" hidden></span></button>\
-    <button type="button" id="t-paid" data-go="paid"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg><span data-t="tPaid"></span></button>\
-  </div>\
-</nav>\
-\
-<div class="toast" id="toast" role="status" hidden></div>\
-\
-<script>\
-(function()\{\
-  var LANGS=[['en','English'],['pcm','Pidgin'],['ur','
-\f3 \'c7\'d1\'cf\'e6
-\f0 '],['bn','
-\f4 \uc0\u2476 \u2494 \u2434 \u2482 \u2494 
-\f0 '],['so','Soomaali'],['sw','Kiswahili'],['am','
-\f5 \uc0\u4768 \u4635 \u4653 \u4763 
-\f0 ']];\
-  var I=\{\
-    en:\{tagline:'Every payment, verified.',received:'Received this month',owed:'Owed to you',late:'Late',newSale:'New sale',speakSale:'Speak a sale',whoOwes:'Who owes me',readMoney:'Read my money',recent:'Recent sales',noSales:'No sales yet. Tap New sale to begin.',tHome:'Home',tSell:'Sell',tOwed:'Owed',tPaid:'Paid',alarm1:'1 customer needs a reminder today',alarmN:'\{n\} customers need a reminder today',remindThem:'Remind',speakHint:'Auvera asks. You answer.',listening:'Listening\'85',customer:'Customer name',phone:'WhatsApp number',amount:'Amount (R)',item:'What they bought',whenPay:'When are they paying?',payNow:'Paying now',payLater:'Pay later',due:'Due date',custLang:"Customer's language",saveSale:'Save and send invoice',errSale:'Add the customer name and an amount.',stInv:'Invoice',stChk:'Checked',stRec:'Receipt',sendInvoice:'Send invoice',sendReminder:'Send reminder',sendFirm:'Send firm reminder',sendReceipt:'Send receipt',checkPay:'Check payment',close:'Close',seeMsg:'See message',copyMsg:'Copy message',viewChain:'View on blockchain',dueToday:'Due today',dueOn:'Due \{d\}',daysLate1:'1 day late',daysLateN:'\{n\} days late',paid:'Paid',example:'Example',howPaid:'How did they pay?',txid:'Transaction ID (ask the customer)',checkChain:'Check on the blockchain',fakeWarn:'Fake proof of payment is common. Only confirm when you see the money yourself.',confirmPay:'Confirm payment',m_eft:'Bank transfer (EFT)',m_payshap:'PayShap',m_card:'Card (Yoco)',m_cash:'Cash',m_btc:'Bitcoin',m_usdt:'USDT (Tron)',c_bank:'I saw R\{a\} arrive in my own banking app, not just a screenshot.',c_card:'My Yoco app or card machine shows R\{a\} approved.',c_cash:'I counted R\{a\} in cash.',c_crypto:'The blockchain shows it confirmed, to my wallet, for the right amount.',h_bank:'Checked in bank app',h_card:'Approved on card machine',h_cash:'Cash counted',h_crypto:'Checked on blockchain',owedTitle:'Who owes you',owedSub:'Late customers first.',nobodyOwes:'Nobody owes you money right now.',paidTitle:'Confirmed payments',paidSub:'Every payment here was checked.',noPaid:'Payments you confirm appear here.',settings:'Settings',appLang:'App language',bizName:'Business name',bank:'Bank details for EFT',cardLink:'Card payment link (Yoco)',large:'Large text and buttons',robot:'Phone voice for words without a recording',removeEx:'Remove example sales',back:'Back',sum:'This month you received R\{r\}. Customers owe you R\{u\}.',sumLate:'\{name\} owes R\{a\}, \{n\} days late.',nobodyLate:'Nobody is late.',toastSaved:'Sale saved. Send the invoice.',toastConfirmed:'Payment confirmed.',toastCopied:'Message copied.',toastExRemoved:'Example sales removed.',welcome:'Welcome to Auvera',chooseLang:'Choose your language',next:'Next',obBiz:'What is your business called?',obBizHint:'Customers see this on invoices and receipts.',obPay:'How do customers pay you?',obPayHint:'Optional. Added to invoices so customers pay straight into your own bank.',obReady:"You're ready",obReadyHint:'Auvera never touches your money. It checks, records and reminds.',startFresh:'Start my first sale',tryEx:'Look around with examples',footer:'Your data stays on this phone.',noVoice:'Voice does not work in this browser.',voiceStopped:'Voice stopped. Tap to try again.',typeAmount:'Please type the amount.',payingNowW:'paying now'\}\
-  \};\
-  \
-  var state = \{\
-    lang: 'en',\
-    sales: [],\
-    bizName: '',\
-    bank: '',\
-    cardLink: '',\
-    large: false\
-  \};\
-\
-  try \{\
-    var stored = localStorage.getItem('auvera_data');\
-    if (stored) state = JSON.parse(stored);\
-  \} catch(e)\{\}\
-\
-  function save() \{\
-    try \{ localStorage.setItem('auvera_data', JSON.stringify(state)); \} catch(e)\{\}\
-    render();\
-  \}\
-\
-  function render() \{\
-    var langData = I[state.lang] || I.en;\
-    document.querySelectorAll('[data-t]').forEach(function(el)\{\
-      var key = el.getAttribute('data-t');\
-      if (langData[key]) el.textContent = langData[key];\
-    \});\
-    \
-    var received = 0, unpaid = 0, late = 0;\
-    var now = new Date().toISOString().slice(0, 10);\
-\
-    state.sales.forEach(function(s) \{\
-      if (s.paid) \{\
-        received += parseFloat(s.amount || 0);\
-      \} else \{\
-        unpaid += parseFloat(s.amount || 0);\
-        if (s.due && s.due < now) late++;\
-      \}\
-    \});\
-\
-    document.getElementById('mReceived').textContent = 'R' + received.toLocaleString();\
-    document.getElementById('mUnpaid').textContent = 'R' + unpaid.toLocaleString();\
-    document.getElementById('mLate').textContent = late;\
-    document.getElementById('bizLine').textContent = state.bizName || 'Auvera Business';\
-  \}\
-\
-  document.querySelectorAll('[data-go]').forEach(function(btn)\{\
-    btn.addEventListener('click', function()\{\
-      var target = btn.getAttribute('data-go');\
-      document.querySelectorAll('.panel').forEach(function(p)\{ p.hidden = true; \});\
-      var activePanel = document.getElementById('p-' + target);\
-      if (activePanel) activePanel.hidden = false;\
-      document.querySelectorAll('.tabs button').forEach(function(tb)\{ tb.removeAttribute('aria-current'); \});\
-      var activeTab = document.getElementById('t-' + target);\
-      if (activeTab) activeTab.setAttribute('aria-current', 'page');\
-    \});\
-  \});\
-\
-  render();\
-\})();\
-</script>\
-</body>\
-</html>}
+.tile{width:34px;height:34px;border:2px solid var(--gold);border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px;color:var(--gold);flex:none}
+.word{font-family:var(--display);font-size:26px;font-weight:600;letter-spacing:.01em}
+.tm{font-family:var(--body);font-size:10px;font-weight:600;vertical-align:super;margin-inline-start:2px;color:var(--gold)}
+
+.top{background:var(--navy);color:var(--on-navy);border-radius:0 0 26px 26px}
+.top .wrap{padding-block:16px 20px;display:flex;flex-direction:column;gap:16px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mark{display:flex;align-items:center;gap:10px}
+.iconbtn{width:48px;height:48px;min-height:48px;padding:0;border-radius:24px;background:transparent;border:1px solid var(--navy-line);color:var(--on-navy)}
+.card{position:relative;border-radius:20px;padding:20px 20px 16px;border:1px solid rgba(201,162,39,.45);background:repeating-linear-gradient(135deg, rgba(201,162,39,.07) 0 1px, transparent 1px 10px), var(--navy-2);display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.card-label{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-navy-muted)}
+.big{font-family:var(--display);font-size:46px;font-weight:600;line-height:1;color:var(--on-navy);font-variant-numeric:lining-nums tabular-nums}
+.crow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;border-top:1px solid rgba(201,162,39,.25);padding-top:12px}
+.crow div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.crow span{font-size:13px;color:var(--on-navy-muted)}
+.crow b{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.crow .owed{color:var(--gold-soft)}
+.cfoot{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--on-navy-muted);letter-spacing:.04em}
+.cfoot .biz{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+main.wrap{padding-block:18px 28px;display:flex;flex-direction:column;gap:18px}
+.panel{display:flex;flex-direction:column;gap:16px}
+h1,h2{margin:0;text-wrap:balance}
+h1{font-family:var(--display);font-size:32px;font-weight:600;line-height:1.1}
+h2{font-size:18px;font-weight:600}
+.sub{margin:0;font-size:14px;color:var(--muted)}
+
+.alarm{background:var(--surface);border:2px solid var(--gold);border-radius:18px;padding:14px 16px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)}
+.alarm .bell{width:44px;height:44px;border-radius:22px;background:var(--gold);color:var(--gold-ink);display:flex;align-items:center;justify-content:center;flex:none}
+.alarm strong{display:block;font-size:16px}
+.alarm div{flex:1;min-width:0}
+.alarm button{min-height:44px;font-size:14px;padding:0 14px}
+
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.qt{flex-direction:column;align-items:flex-start;justify-content:space-between;gap:14px;min-height:112px;padding:16px;border-radius:18px;text-align:start;box-shadow:var(--shadow);font-size:16px}
+.qt .ic{width:44px;height:44px;border-radius:22px;background:var(--soft);color:var(--fg);display:flex;align-items:center;justify-content:center}
+.qt.navy .ic{background:var(--gold);color:var(--gold-ink)}
+.readout{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;font-size:18px;font-weight:600;line-height:1.5;box-shadow:var(--shadow)}
+
+.list{display:flex;flex-direction:column;gap:12px}
+.sale{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.sale.late{border-color:var(--bad)}
+.srow{display:flex;gap:12px;align-items:center}
+.av{width:44px;height:44px;border-radius:22px;background:var(--navy);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex:none;letter-spacing:.02em}
+.who{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.who b{font-size:17px;overflow-wrap:anywhere}
+.who span{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.amt{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip{font-size:13px;font-weight:600;padding:5px 10px;border-radius:20px;white-space:nowrap}
+.chip.late{color:var(--bad);background:var(--bad-bg)}
+.chip.today{color:var(--warn);background:var(--warn-bg)}
+.chip.soon,.chip.example{color:var(--muted);background:var(--soft)}
+.chip.ok{color:var(--ok);background:var(--ok-bg)}
+.track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.step{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted);min-width:0}
+.step i{width:18px;height:18px;border-radius:9px;border:2px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:11px}
+.step.done{color:var(--ok)}
+.step.done i{background:var(--ok);border-color:var(--ok);color:var(--ok-ink)}
+.step span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions > *{flex:1 1 150px}
+.confirm{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:15px;cursor:pointer}
+.check input{width:24px;height:24px;flex:none;margin-top:1px;accent-color:var(--ok)}
+.warnbox{font-size:14px;color:var(--warn);background:var(--warn-bg);border-radius:12px;padding:10px 12px}
+.preview{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+details.msg summary{cursor:pointer;font-size:14px;color:var(--muted);min-height:32px;display:flex;align-items:center}
+.empty{text-align:center;color:var(--muted);padding:26px 14px;border:1px dashed var(--line);border-radius:18px;font-size:15px}
+
+.form{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label,.legend{font-size:14px;font-weight:600;color:var(--muted)}
+input,select{font-family:inherit;font-size:17px;height:52px;border:1px solid var(--line);border-radius:12px;padding:0 14px;background:var(--bg);color:var(--fg);width:100%}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.seg button[aria-pressed="true"]{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+.mic{min-height:64px;font-size:17px;border:2px solid var(--gold);background:var(--surface)}
+.mic .ic{width:40px;height:40px;border-radius:20px;background:var(--gold);color:var(--gold-ink);display:flex;align-items:center;justify-content:center}
+.mic[aria-busy="true"]{background:var(--gold);color:var(--gold-ink)}
+.mic[aria-busy="true"] .ic{background:var(--navy);color:var(--gold-soft)}
+.vstatus{margin:0;font-size:17px;font-weight:600;min-height:1.4em}
+.err{font-size:14px;color:var(--bad);margin:0}
+.setrow{display:flex;flex-direction:column;gap:14px}
+
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom, 0px);box-shadow:0 -4px 16px rgba(11,22,38,.05)}
+.tabs .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding-block:6px}
+.tabs button{flex-direction:column;gap:3px;font-size:12px;font-weight:600;border:none;background:transparent;color:var(--muted);min-height:60px;padding:4px 2px;border-radius:14px;position:relative}
+.tabs button[aria-current="page"]{color:var(--fg)}
+.tabs button[aria-current="page"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:2px;background:var(--gold)}
+.tabs .badge{position:absolute;top:6px;inset-inline-end:calc(50% - 22px);font-size:11px;background:var(--bad);color:#FFFFFF;border-radius:9px;min-width:18px;height:18px;padding:0 5px;display:flex;align-items:center;justify-content:center}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom, 0px));background:var(--navy);color:var(--on-navy);padding:12px 18px;border-radius:14px;font-size:15px;z-index:30;max-width:calc(100% - 32px);box-shadow:var(--shadow)}
+.foot{font-size:13px;color:var(--muted);text-align:center;margin:0}
+
+.ob{position:fixed;inset:0;z-index:40;background:var(--navy);color:var(--on-navy);overflow-y:auto}
+.ob .wrap{min-height:100%;padding-block:calc(28px + env(safe-area-inset-top, 0px)) calc(28px + env(safe-area-inset-bottom, 0px));display:flex;flex-direction:column;gap:22px}
+.ob h1{font-size:34px;color:var(--on-navy)}
+.ob p{margin:0;color:var(--on-navy-muted);font-size:16px}
+.ob .brandbig{display:flex;align-items:center;gap:12px}
+.ob .brandbig .tile{width:48px;height:48px;font-size:28px}
+.ob .brandbig .word{font-size:36px}
+.ob .tag{font-family:var(--display);font-size:22px;color:var(--gold-soft);font-style:italic}
+.ob section{display:flex;flex-direction:column;gap:16px}
+.langs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.langs button{background:var(--navy-2);color:var(--on-navy);border:1px solid var(--navy-line);min-height:60px;font-size:18px;justify-content:flex-start;padding:0 16px}
+.langs button[aria-pressed="true"]{border:2px solid var(--gold);color:var(--gold-soft)}
+.ob input{background:var(--navy-2);color:var(--on-navy);border-color:var(--navy-line)}
+.ob label{font-size:14px;font-weight:600;color:var(--on-navy-muted)}
+.ob .nav{display:flex;gap:10px;margin-top:auto}
+.ob .nav > *{flex:1}
+.ob .ghost{color:var(--on-navy-muted)}
+.dots{display:flex;gap:8px;justify-content:center}
+.dots i{width:8px;height:8px;border-radius:4px;background:var(--navy-line)}
+.dots i.on{background:var(--gold);width:22px}
+.promise{display:flex;flex-direction:column;gap:10px}
+.promise div{display:flex;gap:12px;align-items:center;font-size:16px;color:var(--on-navy)}
+.promise b{width:36px;height:36px;border-radius:18px;background:var(--navy-2);border:1px solid rgba(201,162,39,.5);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;flex:none}
+@media (max-width:370px){.two{grid-template-columns:1fr}.big{font-size:40px}}
+@media (prefers-reduced-motion: no-preference){.qt,.tabs button{transition:transform .12s}.qt:active{transform:scale(.98)}}
+</style>
+</head>
+<body>
+
+<!-- WELCOME -->
+<div class="ob" id="ob" hidden>
+  <div class="wrap">
+    <div class="brandbig"><div class="tile" aria-hidden="true">Au</div><span class="word">Auvera<span class="tm">™</span></span></div>
+    <p class="tag" data-t="tagline"></p>
+    <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <section id="ob1"><h1 data-t="chooseLang"></h1><div class="langs" id="obLangs"></div></section>
+    <section id="ob2" hidden>
+      <h1 data-t="obBiz"></h1><p data-t="obBizHint"></p>
+      <label for="obBizIn" data-t="bizName"></label><input id="obBizIn" autocomplete="organization">
+    </section>
+    <section id="ob3" hidden>
+      <h1 data-t="obPay"></h1><p data-t="obPayHint"></p>
+      <label for="obBank" data-t="bank"></label><input id="obBank" placeholder="Capitec 1234567890">
+      <label for="obLink" data-t="cardLink"></label><input id="obLink" inputmode="url">
+    </section>
+    <section id="ob4" hidden>
+      <h1 data-t="obReady"></h1><p data-t="obReadyHint"></p>
+      <div class="promise">
+        <div><b aria-hidden="true">✓</b><span data-t="h_bank"></span></div>
+        <div><b aria-hidden="true">R</b><span data-t="whoOwes"></span></div>
+        <div><b aria-hidden="true">✉</b><span data-t="sendReminder"></span></div>
+      </div>
+      <button type="button" class="gold full" id="obFresh" data-t="startFresh"></button>
+      <button type="button" class="ghost full" id="obEx" data-t="tryEx"></button>
+    </section>
+    <div class="nav" id="obNav" hidden><button type="button" class="ghost" id="obBack" data-t="back"></button><button type="button" class="gold" id="obNext" data-t="next"></button></div>
+  </div>
+</div>
+
+<!-- APP -->
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <div class="mark"><div class="tile" aria-hidden="true">Au</div><span class="word">Auvera<span class="tm">™</span></span></div>
+      <button type="button" class="iconbtn" id="gear" data-go="settings" data-tlabel="settings"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+    </div>
+    <div class="card" id="balance">
+      <div class="card-label" data-t="received"></div>
+      <div class="big" id="mReceived"></div>
+      <div class="crow">
+        <div><span data-t="owed"></span><b class="owed" id="mUnpaid"></b></div>
+        <div><span data-t="late"></span><b id="mLate"></b></div>
+      </div>
+      <div class="cfoot"><span class="biz" id="bizLine"></span><span>✓ AUVERA</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel" id="p-home">
+    <div class="alarm" id="alarm" hidden>
+      <span class="bell" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></span>
+      <div><strong id="alarmText"></strong></div>
+      <button type="button" class="gold" data-go="owed" data-t="remindThem"></button>
+    </div>
+    <div class="tiles">
+      <button type="button" class="qt navy" data-go="sell"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span><span data-t="newSale"></span></button>
+      <button type="button" class="qt" id="tileVoice"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v5"></path></svg></span><span data-t="speakSale"></span></button>
+      <button type="button" class="qt" data-go="owed"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span><span data-t="whoOwes"></span></button>
+      <button type="button" class="qt" id="readBtn"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg></span><span data-t="readMoney"></span></button>
+    </div>
+    <div class="readout" id="readOut" aria-live="polite" dir="auto" hidden></div>
+    <h2 data-t="recent"></h2>
+    <div class="list" id="recentList"></div>
+  </section>
+
+  <section class="panel" id="p-sell" hidden>
+    <h1 data-t="newSale"></h1>
+    <form class="form" id="saleForm" novalidate>
+      <button type="button" class="mic full" id="voiceBtn"><span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v5"></path></svg></span><span id="voiceLabel" data-t="speakSale"></span></button>
+      <p class="vstatus" id="voiceStatus" dir="auto" aria-live="polite" data-t="speakHint"></p>
+      <div class="field"><label for="fName" data-t="customer"></label><input id="fName" autocomplete="off" dir="auto"></div>
+      <div class="two">
+        <div class="field"><label for="fAmount" data-t="amount"></label><input id="fAmount" inputmode="decimal" placeholder="2000"></div>
+        <div class="field"><label for="fPhone" data-t="phone"></label><input id="fPhone" inputmode="tel" placeholder="072 123 4567"></div>
+      </div>
+      <div class="field"><label for="fItem" data-t="item"></label><input id="fItem" dir="auto"></div>
+      <div class="field"><span class="legend" id="whenLbl" data-t="whenPay"></span>
+        <div class="seg" role="group" aria-labelledby="whenLbl">
+          <button type="button" id="payNow" aria-pressed="true" data-t="payNow"></button>
+          <button type="button" id="payLater" aria-pressed="false" data-t="payLater"></button>
+        </div>
+      </div>
+      <div class="field" id="dueWrap" hidden><label for="fDue" data-t="due"></label><input id="fDue" type="date"></div>
+      <div class="field"><label for="fLang" data-t="custLang"></label><select id="fLang"></select></div>
+      <p class="err" id="saleErr" data-t="errSale" hidden></p>
+      <button type="submit" class="gold full" data-t="saveSale"></button>
+    </form>
+  </section>
+
+  <section class="panel" id="p-owed" hidden>
+    <div><h1 data-t="owedTitle"></h1><p class="sub" data-t="owedSub"></p></div>
+    <div class="list" id="owedList"></div>
+  </section>
+
+  <section class="panel" id="p-paid" hidden>
+    <div><h1 data-t="paidTitle"></h1><p class="sub" data-t="paidSub"></p></div>
+    <div class="list" id="paidList"></div>
+  </section>
+
+  <section class="panel" id="p-settings" hidden>
+    <h1 data-t="settings"></h1>
+    <div class="form setrow">
+      <div class="field"><label for="sUi" data-t="appLang"></label><select id="sUi"></select></div>
+      <div class="field"><label for="sBiz" data-t="bizName"></label><input id="sBiz" dir="auto"></div>
+      <div class="field"><label for="sBank" data-t="bank"></label><input id="sBank" placeholder="Capitec 1234567890"></div>
+      <div class="field"><label for="sLink" data-t="cardLink"></label><input id="sLink" inputmode="url"></div>
+      <div class="field"><label for="sLang" data-t="custLang"></label><select id="sLang"></select></div>
+      <label class="check" for="sLarge"><input type="checkbox" id="sLarge"><span data-t="large"></span></label>
+      <label class="check" for="sRobot"><input type="checkbox" id="sRobot"><span data-t="robot"></span></label>
+      <button type="button" id="clearExamples" data-t="removeEx"></button>
+    </div>
+  </section>
+
+  <p class="foot" data-t="footer"></p>
+</main>
+
+<nav class="tabs" aria-label="Auvera">
+  <div class="wrap">
+    <button type="button" id="t-home" data-go="home" aria-current="page"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg><span data-t="tHome"></span></button>
+    <button type="button" id="t-sell" data-go="sell"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg><span data-t="tSell"></span></button>
+    <button type="button" id="t-owed" data-go="owed"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span data-t="tOwed"></span><span class="badge" id="lateBadge" hidden></span></button>
+    <button type="button" id="t-paid" data-go="paid"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg><span data-t="tPaid"></span></button>
+  </div>
+</nav>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+  var LANGS=[['en','English'],['pcm','Pidgin'],['ur','اردو'],['bn','বাংলা'],['so','Soomaali'],['sw','Kiswahili'],['am','አማርኛ']];
+  var I={
+    en:{tagline:'Every payment, verified.',received:'Received this month',owed:'Owed to you',late:'Late',newSale:'New sale',speakSale:'Speak a sale',whoOwes:'Who owes me',readMoney:'Read my money',recent:'Recent sales',noSales:'No sales yet. Tap New sale to begin.',tHome:'Home',tSell:'Sell',tOwed:'Owed',tPaid:'Paid',alarm1:'1 customer needs a reminder today',alarmN:'{n} customers need a reminder today',remindThem:'Remind',speakHint:'Auvera asks. You answer.',listening:'Listening…',customer:'Customer name',phone:'WhatsApp number',amount:'Amount (R)',item:'What they bought',whenPay:'When are they paying?',payNow:'Paying now',payLater:'Pay later',due:'Due date',custLang:"Customer's language",saveSale:'Save and send invoice',errSale:'Add the customer name and an amount.',stInv:'Invoice',stChk:'Checked',stRec:'Receipt',sendInvoice:'Send invoice',sendReminder:'Send reminder',sendFirm:'Send firm reminder',sendReceipt:'Send receipt',checkPay:'Check payment',close:'Close',seeMsg:'See message',copyMsg:'Copy message',viewChain:'View on blockchain',dueToday:'Due today',dueOn:'Due {d}',daysLate1:'1 day late',daysLateN:'{n} days late',paid:'Paid',example:'Example',howPaid:'How did they pay?',txid:'Transaction ID (ask the customer)',checkChain:'Check on the blockchain',fakeWarn:'Fake proof of payment is common. Only confirm when you see the money yourself.',confirmPay:'Confirm payment',m_eft:'Bank transfer (EFT)',m_payshap:'PayShap',m_card:'Card (Yoco)',m_cash:'Cash',m_btc:'Bitcoin',m_usdt:'USDT (Tron)',c_bank:'I saw R{a} arrive in my own banking app, not just a screenshot.',c_card:'My Yoco app or card machine shows R{a} approved.',c_cash:'I counted R{a} in cash.',c_crypto:'The blockchain shows it confirmed, to my wallet, for the right amount.',h_bank:'Checked in bank app',h_card:'Approved on card machine',h_cash:'Cash counted',h_crypto:'Checked on blockchain',owedTitle:'Who owes you',owedSub:'Late customers first.',nobodyOwes:'Nobody owes you money right now.',paidTitle:'Confirmed payments',paidSub:'Every payment here was checked.',noPaid:'Payments you confirm appear here.',settings:'Settings',appLang:'App language',bizName:'Business name',bank:'Bank details for EFT',cardLink:'Card payment link (Yoco)',large:'Large text and buttons',robot:'Phone voice for words without a recording',removeEx:'Remove example sales',back:'Back',sum:'This month you received R{r}. Customers owe you R{u}.',sumLate:'{name} owes R{a}, {n} days late.',nobodyLate:'Nobody is late.',toastSaved:'Sale saved. Send the invoice.',toastConfirmed:'Payment confirmed.',toastCopied:'Message copied.',toastExRemoved:'Example sales removed.',welcome:'Welcome to Auvera',chooseLang:'Choose your language',next:'Next',obBiz:'What is your business called?',obBizHint:'Customers see this on invoices and receipts.',obPay:'How do customers pay you?',obPayHint:'Optional. Added to invoices so customers pay straight into your own bank.',obReady:"You're ready",obReadyHint:'Auvera never touches your money. It checks, records and reminds.',startFresh:'Start my first sale',tryEx:'Look around with examples',footer:'Your data stays on this phone.',noVoice:'Voice does not work in this browser.',voiceStopped:'Voice stopped. Tap to try again.',typeAmount:'Please type the amount.',payingNowW:'paying now'}
+  };
+  
+  var state = {
+    lang: 'en',
+    sales: [],
+    bizName: '',
+    bank: '',
+    cardLink: '',
+    large: false
+  };
+
+  try {
+    var stored = localStorage.getItem('auvera_data');
+    if (stored) state = JSON.parse(stored);
+  } catch(e){}
+
+  function save() {
+    try { localStorage.setItem('auvera_data', JSON.stringify(state)); } catch(e){}
+    render();
+  }
+
+  function render() {
+    var langData = I[state.lang] || I.en;
+    document.querySelectorAll('[data-t]').forEach(function(el){
+      var key = el.getAttribute('data-t');
+      if (langData[key]) el.textContent = langData[key];
+    });
+    
+    var received = 0, unpaid = 0, late = 0;
+    var now = new Date().toISOString().slice(0, 10);
+
+    state.sales.forEach(function(s) {
+      if (s.paid) {
+        received += parseFloat(s.amount || 0);
+      } else {
+        unpaid += parseFloat(s.amount || 0);
+        if (s.due && s.due < now) late++;
+      }
+    });
+
+    document.getElementById('mReceived').textContent = 'R' + received.toLocaleString();
+    document.getElementById('mUnpaid').textContent = 'R' + unpaid.toLocaleString();
+    document.getElementById('mLate').textContent = late;
+    document.getElementById('bizLine').textContent = state.bizName || 'Auvera Business';
+  }
+
+  document.querySelectorAll('[data-go]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = btn.getAttribute('data-go');
+      document.querySelectorAll('.panel').forEach(function(p){ p.hidden = true; });
+      var activePanel = document.getElementById('p-' + target);
+      if (activePanel) activePanel.hidden = false;
+      document.querySelectorAll('.tabs button').forEach(function(tb){ tb.removeAttribute('aria-current'); });
+      var activeTab = document.getElementById('t-' + target);
+      if (activeTab) activeTab.setAttribute('aria-current', 'page');
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
+  
+    
