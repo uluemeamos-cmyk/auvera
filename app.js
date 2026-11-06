@@ -189,7 +189,12 @@ function go(panel) {
   const t = document.querySelector('.tabbar .tab[data-target="' + panel + '"]');
   if (t) t.classList.add('active');
 
-  if (panel === 'home') renderHome();
+  if (panel === 'home') {
+    renderHome();
+    if (db.notify !== false && Notification.permission === 'granted') {
+      checkOverdueNotifications();
+    }
+  }
   if (panel === 'sell') renderSell();
   if (panel === 'owed') renderOwed();
   if (panel === 'paid') renderPaid();
@@ -242,16 +247,17 @@ function renderHome() {
 
 function renderOwed() {
   let html = '';
-  db.sales.forEach(s => {
+  db.sales.forEach((s, idx) => {
     if (s.paid) return;
     const overdue = daysFrom(s.due) < 0;
     const cls = 'sale-card ' + (overdue ? 'late' : '');
     const days = Math.abs(daysFrom(s.due));
     const dueText = overdue ? days + ' days overdue' : 'due in ' + days + ' days';
-    html += '<div class="' + cls + '">' +
+    html += '<div class="' + cls + '" data-idx="' + idx + '">' +
       '<div class="info"><b>' + escapeHtml(s.name) + '</b>' +
       '<div class="sub">' + escapeHtml(s.item) + ' • ' + dueText + '</div></div>' +
       '<b class="amt unpaid">R' + money(Number(s.amount) || 0) + '</b>' +
+      '<button class="btn-remind" data-idx="' + idx + '">Remind</button>' +
       '</div>';
   });
   $('owedList').innerHTML = html || 'No unpaid balances.';
@@ -299,6 +305,7 @@ function renderSettings() {
   $('sLink').value = db.link;
   $('sLang').value = db.lang;
   $('sUi').value = db.ui;
+  if ($('sNotify')) $('sNotify').checked = db.notify !== false;
 }
 
 /* ===== Calculator state ===== */
@@ -581,6 +588,77 @@ function sendWhatsApp(idx) {
   save();
 }
 
+/* ===== Reminder: notify seller (browser notification) ===== */
+function requestNotificationPermission() {
+  if (!('Notification' in window)) {
+    toast('Notifications not supported in this browser.');
+    return;
+  }
+  if (Notification.permission === 'default') {
+    Notification.requestPermission().then(function(perm) {
+      if (perm === 'granted') {
+        toast('Reminders enabled.');
+        checkOverdueNotifications();
+      } else {
+        toast('Notifications blocked.');
+      }
+    });
+  } else if (Notification.permission === 'granted') {
+    checkOverdueNotifications();
+  }
+}
+
+function checkOverdueNotifications() {
+  if (Notification.permission !== 'granted') return;
+  let any = false;
+  db.sales.forEach(function(s) {
+    if (s.paid) return;
+    const overdue = daysFrom(s.due) < 0;
+    if (!overdue) return;
+    any = true;
+    // Avoid duplicate notifications: only notify if not already reminded today
+    const key = 'reminded_' + s.id;
+    const last = localStorage.getItem(key);
+    const todayStr = iso(today());
+    if (last === todayStr) return;
+    localStorage.setItem(key, todayStr);
+    new Notification('Auvera: Payment overdue', {
+      body: s.name + ' — R' + money(Number(s.amount) || 0) + ' for "' + escapeHtml(s.item) + '" was due ' + fmtDate(s.due) + '.',
+      icon: 'icon-192.png',
+      badge: 'icon-192.png',
+      tag: 'auvera-overdue-' + s.id,
+      renotify: false
+    });
+  });
+  return any;
+}
+
+/* ===== Reminder: remind buyer via WhatsApp ===== */
+function remindBuyer(idx) {
+  const s = db.sales[idx];
+  if (!s || s.paid) return;
+  const overdue = daysFrom(s.due) < 0;
+  const key = overdue ? 'late' : (daysFrom(s.due) <= 1 ? 'soon' : 'invoice');
+  const days = overdue ? Math.abs(daysFrom(s.due)) : 0;
+  const body = t(s.lang || db.lang, key, {
+    name: s.name,
+    no: s.no,
+    biz: db.biz,
+    item: s.item,
+    amount: money(Number(s.amount) || 0),
+    date: fmtDate(s.due),
+    days: days
+  });
+  const phone = s.phone || '';
+  const num = phone.replace(/\D/g, '');
+  const waNum = num.charAt(0) === '0' ? '27' + num.slice(1) : num;
+  const url = 'https://wa.me/' + waNum + '?text=' + encodeURIComponent(body);
+  window.location.href = url;
+  s.invoiceSent = true;
+  save();
+  toast('Reminder sent to ' + escapeHtml(s.name));
+}
+
 /* ===== Read my money (TTS) ===== */
 function readMyMoney() {
   let received = 0, unpaid = 0, lateCount = 0;
@@ -628,6 +706,7 @@ function saveSettings() {
   db.link = $('sLink').value.trim();
   db.lang = $('sLang').value;
   db.ui = $('sUi').value;
+  db.notify = $('sNotify') ? $('sNotify').checked : true;
   save();
   setLang();
   go('home');
@@ -683,6 +762,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Settings
   $('btnSaveSettings').onclick = saveSettings;
   $('btnSettings').onclick = () => go('settings');
+  $('btnNotify').onclick = requestNotificationPermission;
+
+  // Remind buyer buttons (event delegation on owed list)
+  $('owedList').onclick = function(e) {
+    const btn = e.target.closest('.btn-remind');
+    if (btn) {
+      const idx = btn.getAttribute('data-idx');
+      if (idx !== null) remindBuyer(Number(idx));
+    }
+  };
 
   // Onboarding
   $('btnStart').onclick = () => showObStep('obBiz');

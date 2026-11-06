@@ -185,6 +185,18 @@ button:disabled{opacity:0.6;cursor:not-allowed}
 .detail-actions{display:flex;gap:8px;margin-top:4px}
 .detail-actions button{flex:1}
 .late{border-color:var(--bad)}
+.btn-remind{
+  background:transparent;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  border-radius:8px;
+  padding:4px 10px;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  margin-left:8px
+}
+.btn-remind:active{background:var(--soft)}
 
 /* ===== Calculator ===== */
 .calc-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
