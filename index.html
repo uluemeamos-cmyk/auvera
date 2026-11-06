@@ -62,6 +62,11 @@
             <h3>Read my money</h3>
             <p>Hear your totals spoken</p>
           </button>
+          <button class="tile" data-target="calc">
+            <div class="ic" aria-hidden="true">🧮</div>
+            <h3>Calculator</h3>
+            <p>Add, subtract, multiply amounts</p>
+          </button>
         </div>
 
         <div class="list-section">
@@ -163,6 +168,37 @@
       <!-- Sale detail (injected by JS) -->
       <section class="panel" id="p-sale">
         <div id="saleView"></div>
+      </section>
+
+      <!-- Calculator -->
+      <section class="panel" id="p-calc">
+        <div><h1>Calculator</h1><p class="sub">Work out amounts before saving a sale.</p></div>
+        <div class="calc-wrap">
+          <div class="calc-display" id="calcDisplay">0</div>
+          <div class="calc-grid">
+            <button class="calc-btn calc-clear" type="button">C</button>
+            <button class="calc-btn calc-neg" type="button">+/-</button>
+            <button class="calc-btn calc-op" data-op="/">÷</button>
+            <button class="calc-btn" type="button" data-val="7">7</button>
+            <button class="calc-btn" type="button" data-val="8">8</button>
+            <button class="calc-btn" type="button" data-val="9">9</button>
+            <button class="calc-btn calc-op" data-op="*">×</button>
+            <button class="calc-btn" type="button" data-val="4">4</button>
+            <button class="calc-btn" type="button" data-val="5">5</button>
+            <button class="calc-btn" type="button" data-val="6">6</button>
+            <button class="calc-btn calc-op" data-op="-">−</button>
+            <button class="calc-btn" type="button" data-val="1">1</button>
+            <button class="calc-btn" type="button" data-val="2">2</button>
+            <button class="calc-btn" type="button" data-val="3">3</button>
+            <button class="calc-btn calc-op" data-op="+">+</button>
+            <button class="calc-btn" type="button" data-val="0">0</button>
+            <button class="calc-btn" type="button" data-val=".">.</button>
+            <button class="calc-btn calc-equal" type="button">=</button>
+          </div>
+          <div class="calc-actions">
+            <button type="button" id="btnCalcUse" class="gold full">Use this amount in sale</button>
+          </div>
+        </div>
       </section>
     </main>
 

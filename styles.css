@@ -185,3 +185,24 @@ button:disabled{opacity:0.6;cursor:not-allowed}
 .detail-actions{display:flex;gap:8px;margin-top:4px}
 .detail-actions button{flex:1}
 .late{border-color:var(--bad)}
+
+/* ===== Calculator ===== */
+.calc-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.calc-display{
+  font-family:var(--display);font-size:34px;font-weight:700;color:var(--fg);
+  background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px 12px;
+  text-align:right;min-height:70px;display:flex;align-items:center;justify-content:flex-end;overflow:hidden
+}
+.calc-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px
+}
+.calc-btn{
+  min-height:56px;border-radius:12px;border:1px solid var(--line);background:var(--surface);
+  color:var(--fg);font-size:18px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center
+}
+.calc-btn:active{background:var(--soft)}
+.calc-btn.calc-clear{color:var(--bad)}
+.calc-btn.calc-neg{color:var(--muted)}
+.calc-btn.calc-op{color:var(--gold)}
+.calc-btn.calc-equal{background:var(--gold);color:var(--gold-ink)}
+.calc-actions{margin-top:4px}

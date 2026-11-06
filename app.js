@@ -194,6 +194,7 @@ function go(panel) {
   if (panel === 'owed') renderOwed();
   if (panel === 'paid') renderPaid();
   if (panel === 'settings') renderSettings();
+  if (panel === 'calc') calcDisplay();
   if (panel === 'sale') renderSaleDetail();
 }
 
@@ -300,11 +301,100 @@ function renderSettings() {
   $('sUi').value = db.ui;
 }
 
+/* ===== Calculator state ===== */
+let calc = {
+  cur: '0',
+  prev: null,
+  op: null,
+  waiting: false
+};
+
+function calcDisplay() {
+  const d = $('calcDisplay');
+  if (d) d.textContent = calc.cur;
+}
+
+function calcInput(val) {
+  if (calc.waiting) {
+    calc.cur = val;
+    calc.waiting = false;
+  } else {
+    calc.cur = calc.cur === '0' ? val : calc.cur + val;
+  }
+  calcDisplay();
+}
+
+function calcDecimal() {
+  if (calc.waiting) {
+    calc.cur = '0.';
+    calc.waiting = false;
+  } else if (!calc.cur.includes('.')) {
+    calc.cur += '.';
+  }
+  calcDisplay();
+}
+
+function calcNegate() {
+  calc.cur = calc.cur.startsWith('-') ? calc.cur.slice(1) : '-' + calc.cur;
+  calcDisplay();
+}
+
+function calcClear() {
+  calc.cur = '0';
+  calc.prev = null;
+  calc.op = null;
+  calc.waiting = false;
+  calcDisplay();
+}
+
+function calcOp(op) {
+  const cur = Number(calc.cur);
+  if (calc.prev === null) {
+    calc.prev = cur;
+  } else if (calc.op && !calc.waiting) {
+    calc.prev = calcOpResult(calc.prev, cur, calc.op);
+    calcDisplay();
+  }
+  calc.op = op;
+  calc.waiting = true;
+}
+
+function calcOpResult(a, b, op) {
+  if (op === '+') return a + b;
+  if (op === '-') return a - b;
+  if (op === '*') return a * b;
+  if (op === '/') return b === 0 ? 0 : a / b;
+  return b;
+}
+
+function calcEqual() {
+  if (calc.prev === null || !calc.op || calc.waiting) return;
+  const cur = Number(calc.cur);
+  let result = calcOpResult(calc.prev, cur, calc.op);
+  // Clean floating point noise
+  result = Math.round(result * 100000000) / 100000000;
+  calc.cur = String(result);
+  calc.prev = null;
+  calc.op = null;
+  calc.waiting = false;
+  calcDisplay();
+}
+
 /* ===== Escape HTML ===== */
 function escapeHtml(s) {
   const div = document.createElement('div');
   div.textContent = s;
   return div.innerHTML;
+}
+
+/* ===== Calculator: use amount ===== */
+function calcUseAmount() {
+  const amt = Number(calc.cur);
+  const fAmount = $('fAmount');
+  if (fAmount) {
+    fAmount.value = Math.abs(amt);
+    go('sell');
+  }
 }
 
 /* ===== Sale detail view ===== */
@@ -598,4 +688,16 @@ document.addEventListener('DOMContentLoaded', () => {
   $('btnStart').onclick = () => showObStep('obBiz');
   $('btnNextBiz').onclick = () => showObStep('obLangs');
   $('btnFinish').onclick = finishOnboarding;
+
+  // Calculator
+  document.querySelectorAll('.calc-btn[data-val]').forEach(btn => {
+    btn.onclick = () => calcInput(btn.dataset.val);
+  });
+  document.querySelectorAll('.calc-btn[data-op]').forEach(btn => {
+    btn.onclick = () => calcOp(btn.dataset.op);
+  });
+  document.querySelector('.calc-clear').onclick = calcClear;
+  document.querySelector('.calc-neg').onclick = calcNegate;
+  document.querySelector('.calc-equal').onclick = calcEqual;
+  $('btnCalcUse').onclick = calcUseAmount;
 });
