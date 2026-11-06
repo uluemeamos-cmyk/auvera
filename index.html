@@ -1,669 +1,242 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0B1626">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Auvera™">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
-<title>Auvera™</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
-<style>
-/* Layout: private-bank phone app. Navy header with a gold-edged balance card on Home, ivory content, big icon tiles, fixed bottom tab bar. */
-:root{
-  --navy:#0B1626; --navy-2:#13233A; --navy-line:#24364F; --on-navy:#F4EFE3; --on-navy-muted:#B9B1A0;
-  --gold:#C9A227; --gold-soft:#E2C15A; --gold-ink:#0B1626;
-  --bg:#F6F3EC; --surface:#FFFFFF; --line:#E4DDCC; --fg:#0B1626; --muted:#5A6271; --soft:#F0EBDF;
-  --ok:#1C7A5A; --ok-ink:#FFFFFF; --ok-bg:#E2F2EB; --warn:#875800; --warn-bg:#FBEFD2; --bad:#A3271D; --bad-bg:#F9E0DC;
-  --shadow:0 1px 2px rgba(11,22,38,.06),0 6px 18px rgba(11,22,38,.06);
-  --display:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --body:Inter, 'Noto Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --navy:#060D18; --navy-2:#0E1A2C; --navy-line:#22344C; --on-navy:#F4EFE3; --on-navy-muted:#B9B1A0;
-  --gold:#D4B13C; --gold-soft:#E7C863; --gold-ink:#0B1626;
-  --bg:#0A1320; --surface:#111E31; --line:#25374F; --fg:#F1ECDF; --muted:#A8B0BE; --soft:#17263B;
-  --ok:#5CC79F; --ok-ink:#06231A; --ok-bg:#12352B; --warn:#F0C25C; --warn-bg:#3A2E10; --bad:#F28B80; --bad-bg:#3D1A17;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
-  color-scheme:dark}}
-:root[data-theme="dark"]{
-  --navy:#060D18; --navy-2:#0E1A2C; --navy-line:#22344C; --on-navy:#F4EFE3; --on-navy-muted:#B9B1A0;
-  --gold:#D4B13C; --gold-soft:#E7C863; --gold-ink:#0B1626;
-  --bg:#0A1320; --surface:#111E31; --line:#25374F; --fg:#F1ECDF; --muted:#A8B0BE; --soft:#17263B;
-  --ok:#5CC79F; --ok-ink:#06231A; --ok-bg:#12352B; --warn:#F0C25C; --warn-bg:#3A2E10; --bad:#F28B80; --bad-bg:#3D1A17;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25);
-  color-scheme:dark}
-*{box-sizing:border-box}
-html,body{background:var(--bg)}
-body{color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45;padding-bottom:calc(86px + env(safe-area-inset-bottom, 0px))}
-html.large body{zoom:1.18}
-.wrap{max-width:560px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-button,.btn{font-family:inherit;font-size:16px;font-weight:600;min-height:52px;padding:0 18px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;text-align:center;line-height:1.2}
-button:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-button:disabled{opacity:.45;cursor:not-allowed}
-.gold{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
-.navy{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
-.wa{background:var(--ok);color:var(--ok-ink);border-color:var(--ok)}
-.ghost{background:transparent;border-color:transparent;color:var(--muted)}
-.full{width:100%}
-svg{flex:none}
-
-/* Brand */
-.tile{width:34px;height:34px;border:2px solid var(--gold);border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:20px;color:var(--gold);flex:none}
-.word{font-family:var(--display);font-size:26px;font-weight:600;letter-spacing:.01em}
-.tm{font-family:var(--body);font-size:10px;font-weight:600;vertical-align:super;margin-inline-start:2px;color:var(--gold)}
-
-/* Header + balance card */
-.top{background:var(--navy);color:var(--on-navy);border-radius:0 0 26px 26px}
-.top .wrap{padding-block:16px 20px;display:flex;flex-direction:column;gap:16px}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.mark{display:flex;align-items:center;gap:10px}
-.iconbtn{width:48px;height:48px;min-height:48px;padding:0;border-radius:24px;background:transparent;border:1px solid var(--navy-line);color:var(--on-navy)}
-.card{position:relative;border-radius:20px;padding:20px 20px 16px;border:1px solid rgba(201,162,39,.45);background:
-  repeating-linear-gradient(135deg, rgba(201,162,39,.07) 0 1px, transparent 1px 10px), var(--navy-2);
-  display:flex;flex-direction:column;gap:14px;overflow:hidden}
-.card-label{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-navy-muted)}
-.big{font-family:var(--display);font-size:46px;font-weight:600;line-height:1;color:var(--on-navy);font-variant-numeric:lining-nums tabular-nums}
-.big small{font-size:.55em;color:var(--gold-soft);margin-inline-end:4px}
-.crow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;border-top:1px solid rgba(201,162,39,.25);padding-top:12px}
-.crow div{display:flex;flex-direction:column;gap:2px;min-width:0}
-.crow span{font-size:13px;color:var(--on-navy-muted)}
-.crow b{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.crow .owed{color:var(--gold-soft)}
-.cfoot{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--on-navy-muted);letter-spacing:.04em}
-.cfoot .biz{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-main.wrap{padding-block:18px 28px;display:flex;flex-direction:column;gap:18px}
-.panel{display:flex;flex-direction:column;gap:16px}
-h1,h2{margin:0;text-wrap:balance}
-h1{font-family:var(--display);font-size:32px;font-weight:600;line-height:1.1}
-h2{font-size:18px;font-weight:600}
-.sub{margin:0;font-size:14px;color:var(--muted)}
-
-/* Alarm */
-.alarm{background:var(--surface);border:2px solid var(--gold);border-radius:18px;padding:14px 16px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)}
-.alarm .bell{width:44px;height:44px;border-radius:22px;background:var(--gold);color:var(--gold-ink);display:flex;align-items:center;justify-content:center;flex:none}
-.alarm strong{display:block;font-size:16px}
-.alarm div{flex:1;min-width:0}
-.alarm button{min-height:44px;font-size:14px;padding:0 14px}
-
-/* Quick tiles */
-.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.qt{flex-direction:column;align-items:flex-start;justify-content:space-between;gap:14px;min-height:112px;padding:16px;border-radius:18px;text-align:start;box-shadow:var(--shadow);font-size:16px}
-.qt .ic{width:44px;height:44px;border-radius:22px;background:var(--soft);color:var(--fg);display:flex;align-items:center;justify-content:center}
-.qt.navy .ic{background:var(--gold);color:var(--gold-ink)}
-.readout{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;font-size:18px;font-weight:600;line-height:1.5;box-shadow:var(--shadow)}
-
-/* Lists */
-.list{display:flex;flex-direction:column;gap:12px}
-.sale{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
-.sale.late{border-color:var(--bad)}
-.srow{display:flex;gap:12px;align-items:center}
-.av{width:44px;height:44px;border-radius:22px;background:var(--navy);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex:none;letter-spacing:.02em}
-.who{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
-.who b{font-size:17px;overflow-wrap:anywhere}
-.who span{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
-.amt{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.chip{font-size:13px;font-weight:600;padding:5px 10px;border-radius:20px;white-space:nowrap}
-.chip.late{color:var(--bad);background:var(--bad-bg)}
-.chip.today{color:var(--warn);background:var(--warn-bg)}
-.chip.soon,.chip.example{color:var(--muted);background:var(--soft)}
-.chip.ok{color:var(--ok);background:var(--ok-bg)}
-.track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.step{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted);min-width:0}
-.step i{width:18px;height:18px;border-radius:9px;border:2px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:11px}
-.step.done{color:var(--ok)}
-.step.done i{background:var(--ok);border-color:var(--ok);color:var(--ok-ink)}
-.step span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.actions > *{flex:1 1 150px}
-.confirm{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px}
-.check{display:flex;gap:12px;align-items:flex-start;font-size:15px;cursor:pointer}
-.check input{width:24px;height:24px;flex:none;margin-top:1px;accent-color:var(--ok)}
-.warnbox{font-size:14px;color:var(--warn);background:var(--warn-bg);border-radius:12px;padding:10px 12px}
-.preview{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
-details.msg summary{cursor:pointer;font-size:14px;color:var(--muted);min-height:32px;display:flex;align-items:center}
-.empty{text-align:center;color:var(--muted);padding:26px 14px;border:1px dashed var(--line);border-radius:18px;font-size:15px}
-
-/* Forms */
-.form{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
-.field{display:flex;flex-direction:column;gap:6px;min-width:0}
-.field label,.legend{font-size:14px;font-weight:600;color:var(--muted)}
-input,select{font-family:inherit;font-size:17px;height:52px;border:1px solid var(--line);border-radius:12px;padding:0 14px;background:var(--bg);color:var(--fg);width:100%}
-.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.seg button[aria-pressed="true"]{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
-.mic{min-height:64px;font-size:17px;border:2px solid var(--gold);background:var(--surface)}
-.mic .ic{width:40px;height:40px;border-radius:20px;background:var(--gold);color:var(--gold-ink);display:flex;align-items:center;justify-content:center}
-.mic[aria-busy="true"]{background:var(--gold);color:var(--gold-ink)}
-.mic[aria-busy="true"] .ic{background:var(--navy);color:var(--gold-soft)}
-.vstatus{margin:0;font-size:17px;font-weight:600;min-height:1.4em}
-.err{font-size:14px;color:var(--bad);margin:0}
-.setrow{display:flex;flex-direction:column;gap:14px}
-
-/* Tabs */
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:15;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom, 0px);box-shadow:0 -4px 16px rgba(11,22,38,.05)}
-.tabs .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding-block:6px}
-.tabs button{flex-direction:column;gap:3px;font-size:12px;font-weight:600;border:none;background:transparent;color:var(--muted);min-height:60px;padding:4px 2px;border-radius:14px;position:relative}
-.tabs button[aria-current="page"]{color:var(--fg)}
-.tabs button[aria-current="page"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:2px;background:var(--gold)}
-.tabs .badge{position:absolute;top:6px;inset-inline-end:calc(50% - 22px);font-size:11px;background:var(--bad);color:#FFFFFF;border-radius:9px;min-width:18px;height:18px;padding:0 5px;display:flex;align-items:center;justify-content:center}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom, 0px));background:var(--navy);color:var(--on-navy);padding:12px 18px;border-radius:14px;font-size:15px;z-index:30;max-width:calc(100% - 32px);box-shadow:var(--shadow)}
-.foot{font-size:13px;color:var(--muted);text-align:center;margin:0}
-
-/* Welcome */
-.ob{position:fixed;inset:0;z-index:40;background:var(--navy);color:var(--on-navy);overflow-y:auto}
-.ob .wrap{min-height:100%;padding-block:calc(28px + env(safe-area-inset-top, 0px)) calc(28px + env(safe-area-inset-bottom, 0px));display:flex;flex-direction:column;gap:22px}
-.ob h1{font-size:34px;color:var(--on-navy)}
-.ob p{margin:0;color:var(--on-navy-muted);font-size:16px}
-.ob .brandbig{display:flex;align-items:center;gap:12px}
-.ob .brandbig .tile{width:48px;height:48px;font-size:28px}
-.ob .brandbig .word{font-size:36px}
-.ob .tag{font-family:var(--display);font-size:22px;color:var(--gold-soft);font-style:italic}
-.ob section{display:flex;flex-direction:column;gap:16px}
-.langs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.langs button{background:var(--navy-2);color:var(--on-navy);border:1px solid var(--navy-line);min-height:60px;font-size:18px;justify-content:flex-start;padding:0 16px}
-.langs button[aria-pressed="true"]{border:2px solid var(--gold);color:var(--gold-soft)}
-.ob input{background:var(--navy-2);color:var(--on-navy);border-color:var(--navy-line)}
-.ob label{font-size:14px;font-weight:600;color:var(--on-navy-muted)}
-.ob .nav{display:flex;gap:10px;margin-top:auto}
-.ob .nav > *{flex:1}
-.ob .ghost{color:var(--on-navy-muted)}
-.dots{display:flex;gap:8px;justify-content:center}
-.dots i{width:8px;height:8px;border-radius:4px;background:var(--navy-line)}
-.dots i.on{background:var(--gold);width:22px}
-.promise{display:flex;flex-direction:column;gap:10px}
-.promise div{display:flex;gap:12px;align-items:center;font-size:16px;color:var(--on-navy)}
-.promise b{width:36px;height:36px;border-radius:18px;background:var(--navy-2);border:1px solid rgba(201,162,39,.5);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;flex:none}
-@media (max-width:370px){.two{grid-template-columns:1fr}.big{font-size:40px}}
-@media (prefers-reduced-motion: no-preference){.qt,.tabs button{transition:transform .12s}.qt:active{transform:scale(.98)}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0B1626">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Auvera™">
+  <title>Auvera™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-
-<!-- WELCOME -->
-<div class="ob" id="ob" hidden>
   <div class="wrap">
-    <div class="brandbig"><div class="tile" aria-hidden="true">Au</div><span class="word">Auvera<span class="tm">™</span></span></div>
-    <p class="tag" data-t="tagline"></p>
-    <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <section id="ob1"><h1 data-t="chooseLang"></h1><div class="langs" id="obLangs"></div></section>
-    <section id="ob2" hidden>
-      <h1 data-t="obBiz"></h1><p data-t="obBizHint"></p>
-      <label for="obBizIn" data-t="bizName"></label><input id="obBizIn" autocomplete="organization">
-    </section>
-    <section id="ob3" hidden>
-      <h1 data-t="obPay"></h1><p data-t="obPayHint"></p>
-      <label for="obBank" data-t="bank"></label><input id="obBank" placeholder="Capitec 1234567890">
-      <label for="obLink" data-t="cardLink"></label><input id="obLink" inputmode="url">
-    </section>
-    <section id="ob4" hidden>
-      <h1 data-t="obReady"></h1><p data-t="obReadyHint"></p>
-      <div class="promise">
-        <div><b aria-hidden="true">✓</b><span data-t="h_bank"></span></div>
-        <div><b aria-hidden="true">R</b><span data-t="whoOwes"></span></div>
-        <div><b aria-hidden="true">✉</b><span data-t="sendReminder"></span></div>
-      </div>
-      <button type="button" class="gold full" id="obFresh" data-t="startFresh"></button>
-      <button type="button" class="ghost full" id="obEx" data-t="tryEx"></button>
-    </section>
-    <div class="nav" id="obNav" hidden><button type="button" class="ghost" id="obBack" data-t="back"></button><button type="button" class="gold" id="obNext" data-t="next"></button></div>
-  </div>
-</div>
-
-<!-- APP -->
-<header class="top">
-  <div class="wrap">
-    <div class="bar">
-      <div class="mark"><div class="tile" aria-hidden="true">Au</div><span class="word">Auvera<span class="tm">™</span></span></div>
-      <button type="button" class="iconbtn" id="gear" data-go="settings" data-tlabel="settings"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
-    </div>
-    <div class="card" id="balance">
-      <div class="card-label" data-t="received"></div>
-      <div class="big" id="mReceived"></div>
-      <div class="crow">
-        <div><span data-t="owed"></span><b class="owed" id="mUnpaid"></b></div>
-        <div><span data-t="late"></span><b id="mLate"></b></div>
-      </div>
-      <div class="cfoot"><span class="biz" id="bizLine"></span><span>✓ AUVERA</span></div>
-    </div>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="panel" id="p-home">
-    <div class="alarm" id="alarm" hidden>
-      <span class="bell" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></span>
-      <div><strong id="alarmText"></strong></div>
-      <button type="button" class="gold" data-go="owed" data-t="remindThem"></button>
-    </div>
-    <div class="tiles">
-      <button type="button" class="qt navy" data-go="sell"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></span><span data-t="newSale"></span></button>
-      <button type="button" class="qt" id="tileVoice"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v5"></path></svg></span><span data-t="speakSale"></span></button>
-      <button type="button" class="qt" data-go="owed"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span><span data-t="whoOwes"></span></button>
-      <button type="button" class="qt" id="readBtn"><span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg></span><span data-t="readMoney"></span></button>
-    </div>
-    <div class="readout" id="readOut" aria-live="polite" dir="auto" hidden></div>
-    <h2 data-t="recent"></h2>
-    <div class="list" id="recentList"></div>
-  </section>
-
-  <section class="panel" id="p-sell" hidden>
-    <h1 data-t="newSale"></h1>
-    <form class="form" id="saleForm" novalidate>
-      <button type="button" class="mic full" id="voiceBtn"><span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><path d="M12 17v5"></path></svg></span><span id="voiceLabel" data-t="speakSale"></span></button>
-      <p class="vstatus" id="voiceStatus" dir="auto" aria-live="polite" data-t="speakHint"></p>
-      <div class="field"><label for="fName" data-t="customer"></label><input id="fName" autocomplete="off" dir="auto"></div>
-      <div class="two">
-        <div class="field"><label for="fAmount" data-t="amount"></label><input id="fAmount" inputmode="decimal" placeholder="2000"></div>
-        <div class="field"><label for="fPhone" data-t="phone"></label><input id="fPhone" inputmode="tel" placeholder="072 123 4567"></div>
-      </div>
-      <div class="field"><label for="fItem" data-t="item"></label><input id="fItem" dir="auto"></div>
-      <div class="field"><span class="legend" id="whenLbl" data-t="whenPay"></span>
-        <div class="seg" role="group" aria-labelledby="whenLbl">
-          <button type="button" id="payNow" aria-pressed="true" data-t="payNow"></button>
-          <button type="button" id="payLater" aria-pressed="false" data-t="payLater"></button>
+    <!-- Header -->
+    <header class="top">
+      <div class="bar">
+        <div class="mark">
+          <div class="tile" aria-hidden="true">A</div>
+          <span class="word" id="bizChip">AUVERA</span>
         </div>
+        <button class="iconbtn" id="btnSettings" aria-label="Settings">⚙️</button>
       </div>
-      <div class="field" id="dueWrap" hidden><label for="fDue" data-t="due"></label><input id="fDue" type="date"></div>
-      <div class="field"><label for="fLang" data-t="custLang"></label><select id="fLang"></select></div>
-      <p class="err" id="saleErr" data-t="errSale" hidden></p>
-      <button type="submit" class="gold full" data-t="saveSale"></button>
-    </form>
-  </section>
+      <div class="balance-card">
+        <div class="label">Received this month</div>
+        <div class="big" id="mReceived">R0</div>
+        <div class="crow">
+          <span>Owed to you</span><b id="mUnpaid">R0</b>
+          <span class="owed">Late</span><b id="mLate">0</b>
+        </div>
+        <div class="cfoot"><span id="bizName">Auvera Business</span></div>
+      </div>
+    </header>
 
-  <section class="panel" id="p-owed" hidden>
-    <div><h1 data-t="owedTitle"></h1><p class="sub" data-t="owedSub"></p></div>
-    <div class="list" id="owedList"></div>
-  </section>
+    <!-- Panels -->
+    <main>
+      <!-- Home -->
+      <section class="panel visible" id="p-home">
+        <div class="tiles">
+          <button class="tile" data-target="sell">
+            <div class="ic" aria-hidden="true">+</div>
+            <h3>New sale</h3>
+            <p>Record a customer purchase</p>
+          </button>
+          <button class="tile" data-target="voice" id="btnVoiceTile">
+            <div class="ic" aria-hidden="true">🎤</div>
+            <h3>Speak Sale</h3>
+            <p>Voice entry: name &amp; amount</p>
+          </button>
+          <button class="tile" data-target="owed">
+            <div class="ic" aria-hidden="true">🕒</div>
+            <h3>Who owes me</h3>
+            <p>Unpaid balances</p>
+          </button>
+          <button class="tile" id="btnReadMoney">
+            <div class="ic" aria-hidden="true">🔊</div>
+            <h3>Read my money</h3>
+            <p>Hear your totals spoken</p>
+          </button>
+        </div>
 
-  <section class="panel" id="p-paid" hidden>
-    <div><h1 data-t="paidTitle"></h1><p class="sub" data-t="paidSub"></p></div>
-    <div class="list" id="paidList"></div>
-  </section>
+        <div class="list-section">
+          <h3>Recent sales</h3>
+          <div class="list" id="recentList"></div>
+        </div>
+        <div class="list-section">
+          <h3>Unpaid balances</h3>
+          <div class="list" id="owedList"></div>
+        </div>
+        <div class="list-section">
+          <h3>Confirmed payments</h3>
+          <div class="list" id="paidList"></div>
+        </div>
+      </section>
 
-  <section class="panel" id="p-settings" hidden>
-    <h1 data-t="settings"></h1>
-    <div class="form setrow">
-      <div class="field"><label for="sUi" data-t="appLang"></label><select id="sUi"></select></div>
-      <div class="field"><label for="sBiz" data-t="bizName"></label><input id="sBiz" dir="auto"></div>
-      <div class="field"><label for="sBank" data-t="bank"></label><input id="sBank" placeholder="Capitec 1234567890"></div>
-      <div class="field"><label for="sLink" data-t="cardLink"></label><input id="sLink" inputmode="url"></div>
-      <div class="field"><label for="sLang" data-t="custLang"></label><select id="sLang"></select></div>
-      <label class="check" for="sLarge"><input type="checkbox" id="sLarge"><span data-t="large"></span></label>
-      <label class="check" for="sRobot"><input type="checkbox" id="sRobot"><span data-t="robot"></span></label>
-      <button type="button" id="clearExamples" data-t="removeEx"></button>
-    </div>
-  </section>
+      <!-- Sell form -->
+      <section class="panel" id="p-sell">
+        <h1>New sale</h1>
+        <form id="formSell">
+          <div class="field">
+            <label for="fName">Customer name</label>
+            <input id="fName" type="text" placeholder="e.g. Mr Adeyemi" dir="auto">
+          </div>
+          <div class="field">
+            <label for="fItem">What they bought</label>
+            <input id="fItem" type="text" placeholder="e.g. suit alterations" dir="auto">
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="fAmount">Amount (R)</label>
+              <input id="fAmount" type="number" inputmode="decimal" placeholder="0">
+            </div>
+            <div class="field">
+              <label for="fDue">Due date</label>
+              <input id="fDue" type="date">
+            </div>
+          </div>
+          <div class="field">
+            <label for="fLang">Customer's language</label>
+            <select id="fLang"></select>
+          </div>
+          <div class="voice-row">
+            <button type="button" id="btnVoiceSale" class="mic" aria-busy="false">
+              <div class="ic" aria-hidden="true">🎤</div>
+              <span>Speak</span>
+            </button>
+          </div>
+          <div class="field">
+            <label><input type="checkbox" id="fPaid"> Paying now</label>
+          </div>
+          <p class="err" id="saleErr" hidden>Add the customer name and an amount.</p>
+          <button type="submit" id="btnSaveSale" class="gold full">Save and send invoice</button>
+        </form>
+        <div id="voiceStatus"></div>
+        <div id="confirmBox"></div>
+      </section>
 
-  <p class="foot" data-t="footer"></p>
-</main>
+      <!-- Owed -->
+      <section class="panel" id="p-owed">
+        <div><h1>Who owes you</h1><p class="sub">Late customers first.</p></div>
+        <div class="list" id="owedList"></div>
+      </section>
 
-<nav class="tabs" aria-label="Auvera">
-  <div class="wrap">
-    <button type="button" id="t-home" data-go="home" aria-current="page"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg><span data-t="tHome"></span></button>
-    <button type="button" id="t-sell" data-go="sell"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg><span data-t="tSell"></span></button>
-    <button type="button" id="t-owed" data-go="owed"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span data-t="tOwed"></span><span class="badge" id="lateBadge" hidden></span></button>
-    <button type="button" id="t-paid" data-go="paid"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg><span data-t="tPaid"></span></button>
+      <!-- Paid -->
+      <section class="panel" id="p-paid">
+        <div><h1>Confirmed payments</h1><p class="sub">Money received.</p></div>
+        <div class="list" id="paidList"></div>
+      </section>
+
+      <!-- Settings -->
+      <section class="panel" id="p-settings">
+        <h1>Settings</h1>
+        <div class="form setrow">
+          <div class="field">
+            <label for="sUi">App language</label>
+            <select id="sUi"></select>
+          </div>
+          <div class="field">
+            <label for="sBiz">Business name</label>
+            <input id="sBiz" dir="auto">
+          </div>
+          <div class="field">
+            <label for="sBank">Bank / wallet</label>
+            <input id="sBank" placeholder="Capitec 1234567890">
+          </div>
+          <div class="field">
+            <label for="sLink">Card link / PayShap</label>
+            <input id="sLink" inputmode="url">
+          </div>
+          <div class="field">
+            <label for="sLang">Default customer language</label>
+            <select id="sLang"></select>
+          </div>
+          <button type="button" id="btnSaveSettings">Save Settings</button>
+        </div>
+      </section>
+
+      <!-- Sale detail (injected by JS) -->
+      <section class="panel" id="p-sale">
+        <div id="saleView"></div>
+      </section>
+    </main>
+
+    <p class="foot">Every payment, verified. — Auvera™</p>
   </div>
-</nav>
+  <!-- Bottom tab bar -->
+  <nav class="tabbar" aria-label="Auvera">
+    <a class="tab active" href="#home" data-target="home">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
+      <span>Home</span>
+    </a>
+    <a class="tab" href="#sell" data-target="sell">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg>
+      <span>Sell</span>
+    </a>
+    <a class="tab" href="#owed" data-target="owed">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+      <span>Owed</span>
+    </a>
+    <a class="tab" href="#paid" data-target="paid">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+      <span>Paid</span>
+    </a>
+    <a class="tab" href="#settings" data-target="settings">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2v-5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2v-2.19a1.65 1.65 0 0 0-.33-1z"></path></svg>
+      <span>Settings</span>
+    </a>
+  </nav>
 
-<div class="toast" id="toast" role="status" hidden></div>
+  <div class="toast" id="toast" role="status" hidden></div>
 
-<script>
-(function(){
-  var LANGS=[['en','English'],['pcm','Pidgin'],['ur','اردو'],['bn','বাংলা'],['so','Soomaali'],['sw','Kiswahili'],['am','አማርኛ']];
+  <!-- Onboarding -->
+  <div class="ob" id="ob" hidden>
+    <div class="ob-step visible" id="obWelcome">
+      <h1>Welcome to Auvera™</h1>
+      <p>Every payment, verified. Set up your business to get started.</p>
+      <div class="ob-nav">
+        <button id="btnStart">Set up business →</button>
+      </div>
+    </div>
+    <div class="ob-step" id="obBiz">
+      <h1>Your business</h1>
+      <p>What should we call your business on receipts and messages?</p>
+      <input id="obBiz" type="text" placeholder="e.g. Amos Tailoring" dir="auto">
+      <div class="ob-nav">
+        <button id="btnNextBiz">Next →</button>
+      </div>
+    </div>
+    <div class="ob-step" id="obLangs">
+      <h1>Languages</h1>
+      <p>Choose your language and your customers' language.</p>
+      <input type="hidden" id="obLang" value="en">
+      <input type="hidden" id="obUi" value="en">
+      <div id="obLangPicker"></div>
+      <div class="ob-nav">
+        <button id="btnFinish">Finish →</button>
+      </div>
+    </div>
+  </div>
 
-  /* ---------- Every word on screen, in 7 languages ---------- */
-  var I={
-  en:{tagline:'Every payment, verified.',received:'Received this month',owed:'Owed to you',late:'Late',newSale:'New sale',speakSale:'Speak a sale',whoOwes:'Who owes me',readMoney:'Read my money',recent:'Recent sales',noSales:'No sales yet. Tap New sale to begin.',tHome:'Home',tSell:'Sell',tOwed:'Owed',tPaid:'Paid',alarm1:'1 customer needs a reminder today',alarmN:'{n} customers need a reminder today',remindThem:'Remind',speakHint:'Auvera asks. You answer.',listening:'Listening…',customer:'Customer name',phone:'WhatsApp number',amount:'Amount (R)',item:'What they bought',whenPay:'When are they paying?',payNow:'Paying now',payLater:'Pay later',due:'Due date',custLang:"Customer's language",saveSale:'Save and send invoice',errSale:'Add the customer name and an amount.',stInv:'Invoice',stChk:'Checked',stRec:'Receipt',sendInvoice:'Send invoice',sendReminder:'Send reminder',sendFirm:'Send firm reminder',sendReceipt:'Send receipt',checkPay:'Check payment',close:'Close',seeMsg:'See message',copyMsg:'Copy message',viewChain:'View on blockchain',dueToday:'Due today',dueOn:'Due {d}',daysLate1:'1 day late',daysLateN:'{n} days late',paid:'Paid',example:'Example',howPaid:'How did they pay?',txid:'Transaction ID (ask the customer)',checkChain:'Check on the blockchain',fakeWarn:'Fake proof of payment is common. Only confirm when you see the money yourself.',confirmPay:'Confirm payment',m_eft:'Bank transfer (EFT)',m_payshap:'PayShap',m_card:'Card (Yoco)',m_cash:'Cash',m_btc:'Bitcoin',m_usdt:'USDT (Tron)',c_bank:'I saw R{a} arrive in my own banking app, not just a screenshot.',c_card:'My Yoco app or card machine shows R{a} approved.',c_cash:'I counted R{a} in cash.',c_crypto:'The blockchain shows it confirmed, to my wallet, for the right amount.',h_bank:'Checked in bank app',h_card:'Approved on card machine',h_cash:'Cash counted',h_crypto:'Checked on blockchain',owedTitle:'Who owes you',owedSub:'Late customers first.',nobodyOwes:'Nobody owes you money right now.',paidTitle:'Confirmed payments',paidSub:'Every payment here was checked.',noPaid:'Payments you confirm appear here.',settings:'Settings',appLang:'App language',bizName:'Business name',bank:'Bank details for EFT',cardLink:'Card payment link (Yoco)',large:'Large text and buttons',robot:'Phone voice for words without a recording',removeEx:'Remove example sales',back:'Back',sum:'This month you received R{r}. Customers owe you R{u}.',sumLate:'{name} owes R{a}, {n} days late.',nobodyLate:'Nobody is late.',toastSaved:'Sale saved. Send the invoice.',toastConfirmed:'Payment confirmed.',toastCopied:'Message copied.',toastExRemoved:'Example sales removed.',welcome:'Welcome to Auvera',chooseLang:'Choose your language',next:'Next',obBiz:'What is your business called?',obBizHint:'Customers see this on invoices and receipts.',obPay:'How do customers pay you?',obPayHint:'Optional. Added to invoices so customers pay straight into your own bank.',obReady:"You're ready",obReadyHint:'Auvera never touches your money. It checks, records and reminds.',startFresh:'Start my first sale',tryEx:'Look around with examples',footer:'Your data stays on this phone.',noVoice:'Voice does not work in this browser. Open Auvera in Chrome, or use the microphone on your keyboard.',voiceStopped:'Voice stopped. Tap to try again, or type.',typeAmount:'Please type the amount.',payingNowW:'paying now'},
-  pcm:{tagline:'Every payment, we go check am.',received:'Money wey enter this month',owed:'Money people owe you',late:'Don late',newSale:'New sale',speakSale:'Talk the sale',whoOwes:'Who dey owe me',readMoney:'Read my money',recent:'Sales wey just happen',noSales:'No sale yet. Tap New sale make you start.',tHome:'Home',tSell:'Sell',tOwed:'Owing',tPaid:'Paid',alarm1:'1 customer need reminder today',alarmN:'{n} customers need reminder today',remindThem:'Remind',speakHint:'Auvera go ask, you go answer.',listening:'I dey listen…',customer:'Customer name',phone:'WhatsApp number',amount:'How much (R)',item:'Wetin dem buy',whenPay:'When dem go pay?',payNow:'Dem dey pay now',payLater:'Dem go pay later',due:'Day to pay',custLang:'Customer language',saveSale:'Save am, send invoice',errSale:'Put customer name and how much.',stInv:'Invoice',stChk:'Checked',stRec:'Receipt',sendInvoice:'Send invoice',sendReminder:'Send reminder',sendFirm:'Send strong reminder',sendReceipt:'Send receipt',checkPay:'Check payment',close:'Close',seeMsg:'See message',copyMsg:'Copy message',viewChain:'See am for blockchain',dueToday:'Na today',dueOn:'Pay by {d}',daysLate1:'1 day late',daysLateN:'{n} days late',paid:'Don pay',example:'Example',howPaid:'How dem pay?',txid:'Transaction ID (ask customer)',checkChain:'Check am for blockchain',fakeWarn:'Fake alert plenty. Only confirm when you see the money with your own eye.',confirmPay:'Confirm payment',m_eft:'Bank transfer (EFT)',m_payshap:'PayShap',m_card:'Card (Yoco)',m_cash:'Cash',m_btc:'Bitcoin',m_usdt:'USDT (Tron)',c_bank:'I don see R{a} enter my own bank app, no be screenshot.',c_card:'My Yoco or card machine show say R{a} don go.',c_cash:'I don count R{a} cash.',c_crypto:'Blockchain show say e don confirm, enter my wallet, correct amount.',h_bank:'Checked for bank app',h_card:'Card machine approve am',h_cash:'Cash don count',h_crypto:'Checked for blockchain',owedTitle:'Who dey owe you',owedSub:'People wey don late first.',nobodyOwes:'Nobody dey owe you now.',paidTitle:'Payments wey we confirm',paidSub:'Every payment here, we don check am.',noPaid:'Payments wey you confirm go show here.',settings:'Settings',appLang:'App language',bizName:'Business name',bank:'Bank details for EFT',cardLink:'Card payment link (Yoco)',large:'Big writing and buttons',robot:'Phone voice for words wey no get recording',removeEx:'Remove example sales',back:'Back',sum:'This month, R{r} don enter. People still owe you R{u}.',sumLate:'{name} owe R{a}, {n} days late.',nobodyLate:'Nobody don late.',toastSaved:'Sale don save. Send the invoice.',toastConfirmed:'Payment don confirm.',toastCopied:'Message don copy.',toastExRemoved:'Example sales don comot.',welcome:'Welcome to Auvera',chooseLang:'Choose your language',next:'Next',obBiz:'Wetin be your business name?',obBizHint:'Customers go see am for invoice and receipt.',obPay:'How customers dey pay you?',obPayHint:'If you like. We go add am for invoice so money go enter your own bank straight.',obReady:'You don ready',obReadyHint:'Auvera no dey touch your money. E dey check, record and remind.',startFresh:'Start my first sale',tryEx:'Look around with examples',footer:'Your data dey for this phone only.',noVoice:'Voice no dey work for this browser. Open Auvera for Chrome, or use the microphone for your keyboard.',voiceStopped:'Voice don stop. Tap make you try again, or type am.',typeAmount:'Abeg type the amount.',payingNowW:'dey pay now'},
-  ur:{tagline:'ہر ادائیگی، تصدیق شدہ۔',received:'اس مہینے وصول ہوا',owed:'آپ کا باقی',late:'دیر سے',newSale:'نئی فروخت',speakSale:'بول کر فروخت',whoOwes:'کس پر باقی ہے',readMoney:'میرا حساب سنائیں',recent:'حالیہ فروخت',noSales:'ابھی کوئی فروخت نہیں۔ شروع کرنے کے لیے نئی فروخت دبائیں۔',tHome:'ہوم',tSell:'فروخت',tOwed:'باقی',tPaid:'ادا شدہ',alarm1:'آج 1 گاہک کو یاد دہانی چاہیے',alarmN:'آج {n} گاہکوں کو یاد دہانی چاہیے',remindThem:'یاد دلائیں',speakHint:'Auvera پوچھے گا، آپ جواب دیں۔',listening:'سن رہا ہوں…',customer:'گاہک کا نام',phone:'واٹس ایپ نمبر',amount:'رقم (R)',item:'کیا خریدا',whenPay:'ادائیگی کب کریں گے؟',payNow:'ابھی ادائیگی',payLater:'بعد میں ادائیگی',due:'آخری تاریخ',custLang:'گاہک کی زبان',saveSale:'محفوظ کریں اور انوائس بھیجیں',errSale:'گاہک کا نام اور رقم درج کریں۔',stInv:'انوائس',stChk:'تصدیق',stRec:'رسید',sendInvoice:'انوائس بھیجیں',sendReminder:'یاد دہانی بھیجیں',sendFirm:'سخت یاد دہانی بھیجیں',sendReceipt:'رسید بھیجیں',checkPay:'ادائیگی چیک کریں',close:'بند کریں',seeMsg:'پیغام دیکھیں',copyMsg:'پیغام کاپی کریں',viewChain:'بلاک چین پر دیکھیں',dueToday:'آج واجب',dueOn:'{d} تک',daysLate1:'1 دن دیر',daysLateN:'{n} دن دیر',paid:'ادا شدہ',example:'مثال',howPaid:'انہوں نے کیسے ادائیگی کی؟',txid:'ٹرانزیکشن آئی ڈی (گاہک سے پوچھیں)',checkChain:'بلاک چین پر چیک کریں',fakeWarn:'جعلی ادائیگی کے ثبوت عام ہیں۔ صرف تب تصدیق کریں جب آپ خود رقم دیکھیں۔',confirmPay:'ادائیگی کی تصدیق کریں',m_eft:'بینک ٹرانسفر (EFT)',m_payshap:'PayShap',m_card:'کارڈ (Yoco)',m_cash:'نقد',m_btc:'Bitcoin',m_usdt:'USDT (Tron)',c_bank:'میں نے اپنی بینکنگ ایپ میں R{a} آتے دیکھے، صرف اسکرین شاٹ نہیں۔',c_card:'میری Yoco ایپ یا کارڈ مشین R{a} منظور دکھاتی ہے۔',c_cash:'میں نے R{a} نقد گنے۔',c_crypto:'بلاک چین تصدیق دکھاتا ہے، میرے والٹ میں، درست رقم۔',h_bank:'بینک ایپ میں چیک کیا',h_card:'کارڈ مشین سے منظور',h_cash:'نقد گنا گیا',h_crypto:'بلاک چین پر چیک کیا',owedTitle:'کس پر آپ کا باقی ہے',owedSub:'دیر والے پہلے۔',nobodyOwes:'ابھی کسی پر آپ کا کچھ باقی نہیں۔',paidTitle:'تصدیق شدہ ادائیگیاں',paidSub:'یہاں ہر ادائیگی چیک کی گئی ہے۔',noPaid:'آپ کی تصدیق کردہ ادائیگیاں یہاں نظر آئیں گی۔',settings:'ترتیبات',appLang:'ایپ کی زبان',bizName:'کاروبار کا نام',bank:'EFT کے لیے بینک تفصیلات',cardLink:'کارڈ ادائیگی لنک (Yoco)',large:'بڑا متن اور بٹن',robot:'بغیر ریکارڈنگ الفاظ کے لیے فون کی آواز',removeEx:'مثالی فروخت ہٹائیں',back:'واپس',sum:'اس مہینے آپ کو R{r} وصول ہوئے۔ گاہکوں پر R{u} باقی ہیں۔',sumLate:'{name} پر R{a} باقی، {n} دن دیر۔',nobodyLate:'کوئی دیر سے نہیں۔',toastSaved:'فروخت محفوظ۔ انوائس بھیجیں۔',toastConfirmed:'ادائیگی کی تصدیق ہو گئی۔',toastCopied:'پیغام کاپی ہو گیا۔',toastExRemoved:'مثالی فروخت ہٹا دی گئی۔',welcome:'Auvera میں خوش آمدید',chooseLang:'اپنی زبان منتخب کریں',next:'آگے',obBiz:'آپ کے کاروبار کا نام کیا ہے؟',obBizHint:'گاہک اسے انوائس اور رسید پر دیکھیں گے۔',obPay:'گاہک آپ کو کیسے ادائیگی کرتے ہیں؟',obPayHint:'اختیاری۔ انوائس میں شامل ہوگا تاکہ رقم سیدھی آپ کے بینک میں آئے۔',obReady:'آپ تیار ہیں',obReadyHint:'Auvera آپ کے پیسے کو کبھی نہیں چھوتا۔ یہ چیک، ریکارڈ اور یاد دہانی کرتا ہے۔',startFresh:'میری پہلی فروخت شروع کریں',tryEx:'مثالوں کے ساتھ دیکھیں',footer:'آپ کا ڈیٹا صرف اس فون پر ہے۔',noVoice:'اس براؤزر میں آواز کام نہیں کرتی۔ Auvera کو Chrome میں کھولیں، یا کی بورڈ کا مائیکروفون استعمال کریں۔',voiceStopped:'آواز رک گئی۔ دوبارہ کوشش کریں یا لکھیں۔',typeAmount:'براہ کرم رقم لکھیں۔',payingNowW:'ابھی ادائیگی'},
-  bn:{tagline:'প্রতিটি পেমেন্ট, যাচাই করা।',received:'এই মাসে পেয়েছেন',owed:'আপনার পাওনা',late:'দেরি',newSale:'নতুন বিক্রি',speakSale:'বলে বিক্রি লিখুন',whoOwes:'কার কাছে পাওনা',readMoney:'আমার হিসাব শুনুন',recent:'সাম্প্রতিক বিক্রি',noSales:'এখনো কোনো বিক্রি নেই। শুরু করতে নতুন বিক্রি চাপুন।',tHome:'হোম',tSell:'বিক্রি',tOwed:'পাওনা',tPaid:'পরিশোধিত',alarm1:'আজ ১ জন গ্রাহককে মনে করাতে হবে',alarmN:'আজ {n} জন গ্রাহককে মনে করাতে হবে',remindThem:'মনে করান',speakHint:'Auvera জিজ্ঞেস করবে, আপনি উত্তর দিন।',listening:'শুনছি…',customer:'গ্রাহকের নাম',phone:'হোয়াটসঅ্যাপ নম্বর',amount:'পরিমাণ (R)',item:'কী কিনেছেন',whenPay:'কবে টাকা দেবেন?',payNow:'এখন দিচ্ছেন',payLater:'পরে দেবেন',due:'শেষ তারিখ',custLang:'গ্রাহকের ভাষা',saveSale:'সংরক্ষণ করে ইনভয়েস পাঠান',errSale:'গ্রাহকের নাম ও পরিমাণ লিখুন।',stInv:'ইনভয়েস',stChk:'যাচাই',stRec:'রসিদ',sendInvoice:'ইনভয়েস পাঠান',sendReminder:'রিমাইন্ডার পাঠান',sendFirm:'কড়া রিমাইন্ডার পাঠান',sendReceipt:'রসিদ পাঠান',checkPay:'পেমেন্ট যাচাই',close:'বন্ধ',seeMsg:'বার্তা দেখুন',copyMsg:'বার্তা কপি করুন',viewChain:'ব্লকচেইনে দেখুন',dueToday:'আজ দিতে হবে',dueOn:'{d} তারিখে',daysLate1:'১ দিন দেরি',daysLateN:'{n} দিন দেরি',paid:'পরিশোধিত',example:'উদাহরণ',howPaid:'কীভাবে টাকা দিয়েছেন?',txid:'ট্রানজেকশন আইডি (গ্রাহককে জিজ্ঞেস করুন)',checkChain:'ব্লকচেইনে যাচাই করুন',fakeWarn:'জাল পেমেন্টের প্রমাণ খুব সাধারণ। নিজে টাকা দেখলেই কেবল নিশ্চিত করুন।',confirmPay:'পেমেন্ট নিশ্চিত করুন',m_eft:'ব্যাংক ট্রান্সফার (EFT)',m_payshap:'PayShap',m_card:'কার্ড (Yoco)',m_cash:'নগদ',m_btc:'Bitcoin',m_usdt:'USDT (Tron)',c_bank:'আমি নিজের ব্যাংকিং অ্যাপে R{a} আসতে দেখেছি, শুধু স্ক্রিনশট নয়।',c_card:'আমার Yoco অ্যাপ বা কার্ড মেশিনে R{a} অনুমোদিত দেখাচ্ছে।',c_cash:'আমি R{a} নগদ গুনেছি।',c_crypto:'ব্লকচেইনে নিশ্চিত দেখাচ্ছে, আমার ওয়ালেটে, সঠিক পরিমাণ।',h_bank:'ব্যাংক অ্যাপে যাচাই',h_card:'কার্ড মেশিনে অনুমোদিত',h_cash:'নগদ গোনা হয়েছে',h_crypto:'ব্লকচেইনে যাচাই',owedTitle:'কার কাছে আপনার পাওনা',owedSub:'দেরি হওয়া গ্রাহক আগে।',nobodyOwes:'এখন কারো কাছে আপনার পাওনা নেই।',paidTitle:'নিশ্চিত পেমেন্ট',paidSub:'এখানে প্রতিটি পেমেন্ট যাচাই করা।',noPaid:'আপনার নিশ্চিত করা পেমেন্ট এখানে দেখাবে।',settings:'সেটিংস',appLang:'অ্যাপের ভাষা',bizName:'ব্যবসার নাম',bank:'EFT-এর জন্য ব্যাংক তথ্য',cardLink:'কার্ড পেমেন্ট লিংক (Yoco)',large:'বড় লেখা ও বোতাম',robot:'রেকর্ডিং ছাড়া শব্দের জন্য ফোনের কণ্ঠ',removeEx:'উদাহরণ বিক্রি সরান',back:'ফিরে যান',sum:'এই মাসে আপনি R{r} পেয়েছেন। গ্রাহকদের কাছে R{u} পাওনা।',sumLate:'{name}-এর কাছে R{a} পাওনা, {n} দিন দেরি।',nobodyLate:'কেউ দেরি করেনি।',toastSaved:'বিক্রি সংরক্ষিত। ইনভয়েস পাঠান।',toastConfirmed:'পেমেন্ট নিশ্চিত।',toastCopied:'বার্তা কপি হয়েছে।',toastExRemoved:'উদাহরণ সরানো হয়েছে।',welcome:'Auvera-তে স্বাগতম',chooseLang:'আপনার ভাষা বেছে নিন',next:'পরবর্তী',obBiz:'আপনার ব্যবসার নাম কী?',obBizHint:'গ্রাহকরা এটি ইনভয়েস ও রসিদে দেখবেন।',obPay:'গ্রাহকরা কীভাবে টাকা দেন?',obPayHint:'ঐচ্ছিক। ইনভয়েসে যোগ হবে, টাকা সরাসরি আপনার ব্যাংকে যাবে।',obReady:'আপনি প্রস্তুত',obReadyHint:'Auvera কখনো আপনার টাকা ছোঁয় না। এটি যাচাই, রেকর্ড ও মনে করিয়ে দেয়।',startFresh:'প্রথম বিক্রি শুরু করুন',tryEx:'উদাহরণ দিয়ে দেখুন',footer:'আপনার তথ্য শুধু এই ফোনে থাকে।',noVoice:'এই ব্রাউজারে ভয়েস কাজ করে না। Chrome-এ Auvera খুলুন, বা কিবোর্ডের মাইক্রোফোন ব্যবহার করুন।',voiceStopped:'ভয়েস থেমে গেছে। আবার চেষ্টা করুন বা লিখুন।',typeAmount:'অনুগ্রহ করে পরিমাণ লিখুন।',payingNowW:'এখন দিচ্ছেন'},
-  so:{tagline:'Lacag-bixin kasta, la xaqiijiyay.',received:'Lagu helay bishan',owed:'Lacagtaada maqan',late:'Daahay',newSale:'Iib cusub',speakSale:'Ku hadal iibka',whoOwes:'Yaa lacagtayda haya',readMoney:'Ii akhri lacagtayda',recent:'Iibkii u dambeeyay',noSales:'Weli iib ma jiro. Taabo Iib cusub si aad u bilowdo.',tHome:'Hoyga',tSell:'Iibi',tOwed:'Maqan',tPaid:'La bixiyay',alarm1:'1 macmiil ayaa maanta u baahan xasuusin',alarmN:'{n} macmiil ayaa maanta u baahan xasuusin',remindThem:'Xasuusi',speakHint:'Auvera ayaa weydiinaysa, adiguna ka jawaab.',listening:'Waan dhageysanayaa…',customer:'Magaca macmiilka',phone:'Lambarka WhatsApp',amount:'Lacagta (R)',item:'Waxay iibsadeen',whenPay:'Goorma ayay bixinayaan?',payNow:'Hadda ayay bixinayaan',payLater:'Hadhow ayay bixin',due:'Taariikhda bixinta',custLang:'Luqadda macmiilka',saveSale:'Keydi oo dir qaansheegadka',errSale:'Geli magaca macmiilka iyo lacagta.',stInv:'Qaansheegad',stChk:'La hubiyay',stRec:'Rasiidh',sendInvoice:'Dir qaansheegad',sendReminder:'Dir xasuusin',sendFirm:'Dir xasuusin adag',sendReceipt:'Dir rasiidh',checkPay:'Hubi lacag-bixinta',close:'Xir',seeMsg:'Arag fariinta',copyMsg:'Koobi fariinta',viewChain:'Ka eeg blockchain-ka',dueToday:'Maanta',dueOn:'Ugu dambeyn {d}',daysLate1:'1 maalin daahay',daysLateN:'{n} maalmood daahay',paid:'La bixiyay',example:'Tusaale',howPaid:'Sidee ayay u bixiyeen?',txid:'Aqoonsiga macaamilka (weydii macmiilka)',checkChain:'Ka hubi blockchain-ka',fakeWarn:'Caddeyn lacag-bixin been ah waa caam. Xaqiiji kaliya marka aad naftaada aragto lacagta.',confirmPay:'Xaqiiji lacag-bixinta',m_eft:'Wareejin bangi (EFT)',m_payshap:'PayShap',m_card:'Kaar (Yoco)',m_cash:'Lacag caddaan ah',m_btc:'Bitcoin',m_usdt:'USDT (Tron)',c_bank:'Waxaan arkay R{a} oo soo gashay app-ka bangigayga, ma aha sawir kaliya.',c_card:'App-kayga Yoco ama mashiinka kaarka wuxuu muujinayaa R{a} la oggolaaday.',c_cash:'Waxaan tiriyay R{a} lacag caddaan ah.',c_crypto:'Blockchain-ku wuxuu muujinayaa in la xaqiijiyay, boorsadayda, lacagta saxda ah.',h_bank:'Lagu hubiyay app-ka bangiga',h_card:'Mashiinka kaarka ayaa oggolaaday',h_cash:'Lacagta waa la tiriyay',h_crypto:'Lagu hubiyay blockchain',owedTitle:'Yaa lacagtaada haya',owedSub:'Kuwa daahay ayaa ugu horreeya.',nobodyOwes:'Hadda cidna lacagtaada ma hayso.',paidTitle:'Lacag-bixinno la xaqiijiyay',paidSub:'Lacag-bixin kasta oo halkan ah waa la hubiyay.',noPaid:'Lacag-bixinnada aad xaqiijiso halkan ayay ka muuqan doonaan.',settings:'Dejinta',appLang:'Luqadda app-ka',bizName:'Magaca ganacsiga',bank:'Faahfaahinta bangiga ee EFT',cardLink:'Linkiga bixinta kaarka (Yoco)',large:'Qoraal iyo badhammo waaweyn',robot:'Codka taleefanka ee erayada aan la duubin',removeEx:'Ka saar tusaalooyinka',back:'Dib',sum:'Bishan waxaad heshay R{r}. Macaamiishu waxay kuu hayaan R{u}.',sumLate:'{name} wuxuu kuu hayaa R{a}, {n} maalmood daahay.',nobodyLate:'Cidna ma daahin.',toastSaved:'Iibka waa la keydiyay. Dir qaansheegadka.',toastConfirmed:'Lacag-bixinta waa la xaqiijiyay.',toastCopied:'Fariinta waa la koobiyay.',toastExRemoved:'Tusaalooyinka waa la saaray.',welcome:'Ku soo dhawoow Auvera',chooseLang:'Dooro luqaddaada',next:'Xiga',obBiz:'Ganacsigaagu muxuu la yiraahdaa?',obBizHint:'Macaamiishu waxay ku arki doonaan qaansheegadka iyo rasiidhka.',obPay:'Macaamiishu sidee ayay kuu bixiyaan?',obPayHint:'Ikhtiyaari. Waxaa lagu daraa qaansheegadka si lacagtu toos ugu gasho bangigaaga.',obReady:'Waad diyaar tahay',obReadyHint:'Auvera weligeed ma taabato lacagtaada. Way hubisaa, diiwaangelisaa oo xasuusisaa.',startFresh:'Bilow iibkayga ugu horreeya',tryEx:'Ku eeg tusaalooyin',footer:'Xogtaadu waxay ku jirtaa taleefankan kaliya.',noVoice:'Codku kuma shaqeeyo browser-kan. Ku fur Auvera Chrome, ama isticmaal makarafoonka kiiboodhka.',voiceStopped:'Codku wuu istaagay. Mar kale isku day ama qor.',typeAmount:'Fadlan qor lacagta.',payingNowW:'hadda bixinaya'},
-  sw:{tagline:'Kila malipo, yamethibitishwa.',received:'Umepokea mwezi huu',owed:'Unadai',late:'Wamechelewa',newSale:'Mauzo mapya',speakSale:'Sema mauzo',whoOwes:'Madeni ya wateja',readMoney:'Nisomee pesa zangu',recent:'Mauzo ya karibuni',noSales:'Bado hakuna mauzo. Bonyeza Mauzo mapya kuanza.',tHome:'Nyumbani',tSell:'Uza',tOwed:'Madeni',tPaid:'Yamelipwa',alarm1:'Mteja 1 anahitaji kukumbushwa leo',alarmN:'Wateja {n} wanahitaji kukumbushwa leo',remindThem:'Kumbusha',speakHint:'Auvera inauliza, wewe unajibu.',listening:'Ninasikiliza…',customer:'Jina la mteja',phone:'Namba ya WhatsApp',amount:'Kiasi (R)',item:'Walichonunua',whenPay:'Watalipa lini?',payNow:'Wanalipa sasa',payLater:'Watalipa baadaye',due:'Tarehe ya kulipa',custLang:'Lugha ya mteja',saveSale:'Hifadhi na tuma ankara',errSale:'Weka jina la mteja na kiasi.',stInv:'Ankara',stChk:'Imekaguliwa',stRec:'Risiti',sendInvoice:'Tuma ankara',sendReminder:'Tuma ukumbusho',sendFirm:'Tuma ukumbusho mkali',sendReceipt:'Tuma risiti',checkPay:'Kagua malipo',close:'Funga',seeMsg:'Ona ujumbe',copyMsg:'Nakili ujumbe',viewChain:'Tazama kwenye blockchain',dueToday:'Leo',dueOn:'Kabla ya {d}',daysLate1:'Siku 1 kuchelewa',daysLateN:'Siku {n} kuchelewa',paid:'Imelipwa',example:'Mfano',howPaid:'Walilipa vipi?',txid:'Kitambulisho cha muamala (muulize mteja)',checkChain:'Kagua kwenye blockchain',fakeWarn:'Uthibitisho bandia wa malipo ni wa kawaida. Thibitisha tu ukiona pesa mwenyewe.',confirmPay:'Thibitisha malipo',m_eft:'Uhamisho wa benki (EFT)',m_payshap:'PayShap',m_card:'Kadi (Yoco)',m_cash:'Pesa taslimu',m_btc:'Bitcoin',m_usdt:'USDT (Tron)',c_bank:'Nimeona R{a} ikiingia kwenye programu yangu ya benki, si picha ya skrini tu.',c_card:'Programu yangu ya Yoco au mashine ya kadi inaonyesha R{a} imeidhinishwa.',c_cash:'Nimehesabu R{a} taslimu.',c_crypto:'Blockchain inaonyesha imethibitishwa, kwenye pochi yangu, kiasi sahihi.',h_bank:'Imekaguliwa kwenye benki',h_card:'Imeidhinishwa na mashine ya kadi',h_cash:'Taslimu imehesabiwa',h_crypto:'Imekaguliwa kwenye blockchain',owedTitle:'Wateja wanaodaiwa',owedSub:'Waliochelewa kwanza.',nobodyOwes:'Hakuna anayedaiwa sasa.',paidTitle:'Malipo yaliyothibitishwa',paidSub:'Kila malipo hapa yamekaguliwa.',noPaid:'Malipo unayothibitisha yataonekana hapa.',settings:'Mipangilio',appLang:'Lugha ya programu',bizName:'Jina la biashara',bank:'Maelezo ya benki kwa EFT',cardLink:'Kiungo cha malipo ya kadi (Yoco)',large:'Maandishi na vitufe vikubwa',robot:'Sauti ya simu kwa maneno yasiyorekodiwa',removeEx:'Ondoa mauzo ya mfano',back:'Rudi',sum:'Mwezi huu umepokea R{r}. Wateja wanadaiwa R{u}.',sumLate:'{name} anadaiwa R{a}, siku {n} kuchelewa.',nobodyLate:'Hakuna aliyechelewa.',toastSaved:'Mauzo yamehifadhiwa. Tuma ankara.',toastConfirmed:'Malipo yamethibitishwa.',toastCopied:'Ujumbe umenakiliwa.',toastExRemoved:'Mifano imeondolewa.',welcome:'Karibu Auvera',chooseLang:'Chagua lugha yako',next:'Endelea',obBiz:'Biashara yako inaitwaje?',obBizHint:'Wateja wataona hili kwenye ankara na risiti.',obPay:'Wateja wanakulipa vipi?',obPayHint:'Si lazima. Itaongezwa kwenye ankara ili pesa iingie moja kwa moja benki yako.',obReady:'Uko tayari',obReadyHint:'Auvera haigusi pesa zako kamwe. Inakagua, inarekodi na inakumbusha.',startFresh:'Anza mauzo yangu ya kwanza',tryEx:'Tazama kwa mifano',footer:'Data yako iko kwenye simu hii tu.',noVoice:'Sauti haifanyi kazi kwenye kivinjari hiki. Fungua Auvera kwenye Chrome, au tumia maikrofoni ya kibodi.',voiceStopped:'Sauti imesimama. Jaribu tena au andika.',typeAmount:'Tafadhali andika kiasi.',payingNowW:'analipa sasa'},
-  am:{tagline:'እያንዳንዱ ክፍያ፣ የተረጋገጠ።',received:'በዚህ ወር የተቀበሉት',owed:'ያልተከፈለዎት',late:'የዘገዩ',newSale:'አዲስ ሽያጭ',speakSale:'ሽያጩን ይናገሩ',whoOwes:'ዕዳ ያለባቸው',readMoney:'ገንዘቤን አንብብልኝ',recent:'የቅርብ ሽያጮች',noSales:'እስካሁን ሽያጭ የለም። ለመጀመር አዲስ ሽያጭ ይጫኑ።',tHome:'መነሻ',tSell:'ሽያጭ',tOwed:'ዕዳ',tPaid:'የተከፈለ',alarm1:'ዛሬ 1 ደንበኛ ማስታወሻ ያስፈልገዋል',alarmN:'ዛሬ {n} ደንበኞች ማስታወሻ ያስፈልጋቸዋል',remindThem:'አስታውስ',speakHint:'Auvera ይጠይቃል፣ እርስዎ ይመልሱ።',listening:'እያዳመጥኩ ነው…',customer:'የደንበኛ ስም',phone:'የWhatsApp ቁጥር',amount:'መጠን (R)',item:'የገዙት',whenPay:'መቼ ይከፍላሉ?',payNow:'አሁን ይከፍላሉ',payLater:'በኋላ ይከፍላሉ',due:'የመክፈያ ቀን',custLang:'የደንበኛው ቋንቋ',saveSale:'አስቀምጥና የክፍያ ጥያቄ ላክ',errSale:'የደንበኛ ስም እና መጠን ያስገቡ።',stInv:'ጥያቄ',stChk:'ተረጋግጧል',stRec:'ደረሰኝ',sendInvoice:'የክፍያ ጥያቄ ላክ',sendReminder:'ማስታወሻ ላክ',sendFirm:'ጠንካራ ማስታወሻ ላክ',sendReceipt:'ደረሰኝ ላክ',checkPay:'ክፍያ አረጋግጥ',close:'ዝጋ',seeMsg:'መልእክቱን እይ',copyMsg:'መልእክቱን ቅዳ',viewChain:'በብሎክቼይን ላይ እይ',dueToday:'ዛሬ',dueOn:'እስከ {d}',daysLate1:'1 ቀን ዘግይቷል',daysLateN:'{n} ቀን ዘግይቷል',paid:'ተከፍሏል',example:'ምሳሌ',howPaid:'እንዴት ከፈሉ?',txid:'የግብይት መለያ (ደንበኛውን ይጠይቁ)',checkChain:'በብሎክቼይን ላይ አረጋግጥ',fakeWarn:'ሐሰተኛ የክፍያ ማስረጃ የተለመደ ነው። ገንዘቡን ራስዎ ሲያዩ ብቻ ያረጋግጡ።',confirmPay:'ክፍያን አረጋግጥ',m_eft:'የባንክ ዝውውር (EFT)',m_payshap:'PayShap',m_card:'ካርድ (Yoco)',m_cash:'ጥሬ ገንዘብ',m_btc:'Bitcoin',m_usdt:'USDT (Tron)',c_bank:'R{a} በራሴ የባንክ መተግበሪያ ውስጥ ሲገባ አይቻለሁ፣ ስክሪንሾት ብቻ አይደለም።',c_card:'የYoco መተግበሪያዬ ወይም የካርድ ማሽኑ R{a} መጽደቁን ያሳያል።',c_cash:'R{a} ጥሬ ገንዘብ ቆጥሬያለሁ።',c_crypto:'ብሎክቼይኑ ወደ ቦርሳዬ፣ በትክክለኛው መጠን መረጋገጡን ያሳያል።',h_bank:'በባንክ መተግበሪያ ተረጋግጧል',h_card:'በካርድ ማሽን ጸድቋል',h_cash:'ጥሬ ገንዘብ ተቆጥሯል',h_crypto:'በብሎክቼይን ተረጋግጧል',owedTitle:'ዕዳ ያለባቸው ደንበኞች',owedSub:'የዘገዩ መጀመሪያ።',nobodyOwes:'አሁን ማንም ዕዳ የለበትም።',paidTitle:'የተረጋገጡ ክፍያዎች',paidSub:'እዚህ ያለው እያንዳንዱ ክፍያ ተረጋግጧል።',noPaid:'ያረጋገጧቸው ክፍያዎች እዚህ ይታያሉ።',settings:'ቅንብሮች',appLang:'የመተግበሪያ ቋንቋ',bizName:'የንግድ ስም',bank:'ለEFT የባንክ ዝርዝሮች',cardLink:'የካርድ ክፍያ ሊንክ (Yoco)',large:'ትልቅ ጽሑፍ እና አዝራሮች',robot:'ላልተቀዱ ቃላት የስልክ ድምጽ',removeEx:'የምሳሌ ሽያጮችን አስወግድ',back:'ተመለስ',sum:'በዚህ ወር R{r} ተቀብለዋል። ደንበኞች R{u} ዕዳ አለባቸው።',sumLate:'{name} R{a} ዕዳ አለበት፣ {n} ቀን ዘግይቷል።',nobodyLate:'ማንም አልዘገየም።',toastSaved:'ሽያጩ ተቀምጧል። የክፍያ ጥያቄውን ይላኩ።',toastConfirmed:'ክፍያው ተረጋግጧል።',toastCopied:'መልእክቱ ተቀድቷል።',toastExRemoved:'ምሳሌዎቹ ተወግደዋል።',welcome:'ወደ Auvera እንኳን ደህና መጡ',chooseLang:'ቋንቋዎን ይምረጡ',next:'ቀጣይ',obBiz:'የንግድዎ ስም ማን ነው?',obBizHint:'ደንበኞች ይህንን በክፍያ ጥያቄ እና ደረሰኝ ላይ ያያሉ።',obPay:'ደንበኞች እንዴት ይከፍሉዎታል?',obPayHint:'አማራጭ። ገንዘቡ በቀጥታ ወደ ባንክዎ እንዲገባ በክፍያ ጥያቄው ላይ ይጨመራል።',obReady:'ዝግጁ ነዎት',obReadyHint:'Auvera ገንዘብዎን በጭራሽ አይነካም። ያረጋግጣል፣ ይመዘግባል፣ ያስታውሳል።',startFresh:'የመጀመሪያ ሽያጬን ጀምር',tryEx:'በምሳሌዎች ተመልከት',footer:'መረጃዎ በዚህ ስልክ ላይ ብቻ ነው።',noVoice:'ድምጽ በዚህ አሳሽ አይሰራም። Auvera ን በChrome ይክፈቱ፣ ወይም የቁልፍ ሰሌዳውን ማይክሮፎን ይጠቀሙ።',voiceStopped:'ድምጹ ቆሟል። እንደገና ይሞክሩ ወይም ይጻፉ።',typeAmount:'እባክዎ መጠኑን ይጻፉ።',payingNowW:'አሁን ይከፍላሉ'}
-  };
+  <!-- Modules -->
+  <script type="module" src="i18n.js"></script>
+  <script type="module" src="voice.js"></script>
+  <script type="module" src="app.js"></script>
 
-  /* ---------- WhatsApp messages to customers ---------- */
-  var T={
-    en:{invoice:'Hi {name}, invoice #{no} from {biz}: {item}, R{amount}. Please pay by {date}. Thank you!',soon:'Hi {name}, a friendly reminder from {biz}: R{amount} for {item} (invoice #{no}) is due on {date}. Thank you!',late:'Hi {name}, your payment of R{amount} for {item} (invoice #{no}) to {biz} is {days} days late. Please pay today. Thank you.',receipt:'Thank you {name}! Receipt #{no} from {biz}: R{amount} for {item} received on {date}. ✓ Payment confirmed with Auvera.'},
-    pcm:{invoice:'How far {name}, na invoice #{no} from {biz}: {item}, R{amount}. Abeg pay before {date}. Thank you!',soon:'How far {name}, na {biz} dey remind you: R{amount} for {item} (invoice #{no}) go due {date}. Thank you!',late:'{name}, abeg the R{amount} for {item} (invoice #{no}) wey you owe {biz} don pass due by {days} days. Abeg pay today. Thank you.',receipt:'Thank you {name}! Receipt #{no} from {biz}: we don receive your R{amount} for {item} on {date}. ✓ Auvera don confirm am.'},
-    ur:{invoice:'السلام علیکم {name}، {biz} کی طرف سے انوائس #{no}: {item}، R{amount}۔ براہ کرم {date} تک ادائیگی کریں۔ شکریہ!',soon:'السلام علیکم {name}، {biz} کی طرف سے یاد دہانی: {item} کے R{amount} (انوائس #{no}) کی ادائیگی {date} تک ہے۔ شکریہ!',late:'{name}، {biz} کو {item} کے R{amount} (انوائس #{no}) کی ادائیگی {days} دن سے باقی ہے۔ براہ کرم آج ادائیگی کریں۔ شکریہ۔',receipt:'شکریہ {name}! {biz} کی رسید #{no}: {item} کے R{amount} {date} کو وصول ہو گئے۔ ✓ Auvera سے تصدیق شدہ۔'},
-    bn:{invoice:'আসসালামু আলাইকুম {name}, {biz} থেকে ইনভয়েস #{no}: {item}, R{amount}। অনুগ্রহ করে {date} তারিখের মধ্যে পরিশোধ করুন। ধন্যবাদ!',soon:'আসসালামু আলাইকুম {name}, {biz} থেকে মনে করিয়ে দিচ্ছি: {item}-এর R{amount} (ইনভয়েস #{no}) {date} তারিখের মধ্যে দিতে হবে। ধন্যবাদ!',late:'{name}, {biz}-এর {item}-এর R{amount} (ইনভয়েস #{no}) পরিশোধ {days} দিন দেরি হয়েছে। অনুগ্রহ করে আজই পরিশোধ করুন। ধন্যবাদ।',receipt:'ধন্যবাদ {name}! {biz} থেকে রসিদ #{no}: {item}-এর R{amount} {date} তারিখে পাওয়া গেছে। ✓ Auvera দ্বারা নিশ্চিত।'},
-    so:{invoice:'Asc {name}, qaansheegad #{no} ka timid {biz}: {item}, R{amount}. Fadlan bixi ka hor {date}. Mahadsanid!',soon:'Asc {name}, xasuusin ka timid {biz}: R{amount} oo ah {item} (qaansheegad #{no}) waa in la bixiyaa {date}. Mahadsanid!',late:'{name}, lacagta R{amount} ee {item} (qaansheegad #{no}) ee {biz} waxay dib u dhacday {days} maalmood. Fadlan maanta bixi. Mahadsanid.',receipt:'Mahadsanid {name}! Rasiidh #{no} ee {biz}: R{amount} oo ah {item} waa la helay {date}. ✓ Auvera ayaa xaqiijisay.'},
-    sw:{invoice:'Habari {name}, ankara #{no} kutoka {biz}: {item}, R{amount}. Tafadhali lipa kabla ya {date}. Asante!',soon:'Habari {name}, ukumbusho kutoka {biz}: R{amount} kwa {item} (ankara #{no}) inatakiwa kulipwa {date}. Asante!',late:'{name}, malipo ya R{amount} kwa {item} (ankara #{no}) kutoka {biz} yamechelewa siku {days}. Tafadhali lipa leo. Asante.',receipt:'Asante {name}! Risiti #{no} kutoka {biz}: R{amount} kwa {item} imepokelewa {date}. ✓ Imethibitishwa na Auvera.'},
-    am:{invoice:'ሰላም {name}፣ ከ{biz} የክፍያ ጥያቄ #{no}፦ {item}፣ R{amount}። እባክዎ እስከ {date} ይክፈሉ። እናመሰግናለን!',soon:'ሰላም {name}፣ ከ{biz} ማስታወሻ፦ ለ{item} R{amount} (#{no}) እስከ {date} መከፈል አለበት። እናመሰግናለን!',late:'{name}፣ ለ{biz} የ{item} R{amount} (#{no}) ክፍያ በ{days} ቀን ዘግይቷል። እባክዎ ዛሬ ይክፈሉ። እናመሰግናለን።',receipt:'እናመሰግናለን {name}! ከ{biz} ደረሰኝ #{no}፦ ለ{item} R{amount} በ{date} ተቀብለናል። ✓ በAuvera ተረጋግጧል።'}
-  };
-  // [id, name key, check-statement key, how-checked key]
-  var METHODS=[['eft','m_eft','c_bank','h_bank'],['payshap','m_payshap','c_bank','h_bank'],['card','m_card','c_card','h_card'],['cash','m_cash','c_cash','h_cash'],['btc','m_btc','c_crypto','h_crypto'],['usdt','m_usdt','c_crypto','h_crypto']];
-
-  var KEY='auvera-test-v2';
-  var $=function(id){return document.getElementById(id)};
-  function today(){var d=new Date();d.setHours(0,0,0,0);return d}
-  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-  function addDays(n){var d=today();d.setDate(d.getDate()+n);return iso(d)}
-  function parse(s){var p=String(s||iso(today())).split('-');return new Date(+p[0],+p[1]-1,+p[2])}
-  function daysFrom(s){return Math.round((parse(s)-today())/86400000)}
-  function fmtDate(s){var d=parse(s);return d.getDate()+'/'+(d.getMonth()+1)}
-  function money(n){return Math.round(n).toLocaleString('en-ZA').replace(/[,  ]/g,' ')}
-  function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
-  function method(id){return METHODS.filter(function(m){return m[0]===id})[0]||METHODS[0]}
-  function langName(id){return (LANGS.filter(function(l){return l[0]===id})[0]||LANGS[0])[1]}
-  function explorer(m,tx){tx=(tx||'').trim();if(!tx)return '';return m==='btc'?'https://mempool.space/tx/'+encodeURIComponent(tx):(m==='usdt'?'https://tronscan.org/#/transaction/'+encodeURIComponent(tx):'')}
-  function initials(n){var p=String(n||'?').trim().split(/\s+/);return ((p[0]||'?').charAt(0)+(p.length>1?p[p.length-1].charAt(0):'')).toUpperCase()}
-
-  function sample(){return {biz:'',lang:'en',ui:'en',bank:'',link:'',next:1004,sales:[
-    {id:'s1',no:1001,name:'Mr Adeyemi',phone:'0721234567',item:'suit alterations',amount:2000,lang:'pcm',created:addDays(-12),due:addDays(-5),invoiceSent:true,paid:null,example:true},
-    {id:'s2',no:1002,name:'Lerato K.',phone:'0831234567',item:'wig install',amount:1400,lang:'en',created:addDays(-3),due:addDays(0),invoiceSent:true,paid:null,example:true},
-    {id:'s3',no:1003,name:'Mr Okafor',phone:'0611234567',item:'agbada',amount:2000,lang:'en',created:addDays(-1),due:addDays(-1),invoiceSent:true,paid:{method:'eft',tx:'',date:addDays(-1),receiptSent:true},example:true}
-  ]}}
-  var S;
-  try{var raw=localStorage.getItem(KEY);S=raw?JSON.parse(raw):sample()}catch(e){S=sample()}
-  if(!S||!Array.isArray(S.sales))S=sample();
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-
-  function ui(){return I[S.ui]?S.ui:'en'}
-  function t(k,v){var s=(I[ui()]&&I[ui()][k])||I.en[k]||k;if(v)Object.keys(v).forEach(function(x){s=s.split('{'+x+'}').join(v[x])});return s}
-  function applyI18n(){
-    var L=ui();document.documentElement.lang=L==='pcm'?'en':L;document.documentElement.dir=L==='ur'?'rtl':'ltr';
-    document.querySelectorAll('[data-t]').forEach(function(n){if(n.id==='voiceLabel'&&busy)return;n.textContent=t(n.getAttribute('data-t'))});
-    document.querySelectorAll('[data-tlabel]').forEach(function(n){n.setAttribute('aria-label',t(n.getAttribute('data-tlabel')))});
-  }
-
-  /* ---------- Messages ---------- */
-  function payInfo(){var s='';if(S.bank)s+='\n\nEFT: '+S.bank;if(S.link)s+=(s?'\n':'\n\n')+'Card: '+S.link;return s}
-  function msg(sale,kind){
-    var tt=T[sale.lang]||T.en,n=daysFrom(sale.due);
-    var date=kind==='receipt'&&sale.paid?sale.paid.date:sale.due;
-    var out=tt[kind].replace(/\{name\}/g,sale.name).replace(/\{biz\}/g,S.biz||'us').replace(/\{amount\}/g,money(sale.amount))
-      .replace(/\{item\}/g,sale.item||'your order').replace(/\{no\}/g,String(sale.no)).replace(/\{date\}/g,fmtDate(date)).replace(/\{days\}/g,String(-n));
-    if(kind!=='receipt')out+=payInfo();
-    return out;
-  }
-  function waNum(p){var s=(p||'').replace(/\D/g,'');if(s.charAt(0)==='0')s='27'+s.slice(1);return s}
-  function waHref(sale,kind){return 'https://wa.me/'+waNum(sale.phone)+'?text='+encodeURIComponent(msg(sale,kind))}
-  function toast(m){var x=$('toast');x.textContent=m;x.hidden=false;clearTimeout(toast.tm);toast.tm=setTimeout(function(){x.hidden=true},2800)}
-  var WA_ICON='<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>';
-  function waButton(sale,kind,label,onSent){
-    var a=el('a','btn wa');a.href=waHref(sale,kind);a.target='_blank';a.rel='noopener';a.innerHTML=WA_ICON;a.appendChild(document.createTextNode(label));
-    a.addEventListener('click',function(){if(onSent)onSent()});return a;
-  }
-  function previewBlock(sale,kind){
-    var d=el('details','msg');d.appendChild(el('summary',null,t('seeMsg')));
-    var p=el('div','preview',msg(sale,kind));p.dir='auto';d.appendChild(p);
-    var c=el('button',null,t('copyMsg'));c.type='button';c.style.marginTop='8px';
-    c.addEventListener('click',function(){var txt=msg(sale,kind);var pr=navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt):Promise.reject();pr.then(function(){toast(t('toastCopied'))},function(){var r=document.createRange();r.selectNodeContents(p);var sel=getSelection();sel.removeAllRanges();sel.addRange(r)})});
-    d.appendChild(c);return d;
-  }
-
-  /* ---------- Payment check ---------- */
-  function buildConfirm(sale){
-    var box=el('div','confirm'),uid=sale.id;
-    var f1=el('div','field');var l1=el('label',null,t('howPaid'));l1.htmlFor='m-'+uid;
-    var sel=el('select');sel.id='m-'+uid;METHODS.forEach(function(m){var o=el('option',null,t(m[1]));o.value=m[0];sel.appendChild(o)});
-    f1.appendChild(l1);f1.appendChild(sel);box.appendChild(f1);
-    var cw=el('div','field');var l2=el('label',null,t('txid'));l2.htmlFor='tx-'+uid;
-    var tx=el('input');tx.id='tx-'+uid;tx.autocomplete='off';
-    var exp=el('a','btn',t('checkChain'));exp.target='_blank';exp.rel='noopener';
-    cw.appendChild(l2);cw.appendChild(tx);cw.appendChild(exp);box.appendChild(cw);
-    box.appendChild(el('div','warnbox',t('fakeWarn')));
-    var lab=el('label','check');var cb=el('input');cb.type='checkbox';cb.id='cb-'+uid;var ct=el('span');lab.appendChild(cb);lab.appendChild(ct);box.appendChild(lab);
-    var ok=el('button','wa',t('confirmPay'));ok.type='button';box.appendChild(ok);
-    function sync(){var m=sel.value,c=(m==='btc'||m==='usdt');cw.hidden=!c;var l=explorer(m,tx.value);exp.hidden=!l;if(l)exp.href=l;ct.textContent=t(method(m)[2],{a:money(sale.amount)});ok.disabled=!cb.checked||(c&&!tx.value.trim())}
-    sel.addEventListener('change',function(){cb.checked=false;sync()});tx.addEventListener('input',sync);cb.addEventListener('change',sync);sync();
-    ok.addEventListener('click',function(){sale.paid={method:sel.value,tx:tx.value.trim(),date:iso(today()),receiptSent:false};save();render();toast(t('toastConfirmed'))});
-    return box;
-  }
-
-  /* ---------- Sale card ---------- */
-  function statusChip(sale){
-    if(sale.paid)return el('span','chip ok','✓ '+t(method(sale.paid.method)[3]));
-    var n=daysFrom(sale.due);
-    if(n<0)return el('span','chip late',n===-1?t('daysLate1'):t('daysLateN',{n:-n}));
-    if(n===0)return el('span','chip today',t('dueToday'));
-    return el('span','chip soon',t('dueOn',{d:fmtDate(sale.due)}));
-  }
-  function saleCard(sale,mode){
-    var paid=!!sale.paid,n=daysFrom(sale.due);
-    var card=el('article','sale'+(!paid&&n<0?' late':''));
-    var row=el('div','srow');row.appendChild(el('span','av',initials(sale.name)));
-    var who=el('div','who');var nm=el('b',null,sale.name);nm.dir='auto';who.appendChild(nm);
-    var sub=el('span',null,(sale.item||'')+' · #'+sale.no);sub.dir='auto';who.appendChild(sub);
-    row.appendChild(who);row.appendChild(el('span','amt','R'+money(sale.amount)));card.appendChild(row);
-    var chips=el('div','chips');chips.appendChild(statusChip(sale));if(sale.example)chips.appendChild(el('span','chip example',t('example')));card.appendChild(chips);
-    var track=el('div','track');
-    [[t('stInv'),sale.invoiceSent],[t('stChk'),paid],[t('stRec'),paid&&sale.paid.receiptSent]].forEach(function(s){var st=el('div','step'+(s[1]?' done':''));st.appendChild(el('i',null,s[1]?'✓':''));st.appendChild(el('span',null,s[0]));track.appendChild(st)});
-    card.appendChild(track);
-    var actions=el('div','actions');
-    if(!paid){
-      if(!sale.invoiceSent)actions.appendChild(waButton(sale,'invoice',t('sendInvoice'),function(){sale.invoiceSent=true;save();setTimeout(render,400)}));
-      else if(mode==='owed'||n<=0)actions.appendChild(waButton(sale,n<0?'late':'soon',n<0?t('sendFirm'):t('sendReminder')));
-      var chk=el('button','gold',t('checkPay'));chk.type='button';actions.appendChild(chk);card.appendChild(actions);
-      var cf=buildConfirm(sale);cf.hidden=true;card.appendChild(cf);
-      chk.addEventListener('click',function(){cf.hidden=!cf.hidden;chk.textContent=cf.hidden?t('checkPay'):t('close')});
-      card.appendChild(previewBlock(sale,!sale.invoiceSent?'invoice':(n<0?'late':'soon')));
-    }else{
-      if(!sale.paid.receiptSent)actions.appendChild(waButton(sale,'receipt',t('sendReceipt'),function(){sale.paid.receiptSent=true;save();setTimeout(render,400)}));
-      var l=explorer(sale.paid.method,sale.paid.tx);if(l){var a=el('a','btn',t('viewChain'));a.href=l;a.target='_blank';a.rel='noopener';actions.appendChild(a)}
-      if(actions.childNodes.length)card.appendChild(actions);
-      if(!sale.paid.receiptSent)card.appendChild(previewBlock(sale,'receipt'));
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js').then(function(reg) {
+        console.log('Auvera SW registered:', reg.scope);
+      }).catch(function(err) {
+        console.log('Auvera SW registration failed:', err);
+      });
     }
-    return card;
-  }
-
-  function totals(){
-    var m=today().getMonth(),y=today().getFullYear(),rec=0,unpaid=0,late=0,due=0,lates=[];
-    S.sales.forEach(function(s){
-      if(s.paid){var d=parse(s.paid.date);if(d.getMonth()===m&&d.getFullYear()===y)rec+=s.amount}
-      else{unpaid+=s.amount;var n=daysFrom(s.due);if(n<0){late++;lates.push(s)}else if(n===0)due++}
-    });
-    return {rec:rec,unpaid:unpaid,late:late,due:due,lates:lates};
-  }
-  function render(){
-    var x=totals();
-    $('mReceived').innerHTML='';var sm=el('small',null,'R');$('mReceived').appendChild(sm);$('mReceived').appendChild(document.createTextNode(money(x.rec)));
-    $('mUnpaid').textContent='R'+money(x.unpaid);$('mLate').textContent=x.late;
-    $('bizLine').textContent=(S.biz||'').toUpperCase();
-    var lb=$('lateBadge');lb.hidden=!x.late;lb.textContent=x.late;
-    var need=x.late+x.due;$('alarm').hidden=!need;$('alarmText').textContent=need===1?t('alarm1'):t('alarmN',{n:need});
-    $('clearExamples').hidden=!S.sales.some(function(s){return s.example});
-    var recent=S.sales.slice().sort(function(a,b){return b.no-a.no}).slice(0,5),rl=$('recentList');rl.innerHTML='';
-    if(!recent.length)rl.appendChild(el('div','empty',t('noSales')));
-    recent.forEach(function(s){rl.appendChild(saleCard(s,'home'))});
-    var owed=S.sales.filter(function(s){return !s.paid}).sort(function(a,b){return parse(a.due)-parse(b.due)}),ol=$('owedList');ol.innerHTML='';
-    if(!owed.length)ol.appendChild(el('div','empty',t('nobodyOwes')));
-    owed.forEach(function(s){ol.appendChild(saleCard(s,'owed'))});
-    var pd=S.sales.filter(function(s){return s.paid}).sort(function(a,b){return parse(b.paid.date)-parse(a.paid.date)||b.no-a.no}),pl=$('paidList');pl.innerHTML='';
-    if(!pd.length)pl.appendChild(el('div','empty',t('noPaid')));
-    pd.forEach(function(s){pl.appendChild(saleCard(s,'paid'))});
-  }
-
-  var current='home';
-  function go(tab){
-    current=tab;
-    ['home','sell','owed','paid','settings'].forEach(function(p){$('p-'+p).hidden=p!==tab});
-    ['home','sell','owed','paid'].forEach(function(p){var b=$('t-'+p);if(p===tab)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
-    $('balance').hidden=tab!=='home';
-    window.scrollTo(0,0);
-    if(tab==='sell'){$('fLang').value=S.lang||ui()}
-  }
-  document.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(b)go(b.getAttribute('data-go'))});
-
-  function fillLangs(sel,v){sel.innerHTML='';LANGS.forEach(function(l){var o=el('option',null,l[1]);o.value=l[0];sel.appendChild(o)});sel.value=v||'en'}
-
-  /* ---------- Settings ---------- */
-  function loadSettings(){fillLangs($('fLang'),S.lang);fillLangs($('sLang'),S.lang);fillLangs($('sUi'),ui());$('sBiz').value=S.biz||'';$('sBank').value=S.bank||'';$('sLink').value=S.link||'';$('sLarge').checked=!!S.large;$('sRobot').checked=!!S.robot}
-  $('sUi').addEventListener('change',function(e){S.ui=e.target.value;save();applyI18n();render()});
-  $('sBiz').addEventListener('input',function(e){S.biz=e.target.value.trim();save();render()});
-  $('sBank').addEventListener('input',function(e){S.bank=e.target.value.trim();save()});
-  $('sLink').addEventListener('input',function(e){S.link=e.target.value.trim();save()});
-  $('sLang').addEventListener('change',function(e){S.lang=e.target.value;save()});
-  $('sLarge').addEventListener('change',function(e){S.large=e.target.checked;save();applyLarge()});
-  $('sRobot').addEventListener('change',function(e){S.robot=e.target.checked;save()});
-  $('clearExamples').addEventListener('click',function(){S.sales=S.sales.filter(function(s){return !s.example});save();render();toast(t('toastExRemoved'))});
-  function applyLarge(){document.documentElement.classList.toggle('large',!!S.large)}
-
-  /* ---------- New sale ---------- */
-  var later=false;
-  function setWhen(l){later=l;$('payNow').setAttribute('aria-pressed',String(!l));$('payLater').setAttribute('aria-pressed',String(l));$('dueWrap').hidden=!l;if(l&&!$('fDue').value)$('fDue').value=addDays(7)}
-  $('payNow').addEventListener('click',function(){setWhen(false)});$('payLater').addEventListener('click',function(){setWhen(true)});
-  $('saleForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var name=$('fName').value.trim(),amount=parseFloat(($('fAmount').value||'').replace(/[^\d.]/g,''));
-    if(!name||!(amount>0)){$('saleErr').hidden=false;return}
-    $('saleErr').hidden=true;
-    var sale={id:'s'+Date.now(),no:S.next||1001,name:name,phone:$('fPhone').value.trim(),item:$('fItem').value.trim(),amount:amount,lang:$('fLang').value,created:iso(today()),due:later&&$('fDue').value?$('fDue').value:iso(today()),invoiceSent:false,paid:null};
-    S.next=(S.next||1001)+1;S.sales.push(sale);save();e.target.reset();setWhen(false);render();go('home');
-    toast(t('toastSaved'));try{say({c:'saved',t:''})}catch(err){}
-  });
-
-  /* ---------- Voice (Amos's recorded clips, like Road Clear) ---------- */
-  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  var RLANG={en:'en-ZA',pcm:'en-NG',ur:'ur-PK',bn:'bn-BD',so:'so-SO',sw:'sw-KE',am:'am-ET'};
-  var CLIPS={talk:'voice/talk-now',nohear:'voice/no-hear',nomic:'voice/no-mic',okay:'voice/okay',qname:'voice/q-name',qitem:'voice/q-item',qamount:'voice/q-amount',qwhen:'voice/q-when',saved:'voice/sale-saved'};
-  var EXT=['.m4a','.mp3'],clipExt={},missing={};
-  var VQ={
-    en:{qname:"What is the customer's name?",qitem:'What did they buy?',qamount:'How much, in rand?',qwhen:'When will they pay? Say now, or a day like Friday.',talk:'Talk now.',nohear:"I didn't hear you. Please say it again.",okay:'Okay.',nomic:'Allow the microphone for Auvera, then try again.',got:'Got it. Check the details, then tap Save.'},
-    pcm:{qname:'Wetin be the customer name?',qitem:'Wetin dem buy?',qamount:'How much, for rand?',qwhen:'When dem go pay? Talk now now, or one day like Friday.',talk:'Talk now.',nohear:'I no hear you. Talk am again.',okay:'Okay.',nomic:'Allow microphone for Auvera, then try again.',got:'I don get am. Check am well, then tap Save.'},
-    ur:{qname:'گاہک کا نام کیا ہے؟',qitem:'انہوں نے کیا خریدا؟',qamount:'کتنے رینڈ؟',qwhen:'وہ کب ادائیگی کریں گے؟ ابھی کہیں، یا کوئی دن جیسے جمعہ۔',talk:'اب بولیں۔',nohear:'میں سن نہیں سکا۔ براہ کرم دوبارہ کہیں۔',okay:'ٹھیک ہے۔',nomic:'Auvera کے لیے مائیکروفون کی اجازت دیں، پھر دوبارہ کوشش کریں۔',got:'سمجھ گیا۔ تفصیلات دیکھیں، پھر محفوظ کریں۔'},
-    bn:{qname:'গ্রাহকের নাম কী?',qitem:'তিনি কী কিনেছেন?',qamount:'কত র‍্যান্ড?',qwhen:'কবে টাকা দেবেন? এখন বলুন, অথবা একটি দিন যেমন শুক্রবার।',talk:'এখন বলুন।',nohear:'আমি শুনতে পাইনি। আবার বলুন।',okay:'ঠিক আছে।',nomic:'Auvera-কে মাইক্রোফোনের অনুমতি দিন, তারপর আবার চেষ্টা করুন।',got:'বুঝেছি। বিবরণ দেখুন, তারপর সংরক্ষণ করুন।'},
-    so:{qname:'Magaca macmiilka waa maxay?',qitem:'Maxay iibsadeen?',qamount:'Imisa rand?',qwhen:'Goorma ayay bixin doonaan? Dheh hadda, ama maalin sida Jimcaha.',talk:'Hadda hadal.',nohear:'Ma maqlin. Fadlan ku celi.',okay:'Hagaag.',nomic:'U oggolow makarafoonka Auvera, kadibna mar kale isku day.',got:'Waan helay. Hubi faahfaahinta, kadib keydi.'},
-    sw:{qname:'Jina la mteja ni nani?',qitem:'Wamenunua nini?',qamount:'Kiasi gani, kwa randi?',qwhen:'Watalipa lini? Sema sasa, au siku kama Ijumaa.',talk:'Ongea sasa.',nohear:'Sikukusikia. Tafadhali sema tena.',okay:'Sawa.',nomic:'Ruhusu maikrofoni kwa Auvera, kisha jaribu tena.',got:'Nimepata. Angalia maelezo, kisha hifadhi.'},
-    am:{qname:'የደንበኛው ስም ማን ነው?',qitem:'ምን ገዙ?',qamount:'ስንት ራንድ?',qwhen:'መቼ ይከፍላሉ? አሁን ይበሉ፣ ወይም እንደ አርብ ያለ ቀን።',talk:'አሁን ይናገሩ።',nohear:'አልሰማሁዎትም። እባክዎ እንደገና ይበሉ።',okay:'እሺ።',nomic:'ለAuvera ማይክሮፎን ይፍቀዱ፣ ከዚያ እንደገና ይሞክሩ።',got:'ገባኝ። ዝርዝሩን ያረጋግጡ፣ ከዚያ ያስቀምጡ።'}
-  };
-  function vq(k){return (VQ[ui()]||VQ.en)[k]||VQ.en[k]}
-  // Clips can sit in the voice folder or the main folder; both are tried, .m4a first, then .mp3
-  function clipUrls(k){var L=ui(),name=CLIPS[k].replace('voice/',''),dirs=(L==='en'||L==='pcm')?['voice/','']:['voice/'+L+'/',L+'/'],out=[];
-    dirs.forEach(function(d){EXT.forEach(function(e){out.push(d+name+e)})});return out}
-  // One shared player, unlocked on the first tap: iPhone only plays sound that starts from a tap, and this keeps later clips allowed too
-  var player=new Audio();player.preload='auto';var unlocked=false;
-  try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
-  function unlockAudio(){if(unlocked)return;unlocked=true;
-    try{player.src='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';var q=player.play();if(q&&q.catch)q.catch(function(){})}catch(e){}
-    try{if('speechSynthesis' in window){var u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u)}}catch(e){}}
-  ['touchend','click'].forEach(function(ev){document.addEventListener(ev,unlockAudio,{passive:true,capture:true})});
-  function playClip(k){return new Promise(function(res){
-    var mk=ui()+':'+k;if(!CLIPS[k]||missing[mk])return res(false);
-    var done=false;function fin(ok){if(!done){done=true;res(ok)}}
-    var tries=clipExt[mk]?[clipExt[mk]]:clipUrls(k),i=0,att=0;
-    function next(){if(i>=tries.length){missing[mk]=true;return fin(false)}var ext=tries[i++],my=++att,moved=false;
-      function fail(){if(moved||my!==att)return;moved=true;next()}
-      try{player.onended=function(){if(my===att){clipExt[mk]=ext;fin(true)}};player.onerror=fail;player.src=ext;
-        var pr=player.play();if(pr&&pr.then)pr.then(function(){clipExt[mk]=ext},function(err){if(err&&err.name==='NotAllowedError'){if(my===att)fin(false)}else fail()})}catch(e){fail()}}
-    next();setTimeout(function(){fin(true)},15000);
-  })}
-  var bestVoice=null;
-  function pickVoice(){try{var vs=speechSynthesis.getVoices().filter(function(v){return /^en/i.test(v.lang)});if(!vs.length)return;
-    function sc(v){var n=v.name.toLowerCase(),s=0;if(/natural|neural|premium|enhanced|online/.test(n))s+=50;if(/google/.test(n))s+=20;if(/en[-_](ng|za)/i.test(v.lang))s+=15;if(/daniel|arthur|oliver|male/.test(n))s+=10;if(/compact|espeak/.test(n))s-=40;return s}
-    vs.sort(function(a,b){return sc(b)-sc(a)});bestVoice=vs[0]}catch(e){}}
-  try{if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}}catch(e){}
-  function tts(text,force){return new Promise(function(res){var done=false;function fin(){if(!done){done=true;res()}}
-    if((!S.robot&&!force)||!text)return setTimeout(fin,Math.min(2000,400+String(text||'').length*20));
-    try{speechSynthesis.cancel();if(!bestVoice)pickVoice();var u=new SpeechSynthesisUtterance(text);var L=ui();
-      if(L==='en'||L==='pcm'){if(bestVoice){u.voice=bestVoice;u.lang=bestVoice.lang}else u.lang='en-ZA'}
-      else{u.lang=RLANG[L];try{var lv=speechSynthesis.getVoices().filter(function(v){return v.lang.replace('_','-').toLowerCase().indexOf(L)===0})[0];if(lv)u.voice=lv}catch(e){}}
-      u.rate=0.95;u.onend=fin;u.onerror=fin;speechSynthesis.speak(u);setTimeout(fin,2500+text.length*95)}catch(e){fin()}})}
-  async function say(parts){if(!Array.isArray(parts))parts=[parts];
-    for(var i=0;i<parts.length;i++){var p=parts[i];
-      if(typeof p!=='string'&&p.c){var ok=await playClip(p.c);if(!ok&&p.t)await tts(p.t)}
-      else await tts(typeof p==='string'?p:p.t)}}
-  function listen(lang){return new Promise(function(res,rej){try{var r=new SR();r.lang=lang;r.interimResults=false;r.maxAlternatives=1;var got=false;r.onresult=function(e){got=true;res(e.results[0][0].transcript)};r.onerror=function(e){if(!got)rej(e.error||'error')};r.onend=function(){if(!got)rej('no-speech')};r.start()}catch(e){rej('unavailable')}})}
-  var SMALL={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60,seventy:70,eighty:80,ninety:90};
-  function toAmount(s){
-    var d=s.replace(/[,\s](?=\d{3}\b)/g,'').match(/\d+(?:\.\d+)?/);if(d)return parseFloat(d[0]);
-    var total=0,cur=0,any=false;s.toLowerCase().replace(/-/g,' ').split(/\s+/).forEach(function(w){
-      if(w==='a'&&!any){cur=1;return}
-      if(SMALL[w]!=null){cur+=SMALL[w];any=true}else if(w==='hundred'){cur=(cur||1)*100;any=true}else if(w==='thousand'){total+=(cur||1)*1000;cur=0;any=true}});
-    return any?total+cur:NaN;
-  }
-  var DAYS=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
-  function toWhen(s){
-    s=s.toLowerCase();
-    if(/\b(now|today|cash|paid|paying|hadda|maanta|sasa|leo)\b/.test(s)||/ابھی|آج|এখন|আজ|አሁን|ዛሬ/.test(s))return null;
-    if(/tomorrow|tomorro|tumoro|berri|kesho/.test(s)||/کل|আগামীকাল|কাল|ነገ/.test(s))return addDays(1);
-    if(/next week/.test(s))return addDays(7);
-    if(/month end|end of (the )?month/.test(s)){var d=today();return iso(new Date(d.getFullYear(),d.getMonth()+1,0))}
-    for(var i=0;i<7;i++){if(s.indexOf(DAYS[i])>-1){var diff=(i-today().getDay()+7)%7||7;return addDays(diff)}}
-    var n=toAmount(s);if(n>0&&/day/.test(s))return addDays(Math.round(n));
-    return addDays(7);
-  }
-  function vstatus(m){$('voiceStatus').textContent=m}
-  var busy=false;
-  async function startVoice(){
-    if(busy)return;
-    if(!SR){vstatus(t('noVoice'));return}
-    busy=true;var btn=$('voiceBtn');btn.setAttribute('aria-busy','true');$('voiceLabel').textContent=t('listening');
-    var lang=RLANG[ui()]||'en-ZA';
-    var Q=[['fName','qname'],['fItem','qitem'],['fAmount','qamount'],['when','qwhen']];
-    try{
-      for(var i=0;i<Q.length;i++){
-        var q=Q[i],qt=vq(q[1]);vstatus(qt);await say([{c:q[1],t:qt},{c:'talk',t:vq('talk')}]);vstatus(qt+' '+vq('talk'));
-        var heard;
-        try{heard=await listen(lang)}catch(err){
-          if(err==='not-allowed'||err==='service-not-allowed'){vstatus(vq('nomic'));await say({c:'nomic',t:vq('nomic')});throw err}
-          vstatus(vq('nohear')+' '+qt);await say([{c:'nohear',t:vq('nohear')},{c:'talk',t:vq('talk')}]);heard=await listen(lang);
-        }
-        if(q[0]==='fAmount'){var a=toAmount(heard);if(a>0)$('fAmount').value=String(a);else vstatus(t('typeAmount'))}
-        else if(q[0]==='when'){var w=toWhen(heard);if(w){setWhen(true);$('fDue').value=w}else setWhen(false)}
-        else $(q[0]).value=heard.trim().replace(/^./,function(c){return c.toUpperCase()});
-      }
-      var amt=parseFloat($('fAmount').value)||0;
-      vstatus($('fName').value+' · '+($('fItem').value||'')+' · R'+money(amt)+' · '+(later?fmtDate($('fDue').value):t('payingNowW'))+'. '+vq('got'));
-      await say({c:'okay',t:vq('okay')});
-    }catch(e){if(e!=='not-allowed'&&e!=='service-not-allowed')vstatus(t('voiceStopped'))}
-    finally{busy=false;btn.removeAttribute('aria-busy');$('voiceLabel').textContent=t('speakSale')}
-  }
-  $('voiceBtn').addEventListener('click',startVoice);
-  $('tileVoice').addEventListener('click',function(){go('sell');startVoice()});
-  $('readBtn').addEventListener('click',function(){
-    var x=totals();
-    var s=t('sum',{r:money(x.rec),u:money(x.unpaid)})+' '+(x.lates.length?x.lates.map(function(l){return t('sumLate',{name:l.name,a:money(l.amount),n:-daysFrom(l.due)})}).join(' '):t('nobodyLate'));
-    var box=$('readOut');box.textContent=s;box.hidden=false;
-    if(S.robot)tts(s);
-  });
-
-  /* ---------- Welcome setup ---------- */
-  var step=1;
-  function obShow(n){
-    step=n;[1,2,3,4].forEach(function(i){$('ob'+i).hidden=i!==n});
-    document.querySelectorAll('.dots i').forEach(function(d,i){d.className=i<n?'on':''});
-    $('obNav').hidden=(n===1||n===4);
-    if(n===2)setTimeout(function(){$('obBizIn').focus()},50);
-  }
-  LANGS.forEach(function(l){
-    var b=el('button',null,l[1]);b.type='button';b.setAttribute('aria-pressed',String(ui()===l[0]));b.lang=l[0]==='pcm'?'en':l[0];
-    b.addEventListener('click',function(){S.ui=l[0];S.lang=l[0];save();applyI18n();loadSettings();
-      document.querySelectorAll('#obLangs button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});obShow(2)});
-    $('obLangs').appendChild(b);
-  });
-  $('obNext').addEventListener('click',function(){
-    if(step===2){S.biz=$('obBizIn').value.trim();save()}
-    if(step===3){S.bank=$('obBank').value.trim();S.link=$('obLink').value.trim();save()}
-    loadSettings();render();obShow(step+1);
-  });
-  $('obBack').addEventListener('click',function(){obShow(Math.max(1,step-1))});
-  function finishOb(fresh){
-    if(fresh)S.sales=S.sales.filter(function(s){return !s.example});
-    S.setup=true;save();$('ob').hidden=true;loadSettings();render();go(fresh?'sell':'home');
-  }
-  $('obFresh').addEventListener('click',function(){finishOb(true)});
-  $('obEx').addEventListener('click',function(){finishOb(false)});
-
-  /* ---------- Start ---------- */
-  applyLarge();applyI18n();loadSettings();setWhen(false);render();go('home');
-  if(!S.setup){$('obBizIn').value=S.biz||'';$('obBank').value=S.bank||'';$('obLink').value=S.link||'';$('ob').hidden=false;obShow(1)}
-})();
-</script>
-
+  </script>
 </body>
 </html>
