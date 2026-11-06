@@ -1,4 +1,5 @@
 // Auvera™ — i18n module
+// Languages, payment methods, message templates, and helpers.
 // Extracted from index.html monolith during reengineering.
 
 // Supported languages: [code, name]
@@ -69,32 +70,48 @@ export const METHODS = [
   ['usdt',  'm_usdt',  'c_crypto', 'h_crypto']
 ];
 
-// Helper: template replacement
-export function t(lang, key, vars) {
-  let s = ((I[lang] && I[lang][key]) || (I.en && I.en[key]) || '');
-  if (vars) {
-    Object.keys(vars).forEach(k => {
-      s = s.replace(new RegExp('{' + k + '}', 'g'), vars[k]);
-    });
-  }
-  return s;
-}
+// Method display names (inline, referenced by nameKey in templates)
+export const METHOD_NAMES = {
+  en: { eft: 'EFT', payshap: 'PayShap', card: 'Card/Yoco', cash: 'Cash', btc: 'Bitcoin', usdt: 'USDT' },
+  pcm: { eft: 'EFT', payshap: 'PayShap', card: 'Card/Yoco', cash: 'Cash', btc: 'Bitcoin', usdt: 'USDT' },
+  ur: { eft: 'EFT', payshap: 'PayShap', card: 'کارڈ/یوکو', cash: 'کیش', btc: 'بٹوکائن', usdt: 'یوسیو ٹی' },
+  bn: { eft: 'ইএফটি', payshap: 'পে শ্যাপ', card: 'কার্ড/ইয়োকো', cash: 'নগদ', btc: 'বিটকয়েন', usdt: 'ইউএসডিটি' },
+  so: { eft: 'EFT', payshap: 'PayShap', card: 'Karta/Yoco', cash: 'Laqab', btc: 'Bitcoin', usdt: 'USDT' },
+  sw: { eft: 'EFT', payshap: 'PayShap', card: 'Kadi/Yoco', cash: 'Pesa', btc: 'Bitcoin', usdt: 'USDT' },
+  am: { eft: 'ኢኤፍቲ', payshap: 'ፔሽሸፕ', card: 'ካርድ/ዮኮ', cash: 'ብልጽግና', btc: 'ቢትኮይን', usdt: 'ዩዚዲቲ' }
+};
 
-// Helper: method lookup by id
-export function method(id) {
-  return METHODS.filter(m => m[0] === id)[0] || METHODS[0];
-}
-
-// Helper: language name by id
-export function langName(id) {
-  return (LANGS.filter(l => l[0] === id)[0] || LANGS[0])[1];
-}
-
-// Helper: blockchain explorer URL
+// Blockchain explorer URLs
 export function explorer(m, tx) {
   tx = (tx || '').trim();
   if (!tx) return '';
   if (m === 'btc') return 'https://mempool.space/tx/' + encodeURIComponent(tx);
   if (m === 'usdt') return 'https://tronscan.org/#/transaction/' + encodeURIComponent(tx);
   return '';
+}
+
+// Template replacement helper
+export function t(lang, key, vars) {
+  let s = ((I[lang] && I[lang][key]) || (I.en && I.en[key]) || '');
+  if (vars) {
+    Object.keys(vars).forEach(function(k) {
+      s = s.replace(new RegExp('{' + k + '}', 'g'), vars[k]);
+    });
+  }
+  return s;
+}
+
+// Method lookup by id
+export function method(id) {
+  return METHODS.filter(function(m) { return m[0] === id; })[0] || METHODS[0];
+}
+
+// Method name by id and language
+export function methodName(id, lang) {
+  return (METHOD_NAMES[lang] && METHOD_NAMES[lang][id]) || (METHOD_NAMES.en[id]) || id;
+}
+
+// Language name by id
+export function langName(id) {
+  return (LANGS.filter(function(l) { return l[0] === id; })[0] || LANGS[0])[1];
 }

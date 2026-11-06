@@ -1,6 +1,4 @@
-// Auvera™ — Service Worker
-// Offline-first PWA cache. Extracted during reengineering.
-
+// Auvera™ — Service Worker (offline-first PWA cache)
 const CACHE_NAME = 'auvera-v2';
 const ASSETS = [
   './',
@@ -15,15 +13,11 @@ const ASSETS = [
   'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap'
 ];
 
-// Install: cache core assets
 self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
-  );
+  e.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
   self.skipWaiting();
 });
 
-// Activate: clean old caches
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
@@ -33,20 +27,17 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
-// Fetch: cache-first, fallback to network
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((cached) => {
       if (cached) return cached;
       return fetch(e.request).then((resp) => {
-        // Cache successful GET requests
         if (e.request.method === 'GET' && resp.ok) {
           const clone = resp.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
         }
         return resp;
       }).catch(() => {
-        // Offline fallback for navigation
         if (e.request.mode === 'navigate') {
           return caches.match('./index.html');
         }

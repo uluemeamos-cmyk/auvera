@@ -1,12 +1,12 @@
 // Auvera™ — App module
-// Main application logic: state, rendering, event listeners.
+// State, storage, rendering, actions, WhatsApp, onboarding.
 // Extracted from index.html monolith during reengineering.
 
-import { LANGS, I, METHODS, t, method, langName, explorer } from './i18n.js';
-import { Voice } from './voice.js';
+import { LANGS, I, METHODS, t, method, methodName, langName, explorer } from './i18n.js';
+import { CLIP, supportsAudio, playClip, speak, VoiceRecognizer, numFromWords, dayFromWords, processVoiceWords } from './voice.js';
 
 /* ===== State ===== */
-const KEY = 'auvera-v2';
+const KEY = 'auvera-test-v2';
 
 let db = {
   biz: '',
@@ -15,12 +15,16 @@ let db = {
   bank: '',
   link: '',
   next: 1004,
-  sales: []
+  sales: [],
+  alarms: []
 };
 
 let ui = {
   curSale: null,
-  saleIndex: null
+  saleIndex: null,
+  recognition: null,
+  synth: null,
+  alarmsInterval: null
 };
 
 /* ===== DOM ===== */
@@ -56,6 +60,10 @@ function fmtDate(s) {
 function money(n) {
   return Math.round(n).toLocaleString('en-ZA').replace(/[,  ]/g, ' ');
 }
+function initials(n) {
+  const p = String(n || '?').trim().split(/\s+/);
+  return ((p[0] || '?').charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : '')).toUpperCase();
+}
 
 /* ===== Storage ===== */
 function load() {
@@ -69,6 +77,7 @@ function load() {
   if (!db.next) db.next = 1004;
   if (!db.sales) db.sales = [];
   if (!Array.isArray(db.sales)) db.sales = [];
+  if (!db.alarms) db.alarms = [];
 }
 function save() {
   localStorage.setItem(KEY, JSON.stringify(db));
@@ -111,30 +120,22 @@ function populateLangs() {
 }
 
 /* ===== Voice ===== */
-const voice = new Voice({
-  onResult: (text) => onVoiceHeard(text),
+const voiceRec = new VoiceRecognizer({
+  onResult: (text) => onVoiceResult(text),
   onError: (msg) => { $('voiceStatus').textContent = msg; },
   onStart: () => { $('voiceStatus').textContent = 'Listening… Speak name & amount'; },
   onEnd: () => {}
 });
 
-function onVoiceHeard(text) {
+function onVoiceResult(text) {
   $('voiceStatus').textContent = 'Recognized: "' + text + '"';
-  const numbers = text.match(/\d+/);
-  if (numbers) $('fAmount').value = numbers[0];
-  const words = text.replace(/\d+/g, '').trim();
-  if (words) $('fName').value = words;
+  const { name, amount, dayOffset } = processVoiceWords(text);
+  if (name) $('fName').value = name;
+  if (amount) $('fAmount').value = amount;
+  if (dayOffset !== null) $('fDue').value = addDays(dayOffset);
 }
 
-function speakSale() {
-  const s = db.sales[ui.saleIndex];
-  if (!s) return;
-  voice.speak(s.name + ', ' + money(s.amount) + ' rand, due ' + fmtDate(s.due), {
-    lang: s.lang === 'en' ? 'en-US' : db.lang
-  });
-}
-
-/* ===== Sample data ===== */
+/* ===== Sample / example data ===== */
 function sample() {
   return {
     biz: '',
@@ -162,7 +163,8 @@ function sample() {
         created: addDays(-1), due: addDays(3),
         invoiceSent: false, paid: null, example: true
       }
-    ]
+    ],
+    alarms: []
   };
 }
 
@@ -192,6 +194,7 @@ function go(panel) {
   if (panel === 'owed') renderOwed();
   if (panel === 'paid') renderPaid();
   if (panel === 'settings') renderSettings();
+  if (panel === 'sale') renderSaleDetail();
 }
 
 function render() {
@@ -201,6 +204,7 @@ function render() {
   renderHome();
   renderOwed();
   renderPaid();
+  updateLateBadge();
 }
 
 function renderHome() {
@@ -265,6 +269,16 @@ function renderPaid() {
   $('paidList').innerHTML = html || 'No payments recorded.';
 }
 
+function updateLateBadge() {
+  let late = 0;
+  db.sales.forEach(s => { if (!s.paid && daysFrom(s.due) < 0) late++; });
+  const b = $('tabOwedBadge');
+  if (b) {
+    if (late > 0) { b.textContent = late; b.hidden = false; }
+    else { b.hidden = true; }
+  }
+}
+
 function renderSell() {
   $('fName').value = '';
   $('fAmount').value = '';
@@ -293,7 +307,7 @@ function escapeHtml(s) {
   return div.innerHTML;
 }
 
-/* ===== Sale card (detail view) ===== */
+/* ===== Sale detail view ===== */
 function saleCard(s) {
   const overdue = daysFrom(s.due) < 0 && !s.paid;
   const paid = !!s.paid;
@@ -303,8 +317,16 @@ function saleCard(s) {
   let methodsHtml = METHODS.map(mth => {
     const checked = (mth[0] === (s.payMethod || 'eft')) ? ' checked' : '';
     return '<label class="method-row"><input type="radio" name="payMethod" value="' +
-      mth[0] + '"' + checked + '><span>' + t(db.lang, mth[1]) + '</span></label>';
+      mth[0] + '"' + checked + '><span>' + methodName(mth[0], s.lang || db.lang) + '</span></label>';
   }).join('');
+
+  let exploreHtml = '';
+  if ((s.payMethod === 'btc' || s.payMethod === 'usdt') && s.link) {
+    const url = explorer(s.payMethod, s.link);
+    if (url) {
+      exploreHtml = '<a href="' + url + '" target="_blank" rel="noopener" class="btn gold full" style="margin-top:8px">View on explorer</a>';
+    }
+  }
 
   return '<div class="sale-detail">' +
     '<div class="detail-row"><span class="label">Customer</span><span class="value">' +
@@ -326,6 +348,7 @@ function saleCard(s) {
     '<input type="text" id="dBank" value="' + escapeHtml(s.bank || '') + '" placeholder="Bank / wallet"></div>' +
     '<div class="detail-row"><span class="label">Payment link / tx</span>' +
     '<input type="text" id="dLink" value="' + escapeHtml(s.link || '') + '" placeholder="PayShap link / BTC tx"></div>' +
+    exploreHtml +
     '<div class="detail-actions">' +
     '<button class="btn ' + paidClass + '" id="btnPaid">' + paidLabel + '</button>' +
     '<button class="btn" id="btnWhatsApp">WhatsApp</button>' +
@@ -337,6 +360,27 @@ function saleCard(s) {
     '<div class="preview" id="msgPreview"></div>' +
     '</div>' +
     '</div>';
+}
+
+function renderSaleDetail() {
+  const s = db.sales[ui.saleIndex];
+  if (!s) { go('home'); return; }
+  $('saleView').innerHTML = saleCard(s);
+
+  $('#btnPaid').onclick = () => togglePaid(ui.saleIndex);
+  $('#btnWhatsApp').onclick = () => sendWhatsApp(ui.saleIndex);
+  $('#btnSpeak').onclick = () => speakSale();
+  $('#btnDelete').onclick = () => deleteSale(ui.saleIndex);
+
+  document.querySelectorAll('input[name="payMethod"]').forEach(r => {
+    r.onchange = () => { s.payMethod = r.value; save(); };
+  });
+
+  $('#dBank').onchange = () => { s.bank = $('#dBank').value; save(); };
+  $('#dLink').onchange = () => { s.link = $('#dLink').value; save(); };
+
+  // Voice status chip
+  $('voiceStatus').textContent = '';
 }
 
 /* ===== Actions ===== */
@@ -377,26 +421,12 @@ function newSale() {
   renderSell();
   go('home');
   toast('Sale saved');
+  playClip('en-sale-saved', { fallbackText: 'Sale saved', lang: 'en' });
 }
 
 function openSale(idx) {
   ui.saleIndex = idx;
-  const s = db.sales[idx];
-  ui.curSale = s;
-  $('saleView').innerHTML = saleCard(s);
-
-  $('#btnPaid').onclick = () => togglePaid(idx);
-  $('#btnWhatsApp').onclick = () => sendWhatsApp(idx);
-  $('#btnSpeak').onclick = () => speakSale();
-  $('#btnDelete').onclick = () => deleteSale(idx);
-
-  document.querySelectorAll('input[name="payMethod"]').forEach(r => {
-    r.onchange = () => { s.payMethod = r.value; save(); };
-  });
-
-  $('#dBank').onchange = () => { s.bank = $('#dBank').value; save(); };
-  $('#dLink').onchange = () => { s.link = $('#dLink').value; save(); };
-
+  ui.curSale = db.sales[idx];
   go('sale');
 }
 
@@ -414,6 +444,14 @@ function deleteSale(idx) {
   save();
   go('home');
   render();
+}
+
+function speakSale() {
+  const s = db.sales[ui.saleIndex];
+  if (!s) return;
+  speak(s.name + ', ' + money(s.amount) + ' rand, due ' + fmtDate(s.due), {
+    lang: s.lang === 'en' ? 'en-US' : (s.lang || db.lang)
+  });
 }
 
 function sendWhatsApp(idx) {
@@ -451,6 +489,20 @@ function sendWhatsApp(idx) {
   window.location.href = url;
   s.invoiceSent = true;
   save();
+}
+
+/* ===== Read my money (TTS) ===== */
+function readMyMoney() {
+  let received = 0, unpaid = 0, lateCount = 0;
+  db.sales.forEach(s => {
+    const amt = Number(s.amount) || 0;
+    if (s.paid) received += amt;
+    else {
+      unpaid += amt;
+      if (daysFrom(s.due) < 0) lateCount++;
+    }
+  });
+  speak('You have received R' + money(received) + ' this month. You are owed R' + money(unpaid) + '. ' + lateCount + ' payments are late.');
 }
 
 /* ===== Onboarding ===== */
@@ -511,6 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
     go('home');
   }
 
+  // Nav tabs
   document.querySelectorAll('.tabbar .tab').forEach(tab => {
     tab.onclick = (e) => {
       const target = e.currentTarget.dataset.target;
@@ -522,24 +575,26 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.panel#p-home .tile[data-target]').forEach(tile => {
     tile.onclick = () => go(tile.dataset.target);
   });
-  $('btnVoiceTile').onclick = () => { voice.start({ lang: 'en-US' }); };
-  $('btnReadMoney').onclick = () => {
-    let received = 0, unpaid = 0;
-    db.sales.forEach(s => {
-      const amt = Number(s.amount) || 0;
-      if (s.paid) received += amt; else unpaid += amt;
-    });
-    voice.speakMoney('R' + money(received), 'R' + money(unpaid));
+
+  // Voice sell tile
+  $('btnVoiceTile').onclick = () => {
+    voiceRec.start({ lang: 'en-US' });
   };
 
+  // Read my money tile
+  $('btnReadMoney').onclick = readMyMoney;
+
+  // Sell form
   $('btnSaveSale').onclick = newSale;
   $('btnVoiceSale').onclick = () => {
-    voice.start({ lang: 'en-US' });
+    voiceRec.start({ lang: 'en-US' });
   };
 
+  // Settings
   $('btnSaveSettings').onclick = saveSettings;
   $('btnSettings').onclick = () => go('settings');
 
+  // Onboarding
   $('btnStart').onclick = () => showObStep('obBiz');
   $('btnNextBiz').onclick = () => showObStep('obLangs');
   $('btnFinish').onclick = finishOnboarding;
